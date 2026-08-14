@@ -44,8 +44,16 @@ nothing**. Three separate trackers were removed that day, each found a different
 - The KESQ press thumbnail, hotlinked from `kesq.b-cdn.net`, replaced by the text citation
   that was already in the callout.
 
-`build-archive.sh` guards both properties on every build. The only remaining external
-requests are the YouTube embeds on the archive page and ordinary outbound links.
+`build-archive.sh` guards both properties on every build. In the archive's own source the
+only remaining external requests are the YouTube embeds and ordinary outbound links.
+
+**Caveat, true since the 2026-08-14 repoint:** served from `mirage.sunshine.fm`, Cloudflare
+injects its Web Analytics RUM beacon (`static.cloudflareinsights.com`) into the HTML at the
+edge. It is NOT in this repo, it does not appear on `mirage-season1.pages.dev`, and it is
+zone-wide — `sunshine.fm` itself carries it too. It is also UA-gated, so `curl` cannot see it;
+only a real browser reveals it. So: this archive collects nothing, but the zone it is served
+from does. Disabling it is a zone-level decision affecting every sunshine.fm property, not a
+change that can be made in this repo.
 
 ## Recent changes
 - 2026-07-29: Shipped /series — Coachella Valley Vertical Video Series sponsor-pitch landing with /api/series/lead intake (series_leads table) wired to Polsia email proxy
