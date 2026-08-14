@@ -53,8 +53,17 @@ leaked=$(find "$STAGE" \( -name "app.html" -o -name "admin*.html" -o -name "eat.
 [ -z "$leaked" ] || { echo "FATAL: app/admin leaked into staging:"; echo "$leaked"; exit 1; }
 
 # Guard: the archive must stay sealed — no third-party runtime fetches.
-unsealed=$(grep -rlE "cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|connect\.facebook\.net|facebook\.com/tr|r2\.dev" \
+# Matches scheme-qualified URLs only, so the explanatory comments that NAME these
+# hosts ("it hotlinked kesq.b-cdn.net") don't trip the guard they document.
+unsealed=$(grep -rlE "https?://(cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|connect\.facebook\.net|www\.facebook\.com/tr|[a-z0-9.-]*r2\.dev|kesq\.b-cdn\.net)" \
              "$STAGE" --include="*.html" || true)
 [ -z "$unsealed" ] || { echo "FATAL: third-party runtime dependency reintroduced in:"; echo "$unsealed"; exit 1; }
+
+# Guard: no visitor tracking. The archive collects nothing — no beacons to the dead
+# Express API, no persistent device id, no third-party pixel. Grep for the CALL, not
+# the word, so the comments recording each removal stay legible.
+tracking=$(grep -rlE "fetch\('/api/analytics|fbq\(|localStorage\.setItem\('mirage_session" \
+             "$STAGE" --include="*.html" || true)
+[ -z "$tracking" ] || { echo "FATAL: visitor tracking reintroduced in:"; echo "$tracking"; exit 1; }
 
 echo "staged $(find "$STAGE" -type f | wc -l | tr -d ' ') files, $(du -sh "$STAGE" | cut -f1) — sealed, no app/admin"

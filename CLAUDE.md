@@ -33,10 +33,19 @@ Node.js + Express + Neon PostgreSQL, served on Render. Static assets in `/public
 
 - ~~R2 public bucket~~ — `Coachella Bound.mp3` (hero player on the archive page), **vendored 2026-08-14** to `public/vendor/audio/coachella-bound.mp3`. No longer fetched at runtime.
 
-As of 2026-08-14 the archive has **zero third-party runtime dependencies and no analytics
-of any kind** (the Meta Pixel on the farewell page was removed the same day). The only
-remaining external requests are the YouTube embeds on the archive page, one KESQ press
-image, and ordinary outbound links.
+As of 2026-08-14 the archive has **zero third-party runtime dependencies and collects
+nothing**. Three separate trackers were removed that day, each found a different way:
+
+- Meta Pixel on `farewell.html` (`fbq` init + PageView) — found by grepping for tracker hosts.
+- A same-origin beacon on `season1.html` and `farewell.html` that minted a persistent
+  `mirage_session` UUID into localStorage and POSTed it with UTM params to
+  `/api/analytics/pageview`. That Express route is gone, so it 405'd on every load. It was
+  invisible to host greps (same-origin) and only surfaced as a failed request in a browser.
+- The KESQ press thumbnail, hotlinked from `kesq.b-cdn.net`, replaced by the text citation
+  that was already in the callout.
+
+`build-archive.sh` guards both properties on every build. The only remaining external
+requests are the YouTube embeds on the archive page and ordinary outbound links.
 
 ## Recent changes
 - 2026-07-29: Shipped /series — Coachella Valley Vertical Video Series sponsor-pitch landing with /api/series/lead intake (series_leads table) wired to Polsia email proxy

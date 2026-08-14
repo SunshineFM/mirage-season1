@@ -1428,13 +1428,10 @@
         <h2 class="section-heading">Before Coachella Went Live</h2>
       </div>
       <div class="press-callout">
-        <div class="press-thumb">
-          <img
-            src="https://kesq.b-cdn.net/2026/04/Screenshot-2026-04-08-at-9.54.55-AM-scaled.png"
-            alt="KESQ News Channel 3 coverage of Mirage"
-            loading="lazy"
-          >
-        </div>
+        <!-- Thumbnail removed 2026-08-14 when this page was sealed as an archive.
+             It hotlinked kesq.b-cdn.net, which spent KESQ's bandwidth and would have
+             broken silently whenever they reorganize their CDN. The citation below
+             carries the credibility on its own and links to the original article. -->
         <div class="press-body">
           <div class="press-kicker">
             <span class="press-badge">KESQ &middot; News Channel 3</span>
@@ -2068,32 +2065,10 @@
   </footer>
 
   <script>
-  // Pageview tracking
-  (function() {
-    var sid = localStorage.getItem('mirage_session');
-    if (!sid) {
-      try { sid = crypto.randomUUID(); } catch(e) { sid = 's1-' + Date.now() + '-' + Math.random().toString(36).slice(2); }
-      localStorage.setItem('mirage_session', sid);
-    }
-    var params = new URLSearchParams(window.location.search);
-    var keys = ['utm_source', 'utm_medium', 'utm_campaign'];
-    var utm = {};
-    keys.forEach(function(k) {
-      var v = params.get(k);
-      if (v) {
-        try { sessionStorage.setItem(k, v); } catch(e) {}
-        utm[k] = v;
-      } else {
-        try { var stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
-      }
-    });
-    fetch('/api/analytics/pageview', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.assign({ device_id: sid, path: '/season1' }, utm)),
-      keepalive: true
-    }).catch(function(){});
-  })();
+  // Pageview tracking removed 2026-08-14 when this page was sealed as an archive.
+  // It minted a persistent visitor UUID into localStorage ('mirage_session') and
+  // POSTed it with UTM params to /api/analytics/pageview — an Express route that
+  // no longer exists, so every load produced a 405. Dead beacon, live fingerprint.
 
   // Smooth scroll for anchor buttons with offset
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {

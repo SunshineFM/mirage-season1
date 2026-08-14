@@ -297,33 +297,9 @@
         </div>
     </div>
 
-<!-- Pageview Tracking -->
-<script>
-(function() {
-  var sid = localStorage.getItem('mirage_session');
-  if (!sid) {
-    try { sid = crypto.randomUUID(); } catch(e) { sid = 'fw-' + Date.now() + '-' + Math.random().toString(36).slice(2); }
-    localStorage.setItem('mirage_session', sid);
-  }
-  var params = new URLSearchParams(window.location.search);
-  var keys = ['utm_source', 'utm_medium', 'utm_campaign'];
-  var utm = {};
-  keys.forEach(function(k) {
-    var v = params.get(k);
-    if (v) {
-      try { sessionStorage.setItem(k, v); } catch(e) {}
-      utm[k] = v;
-    } else {
-      try { var stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
-    }
-  });
-  fetch('/api/analytics/pageview', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(Object.assign({ device_id: sid, path: '/farewell' }, utm)),
-    keepalive: true
-  }).catch(function(){});
-})();
-</script>
+<!-- Pageview tracking removed 2026-08-14 when this page was sealed as an archive.
+     It minted a persistent visitor UUID into localStorage ('mirage_session') and
+     POSTed it with UTM params to /api/analytics/pageview — an Express route that
+     no longer exists, so every load produced a 405. Dead beacon, live fingerprint. -->
 </body>
 </html>
