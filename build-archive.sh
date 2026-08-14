@@ -52,18 +52,56 @@ leaked=$(find "$STAGE" \( -name "app.html" -o -name "admin*.html" -o -name "eat.
                         -o -name "series.html" -o -name "sponsors.html" \) -print)
 [ -z "$leaked" ] || { echo "FATAL: app/admin leaked into staging:"; echo "$leaked"; exit 1; }
 
-# Guard: the archive must stay sealed — no third-party runtime fetches.
-# Matches scheme-qualified URLs only, so the explanatory comments that NAME these
-# hosts ("it hotlinked kesq.b-cdn.net") don't trip the guard they document.
-unsealed=$(grep -rlE "https?://(cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|connect\.facebook\.net|www\.facebook\.com/tr|[a-z0-9.-]*r2\.dev|kesq\.b-cdn\.net)" \
-             "$STAGE" --include="*.html" || true)
-[ -z "$unsealed" ] || { echo "FATAL: third-party runtime dependency reintroduced in:"; echo "$unsealed"; exit 1; }
+# Guard: the archive must stay sealed.
+#
+# This is an ALLOWLIST tripwire, not a blocklist. An earlier version listed the
+# hosts to ban and scoped itself to --include="*.html"; it therefore reported the
+# archive sealed while all four SVG icons were still @import-ing Google Fonts,
+# which fired on every direct load of /favicon.svg. Enumerating what is forbidden
+# only ever catches what you have already met. This fails on anything NEW instead,
+# and it reads every text file in the archive, not just the HTML.
+ALLOWED_HOSTS="mirage.sunshine.fm sunshine.fm www.sunshine.fm
+www.youtube.com youtube.com bsky.app kesq.com
+www.w3.org schema.org
+revealjs.com hakim.se marked.js.org github.com meyerweb.com"
+# Why each is permitted:
+#   *.sunshine.fm            self-reference — canonical, og:url, outbound
+#   youtube.com              the archive page's video embeds; genuinely remote by nature
+#   bsky.app, kesq.com       ordinary outbound links, never fetched
+#   w3.org, schema.org       xmlns and JSON-LD @context identifiers, never fetched
+#   revealjs.com, hakim.se,  hosts NAMED inside vendored library license comments
+#   marked.js.org,           (reveal.js, marked, the Meyer CSS reset). Not fetched.
+#   github.com, meyerweb.com
+# NOTE: sed -E, not a bare \? — BSD/macOS sed treats GNU's \? literally, which
+# silently leaves the scheme attached and makes every host fail the allowlist.
+found=$(find "$STAGE" -type f ! -name '*.woff2' ! -name '*.png' ! -name '*.mp3' -exec \
+          grep -ohE "https?://[a-zA-Z0-9.-]+" {} + 2>/dev/null | sed -E 's|https?://||' | sort -u)
+unexpected=""
+for h in $found; do
+  echo "$ALLOWED_HOSTS" | tr ' ' '\n' | grep -qx "$h" || unexpected="$unexpected $h"
+done
+[ -z "$unexpected" ] || {
+  echo "FATAL: unrecognised external host(s) in the archive:$unexpected"
+  echo "       If one is legitimately fetched, vendor it. If it is only NAMED"
+  echo "       (a license comment, a namespace), add it to ALLOWED_HOSTS above."
+  exit 1
+}
 
-# Guard: no visitor tracking. The archive collects nothing — no beacons to the dead
-# Express API, no persistent device id, no third-party pixel. Grep for the CALL, not
-# the word, so the comments recording each removal stay legible.
-tracking=$(grep -rlE "fetch\('/api/analytics|fbq\(|localStorage\.setItem\('mirage_session" \
-             "$STAGE" --include="*.html" || true)
+# Guard: no visitor tracking. The archive collects nothing — no beacon to the dead
+# Express API, no persistent device id, no third-party pixel. All file types.
+#
+# HTML comments are stripped before matching. Each removal is recorded in a comment
+# that necessarily quotes the call it removed ("It fired fbq('init', ...)"), and an
+# earlier version of this guard flagged its own documentation. Code inside an HTML
+# comment cannot execute, so stripping them costs no coverage — it only separates
+# a MENTION of tracking from a USE of it.
+tracking=$(find "$STAGE" -type f ! -name '*.woff2' ! -name '*.png' ! -name '*.mp3' | while read -r f; do
+  perl -0777 -pe 's/<!--.*?-->//gs' "$f" 2>/dev/null \
+    | grep -qE "fetch\('/api/analytics|fbq\(|localStorage\.setItem\('mirage_session" && echo "$f"
+done || true)
+# NOTE: `|| true` is load-bearing. The loop's exit status is the last grep -q, which
+# returns 1 when it finds NOTHING — the passing case. Under `set -e` that non-zero
+# command substitution aborts the build silently, with no FATAL and no staged output.
 [ -z "$tracking" ] || { echo "FATAL: visitor tracking reintroduced in:"; echo "$tracking"; exit 1; }
 
 echo "staged $(find "$STAGE" -type f | wc -l | tr -d ' ') files, $(du -sh "$STAGE" | cut -f1) — sealed, no app/admin"

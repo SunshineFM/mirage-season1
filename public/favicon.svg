@@ -1,7 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Righteous&amp;display=swap');
+      /* Righteous vendored 2026-08-14. This was an @import from Google's font CDN,
+         which fired a live request on every direct load of this file. */
+      @font-face {
+        font-family: 'Righteous';
+        font-style: normal;
+        font-weight: 400;
+        src: url('/vendor/fonts/1cXxaUPXBpj2rGoU7C9WiHGFq8Kk1Q.woff2') format('woff2');
+      }
     </style>
   </defs>
   <!-- transparent background -->
