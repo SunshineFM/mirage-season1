@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mirage — farewell & ongoing case study</title>
+    <meta name="description" content="Farewell for Mirage Season 1. The project continues as an ongoing case study and research artifact for local AI in the Coachella Valley. Read the canonical case study at /case-study.">
+    <link rel="canonical" href="https://mirage.sunshine.fm/farewell">
+
+    <!-- OG Meta Tags -->
+    <meta property="og:title" content="mirage — farewell & ongoing case study">
+    <meta property="og:description" content="Farewell for Mirage Season 1. The project continues as an ongoing case study and research artifact for local AI in the Coachella Valley.">
+    <meta property="og:image" content="https://mirage.sunshine.fm/og-card.png">
+    <meta property="og:url" content="https://mirage.sunshine.fm/farewell">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="mirage — farewell & ongoing case study">
+    <meta name="twitter:description" content="Farewell for Mirage Season 1. The project continues as an ongoing case study and research artifact for local AI in the Coachella Valley.">
+    <meta name="twitter:image" content="https://mirage.sunshine.fm/og-card.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "SunshineFM",
+          "url": "https://www.sunshine.fm",
+          "description": "Coachella Valley radio and experimental media infrastructure."
+        },
+        {
+          "@type": "WebSite",
+          "name": "Mirage",
+          "alternateName": "Mirage — SunshineFM",
+          "url": "https://mirage.sunshine.fm",
+          "description": "Ongoing canonical case study and documented evidence for temporary social infrastructure and AI-assisted local product builds, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026) in the Coachella Valley.",
+          "inLanguage": "en",
+          "publisher": { "@type": "Organization", "name": "SunshineFM" }
+        },
+        {
+          "@type": ["ScholarlyArticle", "CreativeWork"],
+          "headline": "Mirage — SunshineFM Case Study (Season 1, 2026)",
+          "description": "Ongoing canonical case study and documented evidence for temporary social infrastructure and AI-assisted local product builds.",
+          "url": "https://mirage.sunshine.fm/case-study",
+          "sameAs": [
+            "https://mirage.sunshine.fm/case-study.html",
+            "https://mirage.sunshine.fm/season1.html"
+          ],
+          "datePublished": "2026-05-04",
+          "dateModified": "2026-07-16",
+          "inLanguage": "en",
+          "isAccessibleForFree": true,
+          "about": { "@type": "Place", "name": "Coachella Valley" },
+          "isBasedOn": [
+            {
+              "@type": "Article",
+              "url": "https://mirage.sunshine.fm/season1.html",
+              "datePublished": "2026-05-04"
+            }
+          ],
+          "citation": [
+            {
+              "@type": "CreativeWork",
+              "name": "Mirage — SunshineFM",
+              "url": "https://mirage.sunshine.fm"
+            }
+          ],
+          "author": { "@type": "Organization", "name": "SunshineFM" },
+          "publisher": { "@type": "Organization", "name": "SunshineFM" },
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://mirage.sunshine.fm/case-study" }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1420341739378694');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1420341739378694&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: #1E293B;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100svh;
+            background: linear-gradient(180deg, #FFF7ED 0%, #FEF3C7 18%, #FEFCE8 40%, #F8FAFC 65%);
+            overflow-x: hidden;
+        }
+
+        .scene {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+        }
+
+        /* Subtle horizon line */
+        .scene::after {
+            content: '';
+            position: absolute;
+            bottom: 38%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 10%, rgba(251, 191, 36, 0.15) 30%, rgba(251, 191, 36, 0.25) 50%, rgba(251, 191, 36, 0.15) 70%, transparent 90%);
+            pointer-events: none;
+        }
+
+        .farewell {
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0;
+        }
+
+        .tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #D97706;
+            margin-bottom: 1.5rem;
+            opacity: 0.85;
+        }
+
+        .farewell-wordmark {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3.5rem, 14vw, 6rem);
+            font-weight: 400;
+            color: #0284C7;
+            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
+            line-height: 1;
+        }
+
+        .farewell-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .farewell-body p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.05rem, 3.5vw, 1.2rem);
+            font-weight: 400;
+            color: #334155;
+            line-height: 1.65;
+        }
+
+        .farewell-body p em {
+            font-style: italic;
+            color: #64748B;
+        }
+
+        .farewell-body p strong {
+            font-weight: 600;
+            color: #1E293B;
+        }
+
+        .closing-line {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.15rem, 4vw, 1.35rem);
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .status-note {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #94A3B8;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+            max-width: 38ch;
+            text-align: center;
+        }
+
+        .farewell-body a {
+            color: #0284C7;
+            text-decoration: none;
+            border-bottom: 2px solid rgba(2, 132, 199, 0.25);
+            padding-bottom: 1px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .farewell-body a:hover {
+            color: #0369A1;
+            border-color: #0369A1;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .links a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0284C7;
+            text-decoration: none;
+            border-bottom: 2px solid rgba(2, 132, 199, 0.25);
+            padding-bottom: 2px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .links a:hover {
+            border-color: #0284C7;
+            color: #0369A1;
+        }
+
+        .links-secondary {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .links-secondary a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: #94A3B8;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+            padding-bottom: 1px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .links-secondary a:hover {
+            color: #64748B;
+            border-color: #64748B;
+        }
+
+        .sun {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FBBF24 30%, rgba(251, 191, 36, 0) 70%);
+            margin-bottom: 2rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 480px) {
+            .scene { padding: 3rem 1.5rem 2rem; }
+            .farewell { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="farewell">
+            <div class="sun"></div>
+            <p class="tagline">May 1, 2026</p>
+            <div class="farewell-wordmark">mirage</div>
+
+            <div class="farewell-body">
+                <p>
+                    <strong>it was all a mirage.</strong>
+                </p>
+                <p>
+                    two festivals. three weekends. <em>gone from the field — not from the record.</em>
+                </p>
+                <p>
+                    mirage continues as an ongoing case study and research artifact for local ai in the coachella valley. what we built, what happened, and what we learned is documented at <a href="/case-study"><strong>mirage.sunshine.fm/case-study</strong></a>.
+                </p>
+                <p>
+                    <em>don't let the algorithms be your memory.</em>
+                </p>
+            </div>
+
+            <p class="closing-line">see you next year.</p>
+            <p class="status-note">the project continues as documented case-study material. a season 2 is plausible but not committed.</p>
+
+            <div class="links">
+                <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener">@sunshinefm.bsky.social</a>
+            </div>
+            <div class="links-secondary">
+                <a href="/case-study">read the ongoing case study</a>
+                <a href="/season1.html">read the season 1 story</a>
+                <a href="/archive/behind-the-scenes">behind the scenes</a>
+            </div>
+        </div>
+    </div>
+
+<!-- Pageview Tracking -->
+<script>
+(function() {
+  var sid = localStorage.getItem('mirage_session');
+  if (!sid) {
+    try { sid = crypto.randomUUID(); } catch(e) { sid = 'fw-' + Date.now() + '-' + Math.random().toString(36).slice(2); }
+    localStorage.setItem('mirage_session', sid);
+  }
+  var params = new URLSearchParams(window.location.search);
+  var keys = ['utm_source', 'utm_medium', 'utm_campaign'];
+  var utm = {};
+  keys.forEach(function(k) {
+    var v = params.get(k);
+    if (v) {
+      try { sessionStorage.setItem(k, v); } catch(e) {}
+      utm[k] = v;
+    } else {
+      try { var stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
+    }
+  });
+  fetch('/api/analytics/pageview', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ device_id: sid, path: '/farewell' }, utm)),
+    keepalive: true
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>

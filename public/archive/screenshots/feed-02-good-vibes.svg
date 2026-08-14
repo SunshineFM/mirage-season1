@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="667" viewBox="0 0 375 667">
+<defs><style>
+.bg{fill:#fff}.header{fill:#0284C7}.card{fill:#fff;stroke:#e2e8f0;stroke-width:1}
+.nickname{fill:#0284c7;font-family:sans-serif;font-size:11px;font-weight:600}
+.location{fill:#475569;font-family:sans-serif;font-size:10px}
+.post-text{fill:#0f172a;font-family:sans-serif;font-size:13px}
+.reaction{fill:#475569;font-family:sans-serif;font-size:11px}
+.feed-desc{fill:#475569;font-family:sans-serif;font-size:11px;font-style:italic}
+.app-name{fill:#fff;font-family:sans-serif;font-size:28px;font-weight:bold}
+.feed-title{fill:#fff;font-family:sans-serif;font-size:16px}
+.hint{fill:#475569;font-family:sans-serif;font-size:11px}
+.badge{fill:#e0f2fe}.tab-inactive{fill:#475569;font-family:sans-serif;font-size:11px}
+.hey-label{fill:#0284c7;font-family:sans-serif;font-size:11px;font-weight:600}
+.hey-sub{fill:#475569;font-family:sans-serif;font-size:10px}
+.hey-btn{fill:#0284c7}.hey-btn-text{fill:#fff;font-family:sans-serif;font-size:11px;font-weight:600}
+</style></defs><rect x="0" y="0" width="375" height="667" rx="0" fill="#ffffff"/><rect x="0" y="0" width="375" height="90" rx="0" fill="#0284c7"/><text x="20" y="30" class="app-name">mirage</text><text x="20" y="62" class="feed-title">Good Vibes</text><rect x="0" y="90" width="375" height="44" rx="0" fill="#ffffff"/><rect x="0" y="133" width="375" height="1" rx="0" fill="#e2e8f0"/><text x="20" y="112" class="tab-inactive">Good Shots</text><text x="92" y="112" class="nickname">Good Vibes</text><text x="164" y="112" class="tab-inactive">Good Tips</text><text x="236" y="112" class="tab-inactive">Hey Mirage</text><text x="305" y="112" class="hint">swipe →</text><text x="20" y="157" class="feed-desc">leave some love — a kind word, a lyric, anything that lifts the mood</text><rect x="16" y="178" width="343" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/><rect x="28" y="192" width="150" height="18" rx="6" fill="#e0f2fe"/><text x="34" y="204" class="nickname">@cactusbird_7</text><text x="110" y="204" class="location">  at the fest</text><text x="28" y="220" class="post-text">that set just changed something in</text><text x="28" y="236" class="post-text">me. grateful to be here. all of us,</text><text x="28" y="252" class="post-text">right now.</text><text x="28" y="260" class="reaction">💐 18</text><text x="96" y="260" class="reaction">💘 15</text><rect x="16" y="298" width="343" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/><rect x="28" y="312" width="150" height="18" rx="6" fill="#e0f2fe"/><text x="34" y="324" class="nickname">@mesaowl_22</text><text x="110" y="324" class="location">  in the desert</text><text x="28" y="340" class="post-text">strangers becoming friends at 2am</text><text x="28" y="356" class="post-text">in the desert. this is the only</text><text x="28" y="372" class="post-text">place like this in the world.</text><text x="28" y="380" class="reaction">💐 23</text><text x="96" y="380" class="reaction">💘 11</text><text x="164" y="380" class="reaction">👏 7</text><text x="20" y="637" class="hint">🌽 tap any post to react</text></svg>

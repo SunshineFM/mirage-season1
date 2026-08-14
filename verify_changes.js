@@ -1,0 +1,13 @@
+const fs = require('fs');
+const lines = fs.readFileSync('public/season1.html', 'utf8').split('\n');
+console.log('=== Ad stats pill (line 1444) ===');
+console.log(lines[1443]);
+console.log('=== Footer (line 1595) ===');
+console.log(lines[1594]);
+console.log('=== Cost body text (lines 1272-1275) ===');
+console.log(lines[1271]);
+console.log(lines[1272]);
+console.log(lines[1273]);
+console.log(lines[1274]);
+console.log('=== Stats grid (line 1313) ===');
+console.log(lines[1312]);

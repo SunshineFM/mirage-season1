@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mirage — SunshineFM Case Study (Season 1, 2026)</title>
+  <meta name="description" content="Ongoing case study and canonical evidence for local AI in the Coachella Valley, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026). Product, metrics, learnings, and post-mortem. Last reviewed 2026-07-16.">
+  <link rel="canonical" href="https://mirage.sunshine.fm/case-study">
+  <meta property="og:title" content="Mirage — SunshineFM Case Study (Season 1, 2026)">
+  <meta property="og:description" content="Ongoing case study and canonical evidence for local AI in the Coachella Valley, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026). Product, metrics, learnings, and post-mortem.">
+  <meta property="og:image" content="https://mirage.sunshine.fm/og-card.png">
+  <meta property="og:url" content="https://mirage.sunshine.fm/case-study">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mirage — SunshineFM Case Study (Season 1, 2026)">
+  <meta name="twitter:description" content="Ongoing case study and canonical evidence for local AI in the Coachella Valley, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026). Product, metrics, learnings, and post-mortem.">
+  <meta name="twitter:image" content="https://mirage.sunshine.fm/og-card.png">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "SunshineFM",
+        "url": "https://www.sunshine.fm",
+        "description": "Coachella Valley radio and experimental media infrastructure."
+      },
+      {
+        "@type": "WebSite",
+        "name": "Mirage",
+        "alternateName": "Mirage — SunshineFM",
+        "url": "https://mirage.sunshine.fm",
+        "description": "Ongoing canonical case study and documented evidence for temporary social infrastructure and AI-assisted local product builds, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026) in the Coachella Valley.",
+        "inLanguage": "en",
+        "publisher": { "@type": "Organization", "name": "SunshineFM" }
+      },
+      {
+        "@type": ["ScholarlyArticle", "CreativeWork"],
+        "headline": "Mirage — SunshineFM Case Study (Season 1, 2026)",
+        "description": "Ongoing canonical case study and documented evidence for temporary social infrastructure and AI-assisted local product builds.",
+        "url": "https://mirage.sunshine.fm/case-study",
+        "sameAs": [
+          "https://mirage.sunshine.fm/case-study.html",
+          "https://mirage.sunshine.fm/season1.html"
+        ],
+        "datePublished": "2026-05-04",
+        "dateModified": "2026-07-28",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "about": { "@type": "Place", "name": "Coachella Valley" },
+        "isBasedOn": [
+          {
+            "@type": "Article",
+            "url": "https://mirage.sunshine.fm/season1.html",
+            "datePublished": "2026-05-04"
+          }
+        ],
+        "citation": [
+          {
+            "@type": "CreativeWork",
+            "name": "Under $500 — Mirage / SunshineFM · The Proof",
+            "url": "https://mirage.sunshine.fm/presentation.html"
+          }
+        ],
+        "author": { "@type": "Organization", "name": "SunshineFM" },
+        "publisher": { "@type": "Organization", "name": "SunshineFM" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://mirage.sunshine.fm/case-study" }
+      },
+      {
+        "@type": "Article",
+        "headline": "Mirage Season 1 — A SunshineFM Experiment",
+        "description": "A 30-day pop-up social network for Coachella Valley festival season. Built in weeks. Run for 30 days. Gone on May 1.",
+        "datePublished": "2026-05-04",
+        "author": { "@type": "Organization", "name": "SunshineFM" },
+        "publisher": { "@type": "Organization", "name": "SunshineFM" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://mirage.sunshine.fm/season1.html" }
+      },
+      {
+        "@type": "Dataset",
+        "name": "Mirage Season 1 — By the Numbers",
+        "description": "Headline metrics from the Mirage Season 1 archive (Apr 1 – May 1, 2026): pop-up run duration, on-platform attendance, press coverage, total spend, tasks executed, and team size.",
+        "url": "https://mirage.sunshine.fm/case-study#by-the-numbers",
+        "dateModified": "2026-07-28",
+        "creator": { "@type": "Organization", "name": "SunshineFM" },
+        "isBasedOn": { "@type": "WebPage", "url": "https://mirage.sunshine.fm/season1.html" },
+        "additionalProperty": [
+          { "@type": "PropertyValue", "name": "Days Live",      "value": "30",  "unitText": "days" },
+          { "@type": "PropertyValue", "name": "Unique Devices", "value": "363" },
+          { "@type": "PropertyValue", "name": "Press Mentions", "value": "1" },
+          { "@type": "PropertyValue", "name": "Total Spend",    "value": "329", "unitText": "USD" },
+          { "@type": "PropertyValue", "name": "Tasks Executed", "value": "50" },
+          { "@type": "PropertyValue", "name": "Employees",      "value": "0" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Righteous&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue:     #0284C7;
+      --blue-mid: #0369A1;
+      --blue-lt:  #E0F2FE;
+      --blue-xlt: #F0F9FF;
+      --gold:     #F59E0B;
+      --gold-dk:  #D97706;
+      --white:    #FFFFFF;
+      --ink:      #0F172A;
+      --ink-mid:  #1E293B;
+      --ink-muted:#475569;
+      --ink-faint:#94A3B8;
+      --bg:       #FAFAFA;
+      --bg-alt:   #F8FAFC;
+      --border:   #E2E8F0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    section {
+      padding: 4rem 0;
+      background: var(--white);
+    }
+
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    .wordmark {
+      font-family: 'Righteous', cursive;
+      letter-spacing: 0.02em;
+    }
+
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-banner {
+      background: var(--blue-lt);
+      border-left: 4px solid var(--blue);
+      padding: 1.25rem 1.5rem;
+      margin: 0 auto 2.5rem;
+      max-width: 860px;
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .status-banner strong {
+      color: var(--ink);
+    }
+
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      line-height: 1.05;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    p {
+      font-size: clamp(1rem, 2.5vw, 1.125rem);
+      color: var(--ink-muted);
+      max-width: 68ch;
+      line-height: 1.75;
+    }
+
+    p + p { margin-top: 1.25rem; }
+
+    strong { font-weight: 700; color: var(--ink); }
+    em { font-style: italic; }
+
+    /* ─── HERO (SKY BLUE) ─── */
+    .hero {
+      background: var(--blue);
+      padding: 5rem 0 3rem;
+    }
+
+    .hero-gradient {
+      height: 120px;
+      background: linear-gradient(to bottom, var(--blue), var(--white));
+    }
+
+    .data-strip-container { padding: 2.5rem 0 1rem; }
+    .data-strip-container .stats-grid { margin-top: 0; }
+
+    .hero .section-label { color: var(--gold); }
+    .hero .section-heading { color: var(--white); }
+    .hero p { color: rgba(255,255,255,0.85); }
+    .hero strong { color: var(--white); }
+
+    .hero-music-player {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-music-player .play-btn {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      flex-shrink: 0;
+    }
+
+    .hero-music-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .hero-progress-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .hero-progress-wrap {
+      height: 3px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .hero-progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    .hero-time {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-season {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-wordmark {
+      font-family: 'Righteous', cursive;
+      font-size: clamp(4rem, 15vw, 8rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 0.25rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    }
+
+    .hero-season-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2rem;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.1rem, 3vw, 1.375rem);
+      font-weight: 600;
+      color: var(--white);
+      max-width: 56ch;
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subhead {
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      color: rgba(255,255,255,0.75);
+      max-width: 64ch;
+      line-height: 1.7;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--blue);
+      border-color: var(--white);
+    }
+    .btn-primary:hover { background: var(--blue-lt); border-color: var(--blue-lt); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--white);
+      border-color: var(--gold);
+    }
+    .btn-gold:hover { background: var(--gold-dk); border-color: var(--gold-dk); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--blue);
+      border-color: var(--blue);
+    }
+    .btn-outline:hover { background: var(--blue-lt); }
+
+    /* ─── WHAT MIRAGE WAS ─── */
+    .intro-quote {
+      font-size: clamp(1.15rem, 3vw, 1.35rem);
+      font-weight: 500;
+      color: var(--ink);
+      border-left: 4px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      background: var(--blue-xlt);
+      border-radius: 0 8px 8px 0;
+      line-height: 1.65;
+      max-width: 68ch;
+      margin-top: 1.75rem;
+    }
+
+    /* ─── WHY WE BUILT IT ─── */
+    .thesis-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+
+    .thesis-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .thesis-dot {
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-top: 0.55rem;
+    }
+
+    .thesis-text {
+      font-size: 1rem;
+      color: var(--ink-muted);
+      line-height: 1.65;
+    }
+
+    /* ─── HOW IT WORKED ─── */
+    .mechanics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      margin-top: 1.75rem;
+    }
+
+    .mechanic-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 0.875rem 1rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .mechanic-icon {
+      font-size: 1.2rem;
+      min-width: 1.75rem;
+      text-align: center;
+      margin-top: 0.05rem;
+    }
+
+    .mechanic-text {
+      font-size: 0.975rem;
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+
+    .mechanic-text strong { color: var(--ink); }
+
+    .tech-stack {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    .tech-stack strong { color: var(--blue); }
+
+    /* ─── WHAT WE BUILT IT WITH ─── */
+    .cost-callout {
+      margin-top: 1.75rem;
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+    }
+
+    .cost-callout .headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.25rem);
+      color: var(--gold);
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .cost-callout p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 58ch;
+      line-height: 1.75;
+    }
+
+    .cost-callout p strong { color: var(--white); }
+
+    /* ─── STATS GRID ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 1.75rem;
+    }
+
+    .stat-cell {
+      background: var(--white);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 3.5rem);
+      color: var(--blue);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .stat-number.gold { color: var(--gold); }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      margin-top: 0.35rem;
+    }
+
+    .season-shape {
+      margin-top: 1.75rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .season-shape h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 0.875rem;
+      text-transform: uppercase;
+    }
+
+    .shape-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shape-row:last-child { border-bottom: none; }
+
+    .shape-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      min-width: 2.5rem;
+      text-align: center;
+    }
+
+    .tag-blue { background: var(--blue-lt); color: var(--blue-mid); }
+    .tag-red  { background: #FEE2E2; color: #DC2626; }
+    .tag-warn { background: #FEF3C7; color: #92400E; }
+
+    .shape-desc {
+      font-size: 0.92rem;
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+
+    .shape-desc strong { color: var(--ink); }
+
+    .honest-note {
+      margin-top: 1.25rem;
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--ink-faint);
+      padding-left: 1rem;
+      border-left: 3px solid var(--border);
+    }
+
+    /* ─── WHAT WORKED / DIDN'T WORK ─── */
+    .result-list {
+      list-style: none;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .result-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      font-size: 1rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .result-list li .icon {
+      font-size: 1.1rem;
+      min-width: 1.5rem;
+      margin-top: 0.15rem;
+    }
+
+    .result-list li strong { color: var(--ink); }
+
+    .highlight-box {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 8px;
+      font-size: 0.975rem;
+      color: var(--ink-muted);
+      line-height: 1.65;
+    }
+
+    .highlight-box strong { color: var(--gold-dk); font-weight: 700; }
+
+    /* ─── WHAT WE LEARNED ─── */
+    .learnings-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+    }
+
+    .learning-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .learning-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .learning-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .learning-body {
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      line-height: 1.65;
+      max-width: none;
+    }
+
+    /* ─── WHAT'S NEXT ─── */
+    .next-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .next-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .next-card-header {
+      background: var(--blue);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .next-card-header.gold-bg { background: var(--gold-dk); }
+
+    .next-card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+
+    .next-card-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .next-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .next-list li {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.975rem;
+      color: var(--ink-muted);
+      line-height: 1.55;
+    }
+
+    .next-list li::before {
+      content: '\2192';
+      color: var(--gold);
+      font-weight: 700;
+      min-width: 1rem;
+      margin-top: 0.05rem;
+    }
+
+    .beyond-text {
+      margin-top: 1.25rem;
+      font-size: 0.975rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    /* ─── ASSETS SECTION (side-by-side) ─── */
+    .assets-section {
+      background: var(--white);
+    }
+
+    .assets-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .asset-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .asset-card-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .asset-card-icon {
+      font-size: 1.3rem;
+    }
+
+    .asset-card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    .asset-card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Music player in assets */
+    .asset-music-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .asset-music-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .asset-music-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dk) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .asset-music-info {
+      flex: 1;
+    }
+
+    .asset-music-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .asset-music-sub {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      margin-top: 0.15rem;
+    }
+
+    .asset-music-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .asset-play-btn {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, transform 0.1s;
+    }
+
+    .asset-play-btn:hover { background: var(--blue-mid); }
+    .asset-play-btn:active { transform: scale(0.95); }
+
+    .asset-track-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .asset-progress-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .asset-progress-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    .asset-time {
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .asset-music-note {
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      line-height: 1.5;
+      margin-top: 0.25rem;
+    }
+
+    /* Video in assets */
+    .asset-video-wrap {
+      aspect-ratio: 9 / 16;
+      max-height: 420px;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .asset-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      background: #000;
+      border-radius: 0;
+    }
+
+    .asset-video-stats {
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+    }
+
+    .asset-stat-pill {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--blue);
+      background: var(--blue-lt);
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .asset-stat-divider {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--ink-faint);
+    }
+
+    .asset-video-note {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      font-style: italic;
+    }
+
+    /* ─── FAREWELL SECTION (back to blue) ─── */
+    .farewell-section {
+      background: var(--blue);
+      border-top: none !important;
+    }
+
+    .farewell-section .section-label { color: var(--gold); }
+    .farewell-section .section-heading { color: var(--white); }
+    .farewell-section p { color: rgba(255,255,255,0.75); }
+
+    .farewell-box {
+      max-width: 420px;
+      margin: 2rem auto 0;
+      text-align: center;
+      padding: 3rem 2rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .farewell-box .wordmark {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      display: block;
+      margin-bottom: 2rem;
+      color: var(--white);
+    }
+
+    .farewell-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .farewell-line {
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    .farewell-line.dim {
+      color: rgba(255,255,255,0.6);
+      font-size: clamp(0.9rem, 3vw, 1.05rem);
+    }
+
+    .farewell-link a {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 2px solid rgba(245, 158, 11, 0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .farewell-link a:hover { border-color: var(--gold); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      background: var(--blue);
+    }
+
+    .footer-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      max-width: none;
+    }
+
+    .footer-text a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ─── SCREENSHOTS ─── */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+    }
+
+    .screenshot-card {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--white);
+      cursor: zoom-in;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+    }
+
+    .screenshot-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .screenshot-img-wrap {
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .screenshot-caption {
+      padding: 0.4rem 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-top: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: min(375px, 90vw);
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ─── AD DETAIL ─── */
+    .ad-detail {
+      margin-top: 1.5rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .ad-detail-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .ad-detail-text {
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .ad-disapproval-note {
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: #8B5A00;
+      padding: 0.625rem 0.875rem;
+      background: #FFF9F0;
+      border: 1px solid #FFE8D0;
+      border-radius: 6px;
+    }
+
+    /* ─── PRESS COVERAGE ─── */
+    .press-callout {
+      margin-top: 1.75rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 560px) {
+      .press-callout { flex-direction: row; }
+      .press-thumb { width: 240px; min-width: 240px; max-width: 240px; }
+      .press-thumb img { width: 240px; height: 100%; object-fit: cover; }
+    }
+
+    .press-thumb {
+      background: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      overflow: hidden;
+    }
+
+    .press-thumb img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    .press-thumb:hover img { opacity: 1; }
+
+    .press-body {
+      padding: 1.5rem 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .press-kicker {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.625rem;
+    }
+
+    .press-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-lt);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .press-date {
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+    }
+
+    .press-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 0.625rem;
+    }
+
+    .press-excerpt {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+      max-width: none;
+    }
+
+    .press-excerpt strong { color: var(--ink); font-weight: 700; }
+
+    .press-byline {
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      margin-bottom: 0.875rem;
+    }
+
+    .press-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+      border: 2px solid var(--blue);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      width: fit-content;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .press-cta:hover { background: var(--blue-lt); }
+
+    /* ─── DIVIDER ─── */
+    .heading-group { margin-bottom: 0; }
+    .heading-group + p { margin-top: 1.25rem; }
+    .heading-group + .intro-quote { margin-top: 1.75rem; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (min-width: 540px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .mechanics-grid { grid-template-columns: repeat(2, 1fr); }
+      .thesis-grid { grid-template-columns: repeat(2, 1fr); }
+      .learnings-grid { grid-template-columns: repeat(2, 1fr); }
+      .next-grid { grid-template-columns: repeat(2, 1fr); }
+      .screenshots-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    }
+
+    @media (min-width: 640px) {
+      .assets-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 768px) {
+      section { padding: 5rem 0; }
+      .hero { padding: 6rem 0 5rem; }
+      .cost-callout { padding: 2.5rem 2.5rem; }
+      .stat-cell { padding: 2rem 1.5rem; }
+    }
+
+    /* ─── AD CREATIVES GRID ─── */
+    .ad-creatives-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .ad-creative-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ad-creative-embed {
+      aspect-ratio: 9 / 16;
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .ad-creative-embed iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+    }
+
+    .ad-creative-metrics {
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .ad-metric-pill {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--blue-mid);
+      background: var(--blue-lt);
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .ad-metric-pill.zero {
+      color: var(--ink-faint);
+      background: var(--bg);
+    }
+
+    .ad-creative-rank {
+      padding: 0.4rem 1rem 0;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+    }
+
+    @media (min-width: 480px) {
+      .ad-creatives-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ─── ANCHOR OFFSET ─── */
+    [id] { scroll-margin-top: 1.5rem; }
+
+    /* ─── PLAY BTN (shared) ─── */
+    .play-btn {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, transform 0.1s;
+    }
+    .play-btn:hover { background: var(--blue-mid); }
+    .play-btn:active { transform: scale(0.95); }
+  </style>
+</head>
+<body>
+
+  <!-- SECTION 1 — HERO -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-season">A SunshineFM Experiment</div>
+      <div class="hero-wordmark wordmark">MIRAGE</div>
+      <div class="hero-season-num">Season 1</div>
+      <p class="hero-tagline">A 30-day pop-up social network for festival season in the Coachella Valley.</p>
+      <p class="hero-subhead">Built in weeks. Run for 30 days. Gone on May 1. A SunshineFM experiment in temporary social infrastructure, AI-assisted building, and local startup possibility.</p>
+      <div class="hero-ctas">
+        <a href="#case-study" class="btn btn-primary">Read the case study</a>
+        <a href="#stats" class="btn btn-secondary">View Season 1 metrics</a>
+        <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener" class="btn btn-gold">Contact / Collaborate</a>
+      </div>
+      <div class="hero-music-player">
+        <button class="play-btn" id="heroPlayBtn" onclick="heroPlayerToggle()" aria-label="Play/pause Coachella Bound" style="width:44px;height:44px;min-width:44px;">
+          <svg id="heroPlayIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <svg id="heroPauseIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+            <rect x="6" y="4" width="4" height="16" rx="1"/>
+            <rect x="14" y="4" width="4" height="16" rx="1"/>
+          </svg>
+        </button>
+        <div class="hero-music-label">Play Coachella Bound</div>
+        <div class="hero-progress-bar">
+          <div class="hero-progress-wrap" id="heroProgressWrap" onclick="heroPlayerSeek(event)">
+            <div class="hero-progress-fill" id="heroProgressFill"></div>
+          </div>
+          <div class="hero-time" id="heroTime">0:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blue → White gradient transition -->
+  <div class="hero-gradient"></div>
+
+  <!-- BY THE NUMBERS — headline metrics anchored at top of page -->
+  <section id="by-the-numbers" class="data-strip-container" aria-label="By the Numbers">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-cell"><div class="stat-number">30</div><div class="stat-label">Days Live</div></div>
+        <div class="stat-cell"><div class="stat-number">363</div><div class="stat-label">Unique Devices</div></div>
+        <div class="stat-cell"><div class="stat-number">1</div><div class="stat-label">Press Mention</div></div>
+        <div class="stat-cell"><div class="stat-number gold">$329</div><div class="stat-label">Total Spend</div></div>
+        <div class="stat-cell"><div class="stat-number gold">~50</div><div class="stat-label">Tasks Executed</div></div>
+        <div class="stat-cell"><div class="stat-number gold">0</div><div class="stat-label">Employees</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY STATUS BANNER (server-rendered, no JS required) -->
+  <section id="case-study-status" class="status-banner" aria-label="Case study status">
+    <p><strong>This page is an ongoing case study and research artifact.</strong> The 30-day Season 1 build (Apr 1 – May 1, 2026) is the documented evidence foundation; Mirage continues past May 1, 2026 as canonical case-study material for temporary social infrastructure and AI-assisted local product builds. Last reviewed <strong>2026-07-16</strong>. A Season 2 is plausible but is not committed and is not marketed as confirmed.</p>
+  </section>
+
+  <!-- SECTION 2 — WHAT MIRAGE WAS -->
+  <section id="case-study">
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">What It Was</div>
+        <h2 class="section-heading">The Experiment</h2>
+      </div>
+      <div class="intro-quote">
+        "Mirage was an anonymous, geo-fenced, temporary social network for festival season. If you were in the Valley, you could post. If you were elsewhere, you could watch. No accounts, no permanent profiles, no algorithmic feed. May 1 hit, and it disappeared."
+      </div>
+      <p style="margin-top:1.5rem;">Two festivals. Three weekends. A social network built for a place and a moment — not for an addiction loop. Coachella gave us our peak. Stagecoach gave us our lessons. The shutdown gave us the story.</p>
+    </div>
+  </section>
+
+
+  <!-- SECTION 2.25 — PRESS COVERAGE -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">In the Press</div>
+        <h2 class="section-heading">Before Coachella Went Live</h2>
+      </div>
+      <div class="press-callout">
+        <div class="press-thumb">
+          <img
+            src="https://kesq.b-cdn.net/2026/04/Screenshot-2026-04-08-at-9.54.55-AM-scaled.png"
+            alt="KESQ News Channel 3 coverage of Mirage"
+            loading="lazy"
+          >
+        </div>
+        <div class="press-body">
+          <div class="press-kicker">
+            <span class="press-badge">KESQ &middot; News Channel 3</span>
+            <span class="press-date">April 8, 2026</span>
+          </div>
+          <div class="press-headline">New AI-powered tool for festival season rolls out ahead of Coachella</div>
+          <p class="press-byline">By Gavin Nguyen &nbsp;&middot;&nbsp; Coachella Valley</p>
+          <p class="press-excerpt"><strong>Festival goers this year now have a new network to connect with each other.</strong> KESQ News Channel 3 covered Mirage six days before Coachella Weekend 1, reporting on the pop-up good vibes network built with AI assistance in under a week — and exploring whether social software can be designed to break the addictive cycle instead of feeding it.</p>
+          <a href="https://kesq.com/news/local-news/2026/04/08/new-ai-powered-tool-for-festival-season-rolls-out-ahead-of-coachella/" target="_blank" rel="noopener" class="press-cta">
+            Read on KESQ &#x2192;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2.5 — WHAT IT LOOKED LIKE -->
+  <section id="screenshots">
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Archive</div>
+        <h2 class="section-heading">What It Looked Like</h2>
+      </div>
+      <p style="margin-top:1.25rem;">Captured before the May 1 shutdown. Mobile-first, blue desert sky palette, zero accounts required.</p>
+      <div class="screenshots-grid">
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/01-location-sharing.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/01-location-sharing.png" alt="Location sharing onboarding screen" loading="lazy">
+          </div>
+          <div class="screenshot-caption">Location</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/02-desert-name.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/02-desert-name.png" alt="Desert nickname assignment screen" loading="lazy">
+          </div>
+          <div class="screenshot-caption">Desert Name</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/03-first-post.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/03-first-post.png" alt="First post creation screen" loading="lazy">
+          </div>
+          <div class="screenshot-caption">First Post</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/04-good-shots.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/04-good-shots.png" alt="Good Shots feed — photo posts from the fest" loading="lazy">
+          </div>
+          <div class="screenshot-caption">Good Shots</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/05-good-vibes.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/05-good-vibes.png" alt="Good Vibes feed — kind words and positive energy" loading="lazy">
+          </div>
+          <div class="screenshot-caption">Good Vibes</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/06-good-tips.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/06-good-tips.png" alt="Good Tips feed — festival info and tips" loading="lazy">
+          </div>
+          <div class="screenshot-caption">Good Tips</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/07-hey-mirage.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/07-hey-mirage.png" alt="Hey Mirage — AI assistant chat" loading="lazy">
+          </div>
+          <div class="screenshot-caption">Hey Mirage</div>
+        </div>
+        <div class="screenshot-card" onclick="openLightbox('/archive/screenshots/06-good-tips.png')">
+          <div class="screenshot-img-wrap">
+            <img src="/archive/screenshots/06-good-tips.png" alt="Good Tips feed — additional posts view" loading="lazy">
+          </div>
+          <div class="screenshot-caption">More Tips</div>
+        </div>
+      </div>
+      <p style="margin-top:1rem;font-size:0.85rem;color:var(--ink-faint);">Tap any screenshot to enlarge.</p>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&#10005;</button>
+    <img id="lightboxImg" src="" alt="Screenshot">
+  </div>
+
+  <!-- SECTION 3 — WHY WE BUILT IT -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">The Thesis</div>
+        <h2 class="section-heading">Why We Built It</h2>
+      </div>
+      <p style="margin-top:1.25rem;"><strong>Mirage started as a question: what would social software feel like if it was built for a moment instead of an addiction loop?</strong></p>
+      <p>Then it became something bigger. The real experiment wasn't just about the product. It was about what's now possible here — in the Coachella Valley — with the tools available today.</p>
+      <div class="thesis-grid">
+        <div class="thesis-item">
+          <div class="thesis-dot"></div>
+          <div class="thesis-text">Social networks do not have to be permanent. Designed obsolescence is a feature, not a failure.</div>
+        </div>
+        <div class="thesis-item">
+          <div class="thesis-dot"></div>
+          <div class="thesis-text">Local digital spaces can be useful without becoming extractive. They can serve the community, then leave.</div>
+        </div>
+        <div class="thesis-item">
+          <div class="thesis-dot"></div>
+          <div class="thesis-text">AI tools let one local builder prototype what used to require teams and capital. The barrier to entry has collapsed.</div>
+        </div>
+        <div class="thesis-item">
+          <div class="thesis-dot"></div>
+          <div class="thesis-text">The Coachella Valley should not just consume technology from SF and LA. It should build its own.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — HOW IT WORKED -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Product</div>
+        <h2 class="section-heading">How It Worked</h2>
+      </div>
+      <div class="mechanics-grid" style="margin-top:1.75rem;">
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F6AB;</div>
+          <div class="mechanic-text"><strong>No accounts.</strong> No sign-up, no login, no profiles. Just show up.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F3DC;&#xFE0F;</div>
+          <div class="mechanic-text"><strong>Anonymous desert nicknames.</strong> Auto-generated handles: DustyHawk_42, SandOwl_7, RedRock_19.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F4CD;</div>
+          <div class="mechanic-text"><strong>Geo-fenced posting.</strong> Three tiers: festival grounds, Valley, everyone else. Location determined your voice.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F441;&#xFE0F;</div>
+          <div class="mechanic-text"><strong>Observer mode.</strong> People outside the Valley could watch but not post. The desert had the mic.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F511;</div>
+          <div class="mechanic-text"><strong>Daily passphrase.</strong> Word-of-mouth discovery mechanic. "What's today's word?" became a real social ritual.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F4D6;</div>
+          <div class="mechanic-text"><strong>Seeded with local knowledge.</strong> Real tips sourced from r/Coachella gave the feed immediate credibility.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F4EC;</div>
+          <div class="mechanic-text"><strong>Private feedback channel.</strong> Direct signal from the community without the noise.</div>
+        </div>
+        <div class="mechanic-row">
+          <div class="mechanic-icon">&#x1F305;</div>
+          <div class="mechanic-text"><strong>Designed shutdown.</strong> Farewell page and full closure at midnight May 1 — planned from day one.</div>
+        </div>
+      </div>
+      <div class="tech-stack">
+        <strong>Stack:</strong> Polsia (AI cofounder platform) · Node.js/Express · Neon PostgreSQL · Render · Cloudflare · Meta Ads via Polsia · Sora 2 AI video creative · SunshineFM design system
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 — WHAT WE BUILT IT WITH -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">The Build</div>
+        <h2 class="section-heading">What We Built It With</h2>
+      </div>
+      <p style="margin-top:1.25rem;">This section exists because the "how" is the ecosystem thesis. Not the what.</p>
+      <div class="cost-callout">
+        <div class="headline">The old cost of experimentation collapsed.</div>
+        <p>Mirage was built with AI-assisted engineering, AI video creative, lightweight hosting, a serverless database, and a small paid media test. The total project investment was roughly <strong>$329</strong> — the SunshineFM platform subscription (~$98 over ~2 months) plus ad spend (~$231 including the platform fee, across all 7 creatives), with about <strong>50 executed tasks</strong> across engineering, ads, analytics, research, and content.</p>
+        <p style="margin-top:0.875rem;"><strong>Zero employees. One person. 45 days.</strong></p>
+        <p style="margin-top:0.875rem;">That's not a flex — it's a data point. A local builder in the Coachella Valley, with AI tools and $329, can ship a product that gets real users. The question is no longer "can we afford to build it?" The question is: what are we building?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6 — STATS -->
+  <section id="stats">
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Season 1 Metrics</div>
+        <h2 class="section-heading">What Happened</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <div class="stat-number">30</div>
+          <div class="stat-label">Days Live</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">753</div>
+          <div class="stat-label">Pageviews</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">363</div>
+          <div class="stat-label">Unique Devices</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">68</div>
+          <div class="stat-label">Sessions</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">245</div>
+          <div class="stat-label">Posts</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">92</div>
+          <div class="stat-label">Reactions</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number gold">$329</div>
+          <div class="stat-label">Total Investment</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number gold">~50</div>
+          <div class="stat-label">Tasks Executed</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number gold">0</div>
+          <div class="stat-label">Employees</div>
+        </div>
+      </div>
+
+      <div class="season-shape">
+        <h3>The Shape of the Season</h3>
+        <div class="shape-row">
+          <span class="shape-tag tag-blue">W1</span>
+          <div class="shape-desc"><strong>Coachella Weekend 1</strong> — the validation spike. 686 pageviews in 4 days — 91% of the entire season's traffic. The product worked when people found it.</div>
+        </div>
+        <div class="shape-row">
+          <span class="shape-tag tag-red">W2</span>
+          <div class="shape-desc"><strong>Coachella Weekend 2</strong> — session-creation regression. 48-hour outage. 119 visitors lost. A deploy broke session creation and we lost the entire second weekend momentum.</div>
+        </div>
+        <div class="shape-row">
+          <span class="shape-tag tag-warn">W3</span>
+          <div class="shape-desc"><strong>Stagecoach</strong> — ad disapproval and billing friction. Best-performing creative removed mid-festival. Platform billing issue blocked optimization during the most critical window.</div>
+        </div>
+      </div>
+      <p class="honest-note">That honesty makes this credible. If it reads like "everything worked," nobody serious will believe it.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 7 — WHAT WORKED -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Results</div>
+        <h2 class="section-heading">What Worked</h2>
+      </div>
+      <ul class="result-list">
+        <li>
+          <span class="icon">&#x2705;</span>
+          <span><strong>AI-generated video ads hit 8–20% CTR at $0.07 CPC.</strong> Influencer-style Sora 2 creatives outperformed every expectation. The format was right.</span>
+        </li>
+        <li>
+          <span class="icon">&#x2705;</span>
+          <span><strong>Passphrase word-of-mouth mechanic created real social discovery.</strong> "What's today's word?" wasn't just a feature — it was a ritual. People asked each other in the wild.</span>
+        </li>
+        <li>
+          <span class="icon">&#x2705;</span>
+          <span><strong>Reddit-sourced local knowledge gave the feed instant credibility.</strong> Real community tips from r/Coachella made the product useful on arrival. Trust before traction.</span>
+        </li>
+        <li>
+          <span class="icon">&#x2705;</span>
+          <span><strong>Bundled AI task execution preserved resources and reduced fragmentation.</strong> Batching tasks across engineering, ads, content, and analytics was more effective than ad hoc single requests.</span>
+        </li>
+        <li>
+          <span class="icon">&#x2705;</span>
+          <span><strong>Designing the farewell from day one made the ending emotionally coherent.</strong> The shutdown wasn't a failure state — it was the product. That distinction changed everything about how it felt to build it.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 7.5 — OUR ASSETS (side-by-side music + video) -->
+  <section class="assets-section" id="the-ad">
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Media</div>
+        <h2 class="section-heading">Our Assets</h2>
+      </div>
+      <p style="margin-top:1.25rem;">The original track and the AI-generated ad creative that drove Season 1.</p>
+      <div class="assets-grid">
+        <!-- LEFT: Music Player -->
+        <div class="asset-card">
+          <div class="asset-card-header">
+            <span class="asset-card-icon">&#x1F3B5;</span>
+            <span class="asset-card-title">Original Track</span>
+          </div>
+          <div class="asset-card-body">
+            <div class="asset-music-wrap">
+              <div class="asset-music-meta">
+                <div class="asset-music-icon">&#x1F335;</div>
+                <div class="asset-music-info">
+                  <div class="asset-music-name">Coachella Bound</div>
+                  <div class="asset-music-sub">SunshineFM Original</div>
+                </div>
+              </div>
+              <div class="asset-music-controls">
+                <button class="asset-play-btn" id="s1PlayBtn" onclick="s1PlayerToggle()" aria-label="Play/pause Coachella Bound">
+                  <svg id="s1PlayIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                  <svg id="s1PauseIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                    <rect x="6" y="4" width="4" height="16" rx="1"/>
+                    <rect x="14" y="4" width="4" height="16" rx="1"/>
+                  </svg>
+                </button>
+                <div class="asset-track-bar">
+                  <div class="asset-progress-wrap" id="s1ProgressWrap" onclick="s1PlayerSeek(event)">
+                    <div class="asset-progress-fill" id="s1ProgressFill"></div>
+                  </div>
+                  <div class="asset-time" id="s1Time">0:00</div>
+                </div>
+              </div>
+              <p class="asset-music-note">Played on loop inside the app during festival weekends. Part mystery marketing hook, part festival soundtrack.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Video Player -->
+        <div class="asset-card">
+          <div class="asset-card-header">
+            <span class="asset-card-icon">&#x1F3AC;</span>
+            <span class="asset-card-title">Facebook Ad Creative</span>
+          </div>
+          <div class="asset-video-wrap" style="aspect-ratio:9/16;width:100%;max-width:300px;min-height:534px;">
+            <iframe
+              src="https://www.youtube.com/embed/QpQIf8VFc0o"
+              title="Mirage — Season 1 Ad (Coachella 2026)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="aspect-ratio:9/16;width:100%;height:100%;display:block;"
+            ></iframe>
+          </div>
+          <div class="asset-video-stats">
+            <span class="asset-stat-pill">20% CTR</span>
+            <span class="asset-stat-divider"></span>
+            <span class="asset-stat-pill">$0.07 per click</span>
+            <span class="asset-stat-divider"></span>
+            <span class="asset-stat-pill">$163.32 Meta spend · winner</span>
+          </div>
+          <div class="asset-video-note">AI-generated with Sora 2</div>
+        </div>
+      </div>
+
+      <!-- Ad detail below -->
+      <div class="ad-detail">
+        <div class="ad-detail-title">Ad ID 120242511966900328 · "Only Live During Coachella"</div>
+        <div class="ad-detail-text">Vertical iPhone selfie-style video. 26-year-old desert festival persona. Ran during Coachella Weekend 1 and early Stagecoach. 11,531 impressions · 2,311 clicks.</div>
+        <div class="ad-disapproval-note">Later disapproved by Meta mid-Stagecoach with no explanation. The best-performing creative in the campaign was removed at the moment it mattered most.</div>
+      </div>
+
+      <!-- The other 6 creatives -->
+      <div style="margin-top:2.5rem;">
+        <div class="section-label" style="margin-bottom:0.5rem;">All Creatives</div>
+        <p style="font-size:0.95rem;color:var(--ink-muted);margin-top:0;">The full Season 1 ad slate — all 6 other creatives tested during Stagecoach, ranked by spend.</p>
+      </div>
+      <div class="ad-creatives-grid">
+
+        <!-- #1 by spend -->
+        <div class="ad-creative-card">
+          <div class="ad-creative-rank">#1 by spend</div>
+          <div class="ad-creative-embed">
+            <iframe
+              src="https://www.youtube.com/embed/vcOUiyZjkJ8"
+              title="Mirage Ad — No Account. No Download. Just Open."
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ad-creative-metrics">
+            <span class="ad-metric-pill">$16.81 spend</span>
+            <span class="ad-metric-pill">201 impr</span>
+            <span class="ad-metric-pill">11.94% CTR</span>
+            <span class="ad-metric-pill">$0.70 CPC</span>
+          </div>
+        </div>
+
+        <!-- #2 by spend -->
+        <div class="ad-creative-card">
+          <div class="ad-creative-rank">#2 by spend</div>
+          <div class="ad-creative-embed">
+            <iframe
+              src="https://www.youtube.com/embed/_FiB_gmQ83E"
+              title="Mirage Ad — A Local's Secret Community"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ad-creative-metrics">
+            <span class="ad-metric-pill">$2.86 spend</span>
+            <span class="ad-metric-pill">28 impr</span>
+            <span class="ad-metric-pill zero">0% CTR</span>
+            <span class="ad-metric-pill zero">— CPC</span>
+          </div>
+        </div>
+
+        <!-- #3 by spend -->
+        <div class="ad-creative-card">
+          <div class="ad-creative-rank">#3 by spend</div>
+          <div class="ad-creative-embed">
+            <iframe
+              src="https://www.youtube.com/embed/z_Xa75CRHCY"
+              title="Mirage Ad — Connect Before Stagecoach"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ad-creative-metrics">
+            <span class="ad-metric-pill">$1.08 spend</span>
+            <span class="ad-metric-pill">22 impr</span>
+            <span class="ad-metric-pill">22.73% CTR</span>
+            <span class="ad-metric-pill">$0.22 CPC</span>
+          </div>
+        </div>
+
+        <!-- #4 by spend -->
+        <div class="ad-creative-card">
+          <div class="ad-creative-rank">#4 by spend</div>
+          <div class="ad-creative-embed">
+            <iframe
+              src="https://www.youtube.com/embed/hDbtP4F5yJU"
+              title="Mirage Ad — Insider Tips Only"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ad-creative-metrics">
+            <span class="ad-metric-pill">$0.59 spend</span>
+            <span class="ad-metric-pill">20 impr</span>
+            <span class="ad-metric-pill">5% CTR</span>
+            <span class="ad-metric-pill">$0.59 CPC</span>
+          </div>
+        </div>
+
+        <!-- #5 by spend -->
+        <div class="ad-creative-card">
+          <div class="ad-creative-rank">#5 by spend</div>
+          <div class="ad-creative-embed">
+            <iframe
+              src="https://www.youtube.com/embed/3qEY_k20aF4"
+              title="Mirage Ad — Stagecoach Festival Tips"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ad-creative-metrics">
+            <span class="ad-metric-pill">$0.18 spend</span>
+            <span class="ad-metric-pill">27 impr</span>
+            <span class="ad-metric-pill">7.41% CTR</span>
+            <span class="ad-metric-pill">$0.09 CPC</span>
+          </div>
+        </div>
+
+        <!-- #6 by spend -->
+        <div class="ad-creative-card">
+          <div class="ad-creative-rank">#6 by spend</div>
+          <div class="ad-creative-embed">
+            <iframe
+              src="https://www.youtube.com/embed/9gpYde1vpIc"
+              title="Mirage Ad — Only Here for Stagecoach Season"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ad-creative-metrics">
+            <span class="ad-metric-pill zero">$0.00 spend</span>
+            <span class="ad-metric-pill zero">0 impr</span>
+            <span class="ad-metric-pill zero">0% CTR</span>
+            <span class="ad-metric-pill zero">— CPC</span>
+          </div>
+        </div>
+
+      </div><!-- /.ad-creatives-grid -->
+    </div>
+  </section>
+
+  <!-- SECTION 8 — WHAT DIDN'T WORK -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Honest Assessment</div>
+        <h2 class="section-heading">What Didn't Work</h2>
+      </div>
+      <ul class="result-list">
+        <li>
+          <span class="icon">&#x274C;</span>
+          <span><strong>No physical activation.</strong> Zero QR codes. Zero staff. Zero on-site presence. Digital-only distribution for a hyper-local product was the single biggest gap.</span>
+        </li>
+        <li>
+          <span class="icon">&#x274C;</span>
+          <span><strong>Deploy regression broke session creation during W2.</strong> 48 hours. 119 visitors lost. Coachella Weekend 2 was dead on arrival.</span>
+        </li>
+        <li>
+          <span class="icon">&#x274C;</span>
+          <span><strong>Passphrase A/B test was inconclusive.</strong> n=6 per group against a required n=36+. Statistically meaningless. We ran the experiment too early.</span>
+        </li>
+        <li>
+          <span class="icon">&#x274C;</span>
+          <span><strong>Ad disapproval killed Stagecoach momentum.</strong> Best-performing creative was removed mid-festival. Compliance workflow was not ready for a live campaign.</span>
+        </li>
+        <li>
+          <span class="icon">&#x274C;</span>
+          <span><strong>Platform billing issue blocked optimization at the worst possible time.</strong> The window to iterate on paid media during Stagecoach closed before it opened.</span>
+        </li>
+        <li>
+          <span class="icon">&#x274C;</span>
+          <span><strong>Browser agents were unreliable for content seeding.</strong> Direct database inserts worked. Learned this too late in W1.</span>
+        </li>
+      </ul>
+      <div class="highlight-box">
+        <strong>The 17x gap between W1 and Stagecoach was primarily an execution gap, not a product gap.</strong> The product worked when people found it. The problem was everything upstream of the product.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9 — WHAT WE LEARNED -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Takeaways</div>
+        <h2 class="section-heading">What We Learned</h2>
+      </div>
+      <div class="learnings-grid">
+        <div class="learning-card">
+          <div class="learning-num">01</div>
+          <div class="learning-title">Temporary social infrastructure is real, but it needs physical activation.</div>
+          <p class="learning-body">Digital-only wasn't enough. The next version needs QR codes at venue entrances, on-site humans who can answer "what is this?", and partner locations as distribution points.</p>
+        </div>
+        <div class="learning-card">
+          <div class="learning-num">02</div>
+          <div class="learning-title">People respond to value, not mechanism.</div>
+          <p class="learning-body">"Tips, music, insider knowledge" performed better than "ephemeral social network." The product's mechanism was novel. The value proposition had to be concrete.</p>
+        </div>
+        <div class="learning-card">
+          <div class="learning-num">03</div>
+          <div class="learning-title">AI changes the cost curve. It doesn't replace taste.</div>
+          <p class="learning-body">The tools made it cheap and fast. Human judgment still mattered for positioning, local knowledge, product restraint, and knowing when something wasn't working.</p>
+        </div>
+        <div class="learning-card">
+          <div class="learning-num">04</div>
+          <div class="learning-title">The Coachella Valley can build, not just host.</div>
+          <p class="learning-body">That's the ecosystem thesis. Mirage suggested — not proved — that temporary social infrastructure can work here. But only when paired with physical activation, real-world distribution, and operational reliability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10 — WHAT'S NEXT -->
+  <section>
+    <div class="container">
+      <div class="heading-group">
+        <div class="section-label">Forward</div>
+        <h2 class="section-heading">What's Next</h2>
+      </div>
+      <div class="next-grid">
+        <div class="next-card">
+          <div class="next-card-header">
+            <div class="next-card-title">Season 2 — Coachella 2027</div>
+          </div>
+          <div class="next-card-body">
+            <ul class="next-list">
+              <li>Physical QR activation from day one</li>
+              <li>Partner locations and third spaces as distribution nodes</li>
+              <li>2–4 student and community ambassadors on the ground</li>
+              <li>Better ad compliance workflow before the campaign runs</li>
+              <li>Stronger real-time admin and moderation dashboard</li>
+              <li>Same-festival A/B tests with proper sample sizes</li>
+            </ul>
+          </div>
+        </div>
+        <div class="next-card">
+          <div class="next-card-header gold-bg">
+            <div class="next-card-title">Beyond Coachella</div>
+          </div>
+          <div class="next-card-body">
+            <p class="beyond-text">Mirage can become a repeatable format for temporary communities: festivals, conferences, civic events, art weeks, college campuses, and cultural moments.</p>
+            <p class="beyond-text" style="margin-top:0.875rem;">The format is: show up, be useful for the moment, disappear cleanly. Every community has moments worth building for.</p>
+            <div style="margin-top:1.25rem;">
+              <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.85rem;padding:0.625rem 1.25rem;">Get in touch &#x2192;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 11 — THE FAREWELL -->
+  <section class="farewell-section">
+    <div class="container">
+      <div class="heading-group" style="text-align:center;">
+        <div class="section-label">May 1, 2026</div>
+        <h2 class="section-heading" style="color:var(--white);">The Farewell</h2>
+      </div>
+      <p style="text-align:center;margin:1rem auto 0;max-width:52ch;">How it ended. Designed from the first day. A shutdown that felt like a period, not an ellipsis.</p>
+      <div class="farewell-box">
+        <span class="wordmark">mirage</span>
+        <div class="farewell-lines">
+          <div class="farewell-line">it was all a mirage.</div>
+          <div class="farewell-line dim">two festivals. three weekends. gone.</div>
+          <div class="farewell-line">don't let the algorithms be your memory.</div>
+          <div class="farewell-line dim">see you next year.</div>
+        </div>
+        <div class="farewell-link">
+          <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener">@sunshinefm.bsky.social</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p class="footer-text">Powered by <a href="https://sunshine.fm" target="_blank" rel="noopener">SunshineFM</a> &nbsp;·&nbsp; Mirage Season 1 ran April 2026 &nbsp;·&nbsp; <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener">@sunshinefm.bsky.social</a> &nbsp;·&nbsp; <a href="/archive/behind-the-scenes">Behind the Scenes</a></p>
+    </div>
+  </footer>
+
+  <script>
+  // Pageview tracking
+  (function() {
+    var sid = localStorage.getItem('mirage_session');
+    if (!sid) {
+      try { sid = crypto.randomUUID(); } catch(e) { sid = 's1-' + Date.now() + '-' + Math.random().toString(36).slice(2); }
+      localStorage.setItem('mirage_session', sid);
+    }
+    var params = new URLSearchParams(window.location.search);
+    var keys = ['utm_source', 'utm_medium', 'utm_campaign'];
+    var utm = {};
+    keys.forEach(function(k) {
+      var v = params.get(k);
+      if (v) {
+        try { sessionStorage.setItem(k, v); } catch(e) {}
+        utm[k] = v;
+      } else {
+        try { var stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
+      }
+    });
+    fetch('/api/analytics/pageview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ device_id: sid, path: '/season1' }, utm)),
+      keepalive: true
+    }).catch(function(){});
+  })();
+
+  // Smooth scroll for anchor buttons with offset
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Lightbox
+  function openLightbox(src) {
+    var lb = document.getElementById('lightbox');
+    var img = document.getElementById('lightboxImg');
+    img.src = src;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Hero Coachella Bound Player
+  (function() {
+    var MP3_URL = 'https://pub-869e2a4a45f246969e59fbb5b78ef626.r2.dev/Coachella%20Bound.mp3';
+    var heroAudio = new Audio();
+    heroAudio.src = MP3_URL;
+    heroAudio.loop = true;
+    heroAudio.preload = 'metadata';
+
+    var heroIsPlaying = false;
+    var heroPlayIcon = document.getElementById('heroPlayIcon');
+    var heroPauseIcon = document.getElementById('heroPauseIcon');
+    var heroFill = document.getElementById('heroProgressFill');
+    var heroTimeEl = document.getElementById('heroTime');
+    var heroWrap = document.getElementById('heroProgressWrap');
+
+    function setHeroPlayState(playing) {
+      heroIsPlaying = playing;
+      heroPlayIcon.style.display = playing ? 'none' : 'block';
+      heroPauseIcon.style.display = playing ? 'block' : 'none';
+    }
+
+    window.heroPlayerToggle = function() {
+      if (heroIsPlaying) {
+        heroAudio.pause();
+      } else {
+        heroAudio.play().catch(function(e) {});
+      }
+    };
+
+    window.heroPlayerSeek = function(e) {
+      if (!heroAudio.duration) return;
+      var rect = heroWrap.getBoundingClientRect();
+      var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      heroAudio.currentTime = pct * heroAudio.duration;
+    };
+
+    heroAudio.addEventListener('play', function() { setHeroPlayState(true); });
+    heroAudio.addEventListener('pause', function() { setHeroPlayState(false); });
+
+    heroAudio.addEventListener('timeupdate', function() {
+      if (!heroAudio.duration) return;
+      var pct = (heroAudio.currentTime / heroAudio.duration) * 100;
+      heroFill.style.width = pct + '%';
+      var elapsed = heroAudio.currentTime;
+      var m = Math.floor(elapsed / 60);
+      var s = Math.floor(elapsed % 60).toString().padStart(2, '0');
+      heroTimeEl.textContent = m + ':' + s;
+    });
+
+    heroAudio.addEventListener('loadedmetadata', function() {
+      var d = heroAudio.duration;
+      var m = Math.floor(d / 60);
+      var s = Math.floor(d % 60).toString().padStart(2, '0');
+      heroTimeEl.textContent = '0:00 / ' + m + ':' + s;
+    });
+  })();
+
+  // Assets section Coachella Bound Player
+  (function() {
+    var MP3_URL = 'https://pub-869e2a4a45f246969e59fbb5b78ef626.r2.dev/Coachella%20Bound.mp3';
+    var audio = new Audio();
+    audio.src = MP3_URL;
+    audio.loop = true;
+    audio.preload = 'metadata';
+
+    var isPlaying = false;
+    var playIcon = document.getElementById('s1PlayIcon');
+    var pauseIcon = document.getElementById('s1PauseIcon');
+    var fill = document.getElementById('s1ProgressFill');
+    var timeEl = document.getElementById('s1Time');
+    var wrap = document.getElementById('s1ProgressWrap');
+
+    function setPlayState(playing) {
+      isPlaying = playing;
+      playIcon.style.display = playing ? 'none' : 'block';
+      pauseIcon.style.display = playing ? 'block' : 'none';
+    }
+
+    window.s1PlayerToggle = function() {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play().catch(function(e) {});
+      }
+    };
+
+    window.s1PlayerSeek = function(e) {
+      if (!audio.duration) return;
+      var rect = wrap.getBoundingClientRect();
+      var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      audio.currentTime = pct * audio.duration;
+    };
+
+    audio.addEventListener('play', function() { setPlayState(true); });
+    audio.addEventListener('pause', function() { setPlayState(false); });
+
+    audio.addEventListener('timeupdate', function() {
+      if (!audio.duration) return;
+      var pct = (audio.currentTime / audio.duration) * 100;
+      fill.style.width = pct + '%';
+      var elapsed = audio.currentTime;
+      var m = Math.floor(elapsed / 60);
+      var s = Math.floor(elapsed % 60).toString().padStart(2, '0');
+      timeEl.textContent = m + ':' + s;
+    });
+
+    audio.addEventListener('loadedmetadata', function() {
+      var d = audio.duration;
+      var m = Math.floor(d / 60);
+      var s = Math.floor(d % 60).toString().padStart(2, '0');
+      timeEl.textContent = '0:00 / ' + m + ':' + s;
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mirage Season 1 — Internal Appendix</title>
+  <meta name="description" content="Mirage Season 1 internal operational appendix: week-by-week metrics, bug log, ad performance, cost breakdown, reports archive, and Season 2 checklist.">
+  <link rel="canonical" href="https://mirage.sunshine.fm/archive/internal">
+  <!-- Intentionally not indexed -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Righteous&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue:     #0284C7;
+      --blue-mid: #0369A1;
+      --blue-lt:  #E0F2FE;
+      --blue-xlt: #F0F9FF;
+      --gold:     #F59E0B;
+      --gold-dk:  #D97706;
+      --white:    #FFFFFF;
+      --ink:      #0F172A;
+      --ink-mid:  #1E293B;
+      --ink-muted:#475569;
+      --ink-faint:#94A3B8;
+      --bg:       #F1F5F9;
+      --bg-alt:   #F8FAFC;
+      --border:   #E2E8F0;
+      --border-dk:#CBD5E1;
+      --red:      #DC2626;
+      --red-lt:   #FEE2E2;
+      --warn:     #92400E;
+      --warn-lt:  #FEF3C7;
+      --green:    #15803D;
+      --green-lt: #DCFCE7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.55;
+      font-size: 0.9375rem;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: var(--ink);
+      padding: 0.65rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .topbar-back {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .topbar-back:hover { color: var(--gold); }
+
+    .topbar-sep {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .topbar-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+    }
+
+    .topbar-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(245,158,11,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245,158,11,0.3);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header {
+      background: var(--ink-mid);
+      padding: 2.5rem 0 2rem;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .page-header-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header-wordmark {
+      font-family: 'Righteous', cursive;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 0.35rem;
+    }
+
+    .page-header-sub {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-header-desc {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 60ch;
+      line-height: 1.65;
+    }
+
+    /* ─── TOC ─── */
+    .toc {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .toc-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--ink-faint);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .toc-list li a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.15s;
+    }
+    .toc-list li a:hover { color: var(--blue-mid); text-decoration: underline; }
+
+    .toc-list li .toc-key {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      min-width: 1.4rem;
+    }
+
+    /* ─── ACCORDION ─── */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1.5rem 0 3rem;
+    }
+
+    .acc-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .acc-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      transition: background 0.15s;
+    }
+
+    .acc-trigger:hover { background: var(--blue-xlt); }
+
+    .acc-trigger[aria-expanded="true"] {
+      background: var(--blue-xlt);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .acc-key {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      min-width: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .acc-title-wrap {
+      flex: 1;
+    }
+
+    .acc-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+
+    .acc-subtitle {
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      margin-top: 0.15rem;
+      font-weight: 400;
+    }
+
+    .acc-chevron {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--ink-faint);
+      transition: transform 0.2s ease;
+    }
+
+    .acc-trigger[aria-expanded="true"] .acc-chevron {
+      transform: rotate(180deg);
+    }
+
+    .acc-body {
+      display: none;
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .acc-body.open { display: block; }
+
+    /* ─── TABLES ─── */
+    .data-table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead {
+      background: var(--bg);
+    }
+
+    th {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      padding: 0.65rem 0.875rem;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 0.65rem 0.875rem;
+      color: var(--ink-muted);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover { background: var(--blue-xlt); }
+
+    .td-strong { font-weight: 700; color: var(--ink); }
+    .td-mono { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    /* severity badges */
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .badge-p0 { background: var(--red-lt); color: var(--red); }
+    .badge-p1 { background: var(--warn-lt); color: var(--warn); }
+    .badge-p2 { background: var(--blue-lt); color: var(--blue-mid); }
+    .badge-p3 { background: #F1F5F9; color: var(--ink-faint); }
+    .badge-fixed { background: var(--green-lt); color: var(--green); }
+
+    /* ─── METRIC CARDS ─── */
+    .metric-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-group-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.14em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--blue-lt);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+
+    @media (min-width: 500px) {
+      .metric-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 700px) {
+      .metric-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .metric-cell {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      color: var(--blue);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .metric-val.gold { color: var(--gold); }
+    .metric-val.red { color: var(--red); }
+    .metric-val.green { color: var(--green); }
+
+    .metric-lbl {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      margin-top: 0.3rem;
+      line-height: 1.3;
+    }
+
+    /* ─── WEEK NARRATIVE ─── */
+    .week-block {
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg);
+      border-radius: 8px;
+      border-left: 3px solid var(--border-dk);
+    }
+
+    .week-block.peak { border-left-color: var(--blue); }
+    .week-block.critical { border-left-color: var(--red); }
+    .week-block.warn { border-left-color: var(--gold); }
+
+    .week-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .week-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+
+    .week-date {
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+    }
+
+    .week-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .week-tag.peak { background: var(--blue-lt); color: var(--blue-mid); }
+    .week-tag.critical { background: var(--red-lt); color: var(--red); }
+    .week-tag.warn { background: var(--warn-lt); color: var(--warn); }
+    .week-tag.neutral { background: #F1F5F9; color: var(--ink-faint); }
+
+    .week-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .week-stat-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--ink-muted);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    .week-notes {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .week-notes ul {
+      list-style: none;
+      margin-top: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-left: 0;
+    }
+
+    .week-notes ul li::before {
+      content: '·  ';
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ─── CHECKLIST ─── */
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin: 0.75rem 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    .checklist li::before {
+      content: '☐';
+      color: var(--blue);
+      font-size: 1rem;
+      min-width: 1.1rem;
+      margin-top: -0.05rem;
+    }
+
+    .checklist-group-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin: 1rem 0 0.4rem;
+    }
+
+    /* ─── ISSUE BLOCK ─── */
+    .issue-block {
+      margin-bottom: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+
+    .issue-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .issue-body {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .issue-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .issue-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-red { background: var(--red-lt); color: var(--red); }
+    .tag-warn { background: var(--warn-lt); color: var(--warn); }
+    .tag-blue { background: var(--blue-lt); color: var(--blue-mid); }
+
+    /* ─── NOTE BOX ─── */
+    .note-box {
+      padding: 0.875rem 1rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      line-height: 1.6;
+      margin: 0.75rem 0;
+    }
+
+    .note-box.info {
+      background: var(--blue-xlt);
+      border: 1px solid var(--blue-lt);
+      color: var(--blue-mid);
+    }
+
+    .note-box.warn {
+      background: var(--warn-lt);
+      border: 1px solid #FDE68A;
+      color: var(--warn);
+    }
+
+    .note-box strong { font-weight: 700; }
+
+    /* ─── FOOTER ─── */
+    .page-footer {
+      padding: 2rem 0 3rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .page-footer p {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      line-height: 1.7;
+    }
+
+    .page-footer a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .page-footer a:hover { text-decoration: underline; }
+
+    /* ─── ANCHOR OFFSET ─── */
+    [id] { scroll-margin-top: 3.5rem; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 420px) {
+      .acc-body { padding: 1rem; }
+      td, th { padding: 0.5rem 0.625rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY TOPBAR -->
+  <nav class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="topbar-left">
+          <a href="/season1.html" class="topbar-back">&#8592; Public Page</a>
+          <span class="topbar-sep">/</span>
+          <span class="topbar-title">Internal Appendix</span>
+        </div>
+        <span class="topbar-badge">SEASON 1 · FINAL</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <div class="page-header-label">Mirage Season 1 — Operational Record</div>
+      <div class="page-header-wordmark">INTERNAL APPENDIX</div>
+      <div class="page-header-sub">Source of Truth · April 2026</div>
+      <p class="page-header-desc">The raw operational layer behind the Season 1 canonical page. Week-by-week data, every bug, full cost accounting, and the Season 2 blueprint.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- TABLE OF CONTENTS -->
+      <nav class="toc" aria-label="Appendix sections">
+        <div class="toc-title">Contents</div>
+        <ul class="toc-list">
+          <li><a href="#appendix-a"><span class="toc-key">A</span>Week-by-Week Metrics Detail</a></li>
+          <li><a href="#appendix-b"><span class="toc-key">B</span>Bug Log</a></li>
+          <li><a href="#appendix-c"><span class="toc-key">C</span>Ad Performance Breakdown</a></li>
+          <li><a href="#appendix-d"><span class="toc-key">D</span>Full Cost Breakdown</a></li>
+          <li><a href="#appendix-e"><span class="toc-key">E</span>Reports Archive</a></li>
+          <li><a href="#appendix-f"><span class="toc-key">F</span>Season 2 Launch Checklist</a></li>
+          <li><a href="#appendix-g"><span class="toc-key">G</span>Platform &amp; Tooling Issues</a></li>
+        </ul>
+      </nav>
+
+      <!-- ACCORDION -->
+      <div class="accordion">
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- A. WEEK-BY-WEEK METRICS -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-a">
+          <button class="acc-trigger" aria-expanded="true" aria-controls="body-a" onclick="toggleAcc(this)">
+            <span class="acc-key">A</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Week-by-Week Metrics Detail</div>
+              <div class="acc-subtitle">6 periods · pre-launch through shutdown</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body open" id="body-a">
+
+            <!-- Pre-Launch -->
+            <div class="week-block">
+              <div class="week-header">
+                <span class="week-title">Pre-Launch</span>
+                <span class="week-date">Mar 18 – Mar 31</span>
+                <span class="week-tag neutral">Build Phase</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">~15 tasks executed</span>
+                <span class="week-stat-pill">69 test posts (purged)</span>
+                <span class="week-stat-pill">34 test sessions (purged)</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li>MVP build + polish cycle</li>
+                  <li>App live, feeds seeded, admin dashboard functional</li>
+                  <li>All pre-launch test data excluded from analytics (baseline: Apr 1)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Week 1 -->
+            <div class="week-block">
+              <div class="week-header">
+                <span class="week-title">Week 1: Soft Launch</span>
+                <span class="week-date">Apr 1 – Apr 6</span>
+                <span class="week-tag neutral">Soft Launch</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">~12 pageviews</span>
+                <span class="week-stat-pill">~5 unique visitors</span>
+                <span class="week-stat-pill">0 organic sessions</span>
+                <span class="week-stat-pill">$33 ad spend (start)</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li>Meta Ads launched — 7–12% initial CTR</li>
+                  <li>20+ Good Tips seeded from Reddit r/Coachella</li>
+                  <li>Traffic blind — landing page tracking not yet deployed</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="week-block warn">
+              <div class="week-header">
+                <span class="week-title">Week 2: Pre-Coachella Ramp</span>
+                <span class="week-date">Apr 7 – Apr 9</span>
+                <span class="week-tag warn">Ramp + Fixes</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">~48 pageviews (Day 8 snapshot)</span>
+                <span class="week-stat-pill">~23 unique visitors</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li>Tracking fix deployed — landing page was blind before this</li>
+                  <li>UTM columns added to analytics schema</li>
+                  <li>Bugs fixed: scheduler error, passphrase bypass, feed routing</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Week 3 — PEAK -->
+            <div class="week-block peak">
+              <div class="week-header">
+                <span class="week-title">Week 3: Coachella Weekend 1</span>
+                <span class="week-date">Apr 10 – Apr 13</span>
+                <span class="week-tag peak">PEAK</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">686 pageviews (91% of season)</span>
+                <span class="week-stat-pill">~300+ unique devices</span>
+                <span class="week-stat-pill">59 sessions</span>
+                <span class="week-stat-pill">35+ posts</span>
+                <span class="week-stat-pill">90+ reactions</span>
+                <span class="week-stat-pill">10.4% CVR (home → session)</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li>Meta Ads $10–20/day throughout</li>
+                  <li>UTM attribution verified mid-W1</li>
+                  <li>Product validated — engagement real when people found it</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="week-block critical">
+              <div class="week-header">
+                <span class="week-title">Week 4: Between Festivals + Coachella W2</span>
+                <span class="week-date">Apr 14 – Apr 19</span>
+                <span class="week-tag critical">CRITICAL — OUTAGE</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">~26 pageviews (W2)</span>
+                <span class="week-stat-pill">2 sessions</span>
+                <span class="week-stat-pill">119 visitors lost (outage)</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li><strong>P0:</strong> Session creation broke on Apr 14 deploy — 48-hour outage</li>
+                  <li>Coachella Weekend 2 effectively dead on arrival</li>
+                  <li>Passphrase A/B test launched Apr 18: removed passphrase for 50% of users</li>
+                  <li>A/B result inconclusive — n=6 per group, required n=36+</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="week-block warn">
+              <div class="week-header">
+                <span class="week-title">Week 5: Stagecoach</span>
+                <span class="week-date">Apr 24 – Apr 26</span>
+                <span class="week-tag warn">Stagecoach</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">41 pageviews</span>
+                <span class="week-stat-pill">31 unique devices</span>
+                <span class="week-stat-pill">6 sessions</span>
+                <span class="week-stat-pill">0 reactions</span>
+                <span class="week-stat-pill">16.7% CVR (n=1, N/A)</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li>Best-performing ad disapproved by Meta mid-festival — no explanation</li>
+                  <li>Polsia billing discrepancy (25 vs 50 credits) blocked replacement ads and optimization</li>
+                  <li>17x gap vs Coachella W1 — primarily execution gap, not product gap</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="week-block">
+              <div class="week-header">
+                <span class="week-title">Week 6: Shutdown Prep</span>
+                <span class="week-date">Apr 27 – May 1</span>
+                <span class="week-tag neutral">Closure</span>
+              </div>
+              <div class="week-stats">
+                <span class="week-stat-pill">100% data integrity verified</span>
+                <span class="week-stat-pill">Zero data loss</span>
+                <span class="week-stat-pill">4/4 shutdown checks passed</span>
+              </div>
+              <div class="week-notes">
+                <ul>
+                  <li>Final Retrospective completed</li>
+                  <li>Season 1 Playbook compiled</li>
+                  <li>Farewell page verified, data export cron verified</li>
+                  <li>All 4 shutdown QA checks passed</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /acc-body -->
+        </div><!-- /acc-item -->
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- B. BUG LOG -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-b">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="body-b" onclick="toggleAcc(this)">
+            <span class="acc-key">B</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Bug Log</div>
+              <div class="acc-subtitle">~12 bugs found and resolved during Season 1</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body" id="body-b">
+
+            <div class="note-box info">
+              Severity scale: <strong>P0</strong> = total production outage · <strong>P1</strong> = major feature broken · <strong>P2</strong> = degraded experience · <strong>P3</strong> = cosmetic/minor
+            </div>
+
+            <div class="data-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Bug</th>
+                    <th>Severity</th>
+                    <th>Found</th>
+                    <th>Fixed</th>
+                    <th>Impact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td-strong">Session creation regression</td>
+                    <td><span class="badge badge-p0">P0</span></td>
+                    <td class="td-mono">Apr 14</td>
+                    <td class="td-mono">Apr 16 <span class="badge badge-fixed">Fixed</span></td>
+                    <td>48-hour outage. 119 visitors could not create sessions. Killed Coachella W2 momentum entirely.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Analytics tracking blind (landing page)</td>
+                    <td><span class="badge badge-p1">P1</span></td>
+                    <td class="td-mono">Apr 7</td>
+                    <td class="td-mono">Apr 7–8 <span class="badge badge-fixed">Fixed</span></td>
+                    <td>No pageview data for Week 1 soft launch. Lost early UTM attribution visibility.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Passphrase bypass bug</td>
+                    <td><span class="badge badge-p1">P1</span></td>
+                    <td class="td-mono">Pre-launch</td>
+                    <td class="td-mono">Late Mar <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Users could skip the daily passphrase gate entirely. Undermined word-of-mouth mechanic.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Scheduler / cron error</td>
+                    <td><span class="badge badge-p1">P1</span></td>
+                    <td class="td-mono">Early Apr</td>
+                    <td class="td-mono">Apr 7–8 <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Daily scheduled jobs failing silently. Passphrase rotation and cleanup tasks not running.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Feed routing issue</td>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td class="td-mono">Early Apr</td>
+                    <td class="td-mono">Apr 7–8 <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Incorrect feed displayed for some geo tiers. Valley users saw global observer feed.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">UTM columns missing from schema</td>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td class="td-mono">Apr 7</td>
+                    <td class="td-mono">Apr 8 <span class="badge badge-fixed">Fixed</span></td>
+                    <td>No UTM attribution captured for first week of ad traffic. Migration deployed retroactively.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Admin dashboard display bugs</td>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td class="td-mono">Mar–Apr</td>
+                    <td class="td-mono">Multiple <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Count discrepancies, incorrect session displays, minor layout issues in Signal admin panel.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Browser agent content seeding failure</td>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td class="td-mono">Apr W1</td>
+                    <td class="td-mono">Workaround <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Browser agents unreliable for seeding posts via admin panel. Switched to direct DB inserts.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Geo-detection edge cases</td>
+                    <td><span class="badge badge-p2">P2</span></td>
+                    <td class="td-mono">Pre-launch</td>
+                    <td class="td-mono">Late Mar <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Some Valley users detected as "observer" due to geo boundary edge cases.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Passphrase A/B test implementation</td>
+                    <td><span class="badge badge-p3">P3</span></td>
+                    <td class="td-mono">Apr 18</td>
+                    <td class="td-mono">Inconclusive</td>
+                    <td>A/B launched but n=6 per group (need 36+). Statistically meaningless. Passphrase removed Apr 18.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Season1 page screenshot/asset issues</td>
+                    <td><span class="badge badge-p3">P3</span></td>
+                    <td class="td-mono">Apr 23</td>
+                    <td class="td-mono">Apr 23 <span class="badge badge-fixed">Fixed</span></td>
+                    <td>6 visual fixes: gradient, grid layout, video player, side-by-side assets, section styling.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Service worker / PWA caching conflicts</td>
+                    <td><span class="badge badge-p3">P3</span></td>
+                    <td class="td-mono">Early Apr</td>
+                    <td class="td-mono">Apr <span class="badge badge-fixed">Fixed</span></td>
+                    <td>Stale cached assets serving old JS/HTML after deploys. Cache headers tightened.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- C. AD PERFORMANCE -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-c">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="body-c" onclick="toggleAcc(this)">
+            <span class="acc-key">C</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Ad Performance Breakdown</div>
+              <div class="acc-subtitle">Meta Ads · $33.89 total spend · Coachella + Stagecoach</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body" id="body-c">
+
+            <div class="data-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Creative</th>
+                    <th>Format</th>
+                    <th>CTR</th>
+                    <th>CPC</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td-strong">Ad 1: 26F desert festival<br><span style="font-weight:400;font-size:0.8em;color:var(--ink-faint);">ID 120242511966900328</span></td>
+                    <td>Sora 2 AI video</td>
+                    <td class="td-mono">8.09% → 20.04% lifetime</td>
+                    <td class="td-mono">$0.07</td>
+                    <td><span class="badge badge-p0">Disapproved</span><br><span style="font-size:0.75em;color:var(--ink-faint);">Mid-Stagecoach</span></td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Ad 2: 24M anti-algorithm</td>
+                    <td>Sora 2 AI video</td>
+                    <td class="td-mono">11.4%</td>
+                    <td class="td-mono">—</td>
+                    <td><span class="badge badge-fixed">Ran full campaign</span></td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Ad 3: 30F valley-local</td>
+                    <td>Sora 2 AI video</td>
+                    <td class="td-mono">0%</td>
+                    <td class="td-mono">—</td>
+                    <td><span class="badge badge-p3">Paused early</span></td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Coachella Bound song ads</td>
+                    <td>Sora 2 + original music</td>
+                    <td class="td-mono">—</td>
+                    <td class="td-mono">—</td>
+                    <td><span class="badge badge-p3">Deployed W2</span></td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Stagecoach replacements (2 creatives)</td>
+                    <td>New creatives</td>
+                    <td class="td-mono">—</td>
+                    <td class="td-mono">—</td>
+                    <td><span class="badge badge-p2">Limited delivery</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="metric-group" style="margin-top:1.25rem;">
+              <div class="metric-group-title">Campaign Summary</div>
+              <div class="metric-grid">
+                <div class="metric-cell">
+                  <div class="metric-val gold">$33.89</div>
+                  <div class="metric-lbl">Total Spend</div>
+                </div>
+                <div class="metric-cell">
+                  <div class="metric-val">20%</div>
+                  <div class="metric-lbl">Peak CTR</div>
+                </div>
+                <div class="metric-cell">
+                  <div class="metric-val">$0.07</div>
+                  <div class="metric-lbl">Best CPC</div>
+                </div>
+                <div class="metric-cell">
+                  <div class="metric-val">11,531</div>
+                  <div class="metric-lbl">Peak Impressions</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="note-box warn" style="margin-top:1rem;">
+              <strong>Ad disapproval:</strong> Best-performing creative (Ad 1) removed by Meta mid-Stagecoach. No warning, no clear compliance violation documented, no recovery path. Compliance review workflow must be built before any future campaign.
+            </div>
+
+            <div style="margin-top:1rem;">
+              <div class="metric-group-title" style="margin-bottom:0.5rem;">Campaign Configuration</div>
+              <div class="data-table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Parameter</th><th>Value</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Daily budget</td><td>$10–20/day</td></tr>
+                    <tr><td>Age targeting</td><td>18–35</td></tr>
+                    <tr><td>Geo targeting</td><td>Coachella Valley + festival interests</td></tr>
+                    <tr><td>Format</td><td>Instagram/Facebook video (vertical, iPhone selfie style)</td></tr>
+                    <tr><td>Top creative style</td><td>Influencer persona (value-led: tips, music) vs. product demo (mechanism). Persona &gt;&gt;&gt; demo.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- D. COST BREAKDOWN -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-d">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="body-d" onclick="toggleAcc(this)">
+            <span class="acc-key">D</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Full Cost Breakdown</div>
+              <div class="acc-subtitle">~$170 total · 45 days · 0 employees</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body" id="body-d">
+
+            <div class="metric-group">
+              <div class="metric-group-title">Financial Costs</div>
+              <div class="data-table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Category</th><th>Detail</th><th>Cost</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="td-strong">Polsia subscription</td>
+                      <td>2 months × $49</td>
+                      <td class="td-mono td-strong">$98</td>
+                    </tr>
+                    <tr>
+                      <td class="td-strong">Credit packs</td>
+                      <td>2 months × $19</td>
+                      <td class="td-mono td-strong">$38</td>
+                    </tr>
+                    <tr>
+                      <td class="td-strong">Meta Ad spend</td>
+                      <td>~45 days of campaigns</td>
+                      <td class="td-mono td-strong">$33.89</td>
+                    </tr>
+                    <tr style="background:var(--blue-xlt);">
+                      <td class="td-strong">Total</td>
+                      <td><em>All infrastructure + ads + AI tooling</em></td>
+                      <td class="td-mono" style="font-family:'Bebas Neue';font-size:1.2rem;color:var(--blue);">~$170</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="metric-group">
+              <div class="metric-group-title">Task Distribution (~50 total)</div>
+              <div class="data-table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Category</th><th>Count</th><th>% of Total</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="td-strong">Engineering</td><td class="td-mono">~22</td><td class="td-mono">44%</td></tr>
+                    <tr><td class="td-strong">Meta Ads</td><td class="td-mono">~12</td><td class="td-mono">24%</td></tr>
+                    <tr><td class="td-strong">Data / Analytics</td><td class="td-mono">~8</td><td class="td-mono">16%</td></tr>
+                    <tr><td class="td-strong">Research</td><td class="td-mono">~3</td><td class="td-mono">6%</td></tr>
+                    <tr><td class="td-strong">Content</td><td class="td-mono">~3</td><td class="td-mono">6%</td></tr>
+                    <tr><td class="td-strong">Browser</td><td class="td-mono">~2</td><td class="td-mono">4%</td></tr>
+                    <tr style="background:var(--blue-xlt);">
+                      <td class="td-strong">Total</td>
+                      <td class="td-mono" style="font-family:'Bebas Neue';font-size:1.2rem;color:var(--blue);">~50</td>
+                      <td class="td-mono">100%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="note-box info">
+              <strong>Infrastructure:</strong> Hosting (Render), DB (Neon PostgreSQL), and CDN (Cloudflare) are included in the Polsia subscription and not billed separately. Zero infrastructure cost outside the $98 + $38 subscription.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- E. REPORTS ARCHIVE -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-e">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="body-e" onclick="toggleAcc(this)">
+            <span class="acc-key">E</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Reports Archive</div>
+              <div class="acc-subtitle">9 saved reports across the full season</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body" id="body-e">
+
+            <div class="data-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Report</th>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td-strong">Final Retrospective</td>
+                    <td class="td-mono">#546366</td>
+                    <td><span class="badge badge-p0" style="background:#F0FDF4;color:#15803D;">Final</span></td>
+                    <td class="td-mono">Apr 28</td>
+                    <td>Full season postmortem. Primary source of record.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Season 1 Playbook</td>
+                    <td class="td-mono">#570868</td>
+                    <td><span class="badge badge-p0" style="background:#F0FDF4;color:#15803D;">Playbook</span></td>
+                    <td class="td-mono">Apr 28</td>
+                    <td>Season 2 blueprint. Source for Appendix F checklist.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Data Integrity Verification</td>
+                    <td class="td-mono">#550164</td>
+                    <td><span class="badge badge-p2">Verification</span></td>
+                    <td class="td-mono">Apr 28</td>
+                    <td>100% match, zero data loss confirmed.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Shutdown Verification</td>
+                    <td class="td-mono">#549671</td>
+                    <td><span class="badge badge-p2">Verification</span></td>
+                    <td class="td-mono">Apr 27</td>
+                    <td>All 4 shutdown checks passed.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Stagecoach 3-Day Analytics</td>
+                    <td class="td-mono">#550170</td>
+                    <td><span class="badge badge-p3">Analytics</span></td>
+                    <td class="td-mono">Apr 26</td>
+                    <td>41 PV, 31 devices, 6 sessions, 0 reactions.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Pre-Stagecoach Baseline</td>
+                    <td class="td-mono">#479568</td>
+                    <td><span class="badge badge-p3">Analytics</span></td>
+                    <td class="td-mono">Apr 21</td>
+                    <td>Baseline metrics before Stagecoach weekend.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">W1 Day 2 Analytics</td>
+                    <td class="td-mono">#399410</td>
+                    <td><span class="badge badge-p3">Analytics</span></td>
+                    <td class="td-mono">Apr 11</td>
+                    <td>Coachella W1 day 2 snapshot during peak.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">W1 Day 1 Analytics</td>
+                    <td class="td-mono">#373582</td>
+                    <td><span class="badge badge-p3">Analytics</span></td>
+                    <td class="td-mono">Apr 10</td>
+                    <td>Coachella W1 launch day — first real traffic data.</td>
+                  </tr>
+                  <tr>
+                    <td class="td-strong">Day 8 Snapshot</td>
+                    <td class="td-mono">#357150</td>
+                    <td><span class="badge badge-p3">Analytics</span></td>
+                    <td class="td-mono">Apr 8</td>
+                    <td>Pre-Coachella: ~48 PV, ~23 unique visitors.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- F. SEASON 2 LAUNCH CHECKLIST -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-f">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="body-f" onclick="toggleAcc(this)">
+            <span class="acc-key">F</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Season 2 Launch Checklist</div>
+              <div class="acc-subtitle">From Season 1 Playbook (Report #570868)</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body" id="body-f">
+
+            <div class="note-box info" style="margin-bottom:1rem;">
+              Source: <strong>Season 1 Playbook</strong> (Report #570868, Apr 28, 2026). This checklist assumes a Coachella 2027 target with ~6-week lead time.
+            </div>
+
+            <div class="checklist-group-title">6 Weeks Out</div>
+            <ul class="checklist">
+              <li>Secure partner locations for physical QR distribution (cafes, art spaces, third spots)</li>
+              <li>Recruit and brief 2–4 student / community ambassadors</li>
+              <li>Design QR print materials (posters, stickers, hangtags)</li>
+              <li>Begin ad creative production — submit to Meta for compliance review before campaign start</li>
+            </ul>
+
+            <div class="checklist-group-title">4 Weeks Out</div>
+            <ul class="checklist">
+              <li>Build real-time admin dashboard with live session/post/reaction counters</li>
+              <li>Prepare 3–5 ad creatives with full compliance review before festival</li>
+              <li>Confirm ad account standing and budget authorization</li>
+              <li>Set up proper A/B test infrastructure (minimum n=36 per group before reading results)</li>
+            </ul>
+
+            <div class="checklist-group-title">2 Weeks Out</div>
+            <ul class="checklist">
+              <li>Print and distribute QR codes to partner locations</li>
+              <li>Test geo-fencing boundaries with devices at actual festival coordinates</li>
+              <li>Seed initial content (100+ high-quality tips, local knowledge)</li>
+              <li>Brief ambassadors on talking points and passphrase distribution</li>
+              <li>Run full regression test suite — no deploys without testing session creation</li>
+            </ul>
+
+            <div class="checklist-group-title">1 Week Out</div>
+            <ul class="checklist">
+              <li>Launch paid ads (Meta + Instagram)</li>
+              <li>Activate on-site staff coordination</li>
+              <li>Final QA pass on all critical flows: session creation, geo-gate, passphrase, posting, reactions</li>
+              <li>Freeze deploys for 48h before festival start unless P0</li>
+            </ul>
+
+            <div class="checklist-group-title">Festival Day 1</div>
+            <ul class="checklist">
+              <li>100+ QR placements live at partner locations</li>
+              <li>2–4 on-site staff/ambassadors with mobile access to admin</li>
+              <li>Monitor real-time dashboard every 30 min during peak hours</li>
+              <li>Check 50 PV threshold by end of Day 1 evening</li>
+              <li>Have replacement ad creatives pre-approved and ready if primary gets disapproved</li>
+            </ul>
+
+          </div>
+        </div>
+
+        <!-- ───────────────────────────────────────────────────────── -->
+        <!-- G. PLATFORM/TOOLING ISSUES -->
+        <!-- ───────────────────────────────────────────────────────── -->
+        <div class="acc-item" id="appendix-g">
+          <button class="acc-trigger" aria-expanded="false" aria-controls="body-g" onclick="toggleAcc(this)">
+            <span class="acc-key">G</span>
+            <div class="acc-title-wrap">
+              <div class="acc-title">Platform &amp; Tooling Issues</div>
+              <div class="acc-subtitle">Honest record of external friction that affected the season</div>
+            </div>
+            <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="acc-body" id="body-g">
+
+            <div class="issue-block">
+              <div class="issue-title">Polsia Billing Discrepancy — 25 vs 50 Credits</div>
+              <div class="issue-body">During Stagecoach, the account showed 25 available credits when the subscription should have provided 50. This discrepancy was unresolved for multiple weeks and directly blocked the ability to run replacement ad creative tasks and optimization work during the most critical window of the season. The billing issue was reported to Polsia but not resolved before Stagecoach ended.</div>
+              <div class="issue-tag-row">
+                <span class="issue-tag tag-red">Blocking</span>
+                <span class="issue-tag tag-warn">Stagecoach Impact</span>
+                <span class="issue-tag tag-warn">Unresolved During Season</span>
+              </div>
+            </div>
+
+            <div class="issue-block">
+              <div class="issue-title">Browser Agents — Unreliable for Content Seeding</div>
+              <div class="issue-body">Browser agents were deployed to seed the feed via the admin panel UI. They failed consistently due to bot detection or interaction timing issues. The working pattern — discovered too late in W1 — was to use direct database inserts via the Engineering agent. Any future content seeding strategy must use DB-level operations, not browser automation for this use case.</div>
+              <div class="issue-tag-row">
+                <span class="issue-tag tag-warn">Late Discovery</span>
+                <span class="issue-tag tag-blue">Workaround Found</span>
+              </div>
+            </div>
+
+            <div class="issue-block">
+              <div class="issue-title">Meta Ad Disapproval — No Warning, No Clear Violation</div>
+              <div class="issue-body">Ad ID 120242511966900328 — the best-performing creative in the campaign (20% CTR, $0.07 CPC) — was removed by Meta mid-Stagecoach. No advance warning was provided, no clear compliance violation was documented, and there was no recovery path to reinstate the ad within the festival window. Replacement creatives were queued but never achieved comparable delivery. The absence of a pre-approved backup creative library was the structural failure here.</div>
+              <div class="issue-tag-row">
+                <span class="issue-tag tag-red">Blocking</span>
+                <span class="issue-tag tag-warn">No Recovery Path</span>
+                <span class="issue-tag tag-blue">Structural Fix: Pre-approve backup creatives</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /accordion -->
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <div class="container">
+      <p>
+        <a href="/season1.html">← Mirage Season 1 Public Page</a>
+        &nbsp;·&nbsp;
+        Internal Appendix · Season 1 Final · April 2026
+        &nbsp;·&nbsp;
+        <a href="https://sunshine.fm" target="_blank" rel="noopener">SunshineFM</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+  // Accordion toggle
+  function toggleAcc(trigger) {
+    var expanded = trigger.getAttribute('aria-expanded') === 'true';
+    var bodyId = trigger.getAttribute('aria-controls');
+    var body = document.getElementById(bodyId);
+
+    if (expanded) {
+      trigger.setAttribute('aria-expanded', 'false');
+      body.classList.remove('open');
+    } else {
+      trigger.setAttribute('aria-expanded', 'true');
+      body.classList.add('open');
+    }
+  }
+
+  // Smooth scroll for TOC links
+  document.querySelectorAll('.toc-list a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+
+      // Open the accordion if it's closed
+      var accItem = target;
+      var trigger = accItem.querySelector('.acc-trigger');
+      var bodyId = trigger && trigger.getAttribute('aria-controls');
+      var body = bodyId && document.getElementById(bodyId);
+      if (trigger && trigger.getAttribute('aria-expanded') === 'false') {
+        trigger.setAttribute('aria-expanded', 'true');
+        body && body.classList.add('open');
+      }
+
+      setTimeout(function() {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    });
+  });
+  </script>
+</body>
+</html>

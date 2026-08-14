@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="667" viewBox="0 0 375 667">
+<defs><style>
+.bg{fill:#fff}.header{fill:#0284C7}.card{fill:#fff;stroke:#e2e8f0;stroke-width:1}
+.nickname{fill:#0284c7;font-family:sans-serif;font-size:11px;font-weight:600}
+.location{fill:#475569;font-family:sans-serif;font-size:10px}
+.post-text{fill:#0f172a;font-family:sans-serif;font-size:13px}
+.reaction{fill:#475569;font-family:sans-serif;font-size:11px}
+.feed-desc{fill:#475569;font-family:sans-serif;font-size:11px;font-style:italic}
+.app-name{fill:#fff;font-family:sans-serif;font-size:28px;font-weight:bold}
+.feed-title{fill:#fff;font-family:sans-serif;font-size:16px}
+.hint{fill:#475569;font-family:sans-serif;font-size:11px}
+.badge{fill:#e0f2fe}.tab-inactive{fill:#475569;font-family:sans-serif;font-size:11px}
+.hey-label{fill:#0284c7;font-family:sans-serif;font-size:11px;font-weight:600}
+.hey-sub{fill:#475569;font-family:sans-serif;font-size:10px}
+.hey-btn{fill:#0284c7}.hey-btn-text{fill:#fff;font-family:sans-serif;font-size:11px;font-weight:600}
+</style></defs><rect x="0" y="0" width="375" height="667" rx="0" fill="#ffffff"/><rect x="0" y="0" width="375" height="90" rx="0" fill="#0284c7"/><text x="20" y="30" class="app-name">mirage</text><text x="20" y="62" class="feed-title">Hey Mirage</text><rect x="0" y="90" width="375" height="44" rx="0" fill="#ffffff"/><rect x="0" y="133" width="375" height="1" rx="0" fill="#e2e8f0"/><text x="20" y="112" class="tab-inactive">Good Shots</text><text x="92" y="112" class="tab-inactive">Good Vibes</text><text x="164" y="112" class="tab-inactive">Good Tips</text><text x="236" y="112" class="nickname">Hey Mirage</text><text x="305" y="112" class="hint">swipe →</text><text x="20" y="157" class="feed-desc">private note — only the Mirage team sees this</text><rect x="16" y="180" width="343" height="180" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/><text x="28" y="200" class="hey-label">✉ private note</text><text x="28" y="218" class="hey-sub">only the Mirage team sees this</text><rect x="28" y="240" width="319" height="60" rx="8" fill="#f0f9ff" stroke="#e2e8f0" stroke-width="1"/><text x="36" y="262" class="hey-sub">leave feedback, ideas,</text><text x="36" y="280" class="hey-sub">anything you want heard...</text><rect x="267" y="305" width="80" height="28" rx="8" fill="#0284c7"/><text x="275" y="322" class="hey-btn-text">send →</text><text x="20" y="637" class="hint">🌽 tap any post to react</text></svg>

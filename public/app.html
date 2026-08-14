@@ -1,0 +1,4753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>mirage</title>
+    <meta name="description" content="Mirage — a pop-up social network for festival season (archived). The Season 1 case study lives at /season1.html.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://mirage.sunshine.fm/app">
+
+    <!-- OG Meta Tags -->
+    <meta property="og:title" content="mirage — a pop-up social network for festival season">
+    <meta property="og:description" content="appears april 1. disappears may 1. what festival season feels like on the grounds.">
+    <meta property="og:image" content="https://mirage.sunshine.fm/og-card.png">
+    <meta property="og:url" content="https://mirage.sunshine.fm">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json?v=12">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0284C7">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mirage">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1420341739378694');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1420341739378694&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --sky: #0284C7;
+            --sky-dark: #0369A1;
+            --sky-light: #E0F2FE;
+            --gold: #D97706;
+            --gold-dark: #92400E;
+            --gold-light: #FEF3C7;
+            --white: #FFFFFF;
+            --off-white: #F8FAFC;
+            --text: #0F172A;
+            --text-muted: #475569;
+            --text-dim: #94A3B8;
+            --border: #E2E8F0;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        html, body { height: 100%; overflow: hidden; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--off-white);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---- PULSING LIVE DOT ---- */
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            50% { transform: scale(1.3); opacity: 0.8; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ADE80;
+            flex-shrink: 0;
+            animation: livePulse 1.6s ease-in-out infinite;
+        }
+
+        /* ---- OVERLAYS ---- */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(160deg, #0369A1 0%, #0EA5E9 60%, #7DD3FC 100%);
+            padding: 2rem 1.5rem;
+            transition: opacity 0.3s;
+        }
+        .overlay.hidden { display: none; }
+
+        .overlay-card {
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        .overlay-wordmark {
+            font-family: 'Righteous', cursive;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--white);
+            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .overlay-headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.04em;
+            text-transform: lowercase;
+            color: var(--white);
+            margin-bottom: 1.25rem;
+        }
+
+        .overlay-card p {
+            color: rgba(255,255,255,0.85);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.65;
+            margin-bottom: 2.5rem;
+        }
+
+        .nickname-display {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #FDE68A;
+            background: rgba(0,0,0,0.18);
+            padding: 0.85rem 1.75rem;
+            border-radius: 14px;
+            margin-bottom: 2rem;
+            display: inline-block;
+            letter-spacing: 0.03em;
+        }
+
+        .overlay-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .btn-loc {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1.1rem;
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s, opacity 0.2s;
+            letter-spacing: 0.02em;
+        }
+        .btn-loc:active { transform: scale(0.97); }
+        .btn-loc:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-loc-primary {
+            background: rgba(255,255,255,0.22);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+        }
+        .btn-loc-secondary {
+            background: transparent;
+            color: rgba(255,255,255,0.75);
+            border: 1.5px solid rgba(255,255,255,0.25);
+        }
+        .btn-loc-secondary:hover { border-color: rgba(255,255,255,0.5); }
+
+        /* ---- HEADER ---- */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 1rem;
+            padding-top: max(0.85rem, env(safe-area-inset-top, 0px));
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .app-logo {
+            font-family: 'Righteous', cursive;
+            font-size: 1.6rem;
+            color: var(--sky);
+            letter-spacing: 0.02em;
+            line-height: 1;
+        }
+
+        .header-logo-wrap {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .header-gone-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.03em;
+            text-transform: lowercase;
+            margin-top: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-nickname {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.01em;
+            max-width: 88px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            opacity: 0.8;
+        }
+        @media (max-width: 360px) {
+            .nav-nickname { max-width: 64px; }
+        }
+
+        .header-share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: background 0.2s, color 0.2s;
+            flex-shrink: 0;
+        }
+        .header-share-btn:hover { background: var(--sky-light); color: var(--sky); }
+        .header-share-btn svg { width: 15px; height: 15px; }
+
+        .geo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 0.38rem 0.8rem;
+            border-radius: 100px;
+            white-space: nowrap;
+            text-transform: lowercase;
+        }
+        .geo-badge.at_the_fest {
+            background: rgba(2, 132, 199, 0.1);
+            color: var(--sky-dark);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+        }
+        .geo-badge.in_the_desert {
+            background: rgba(217, 119, 6, 0.1);
+            color: var(--gold-dark);
+            border: 1px solid rgba(217, 119, 6, 0.2);
+        }
+        .geo-badge.outside {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--text-muted);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        /* ---- TABS ---- */
+        .tab-bar {
+            display: flex;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.85rem 0.4rem;
+            background: none;
+            border: none;
+            border-bottom: 2.5px solid transparent;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            text-transform: lowercase;
+            letter-spacing: 0.01em;
+        }
+        .tab-btn.active { color: var(--text); }
+        .tab-btn[data-tab="moments"].active { border-bottom-color: var(--sky); }
+        .tab-btn[data-tab="tips"].active { border-bottom-color: var(--gold); }
+        .tab-btn[data-tab="pulse"].active { border-bottom-color: #DC2626; color: #DC2626; }
+        .tab-btn[data-tab="notetosat"].active { border-bottom-color: var(--sky-dark); color: var(--sky-dark); }
+
+        /* ---- FEED ---- */
+        .feed {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.75rem;
+            padding-bottom: calc(8.25rem + var(--safe-bottom));
+            background: #FFFFFF;
+        }
+        /* Per-tab feed background colors - white background for all tabs */
+        .feed[data-tab="moments"] {
+            background: #FFFFFF;
+        }
+        .feed[data-tab="tips"] {
+            background: #FFFFFF;
+        }
+        .feed[data-tab="pulse"] {
+            background: #FFFFFF;
+        }
+
+        /* ---- NOTE TO SAT TAB ---- */
+        .feed[data-tab="notetosat"] {
+            background: #FFFFFF;
+        }
+
+        .notetosat-wrapper {
+            padding: 1.5rem 0.25rem 2rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .notetosat-intro {
+            margin-bottom: 1.75rem;
+        }
+
+        .notetosat-intro p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .notetosat-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 0.9rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--text);
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--off-white);
+            line-height: 1.6;
+        }
+        .notetosat-textarea:focus { border-color: var(--sky); background: white; }
+        .notetosat-textarea::placeholder { color: var(--text-dim); }
+
+        .notetosat-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.6rem;
+        }
+
+        .notetosat-char {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        .notetosat-btn {
+            padding: 0.7rem 2rem;
+            background: var(--sky);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+        .notetosat-btn:hover { background: var(--sky-dark); }
+        .notetosat-btn:active { transform: scale(0.96); }
+        .notetosat-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .notetosat-confirm {
+            text-align: center;
+            margin-top: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--sky-dark);
+            padding: 0.75rem;
+            background: var(--sky-light);
+            border-radius: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        .notetosat-confirm.hidden { display: none; }
+
+        .feed-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 60%;
+            text-align: center;
+            color: var(--text-muted);
+            gap: 0.75rem;
+        }
+        .feed-empty .empty-icon { font-size: 2.5rem; opacity: 0.55; }
+        .feed-empty p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            max-width: 240px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .load-more-btn {
+            display: block;
+            width: 100%;
+            padding: 0.85rem;
+            margin-top: 0.5rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .load-more-btn:hover { background: var(--sky-light); }
+
+        /* ---- FEED FOOTER ---- */
+        .feed-footer-text {
+            text-align: center;
+            padding: 1.5rem 1rem 0.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+        .feed-footer-text a {
+            color: var(--sky);
+            text-decoration: none;
+        }
+        .feed-footer-text a:hover { text-decoration: underline; }
+
+        /* ---- POST CARD ---- */
+        .post-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem 1rem 0.75rem;
+            margin-bottom: 0.75rem;
+            margin-top: 14px;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        /* Realistic thumbtack pin — deep sky blue, corner-positioned, 3D */
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 16px;
+            left: auto;
+            transform: rotate(-22deg);
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255,255,255,0.65) 0%, transparent 38%),
+                radial-gradient(circle at 55% 60%, #0C4A6E 0%, #0284C7 45%, #7DD3FC 100%);
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.45),
+                0 2px 4px rgba(0,0,0,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        /* Colored post cards per tab */
+        .feed[data-tab="moments"] .post-card {
+            background: #C8E6F5;
+        }
+        .feed[data-tab="tips"] .post-card {
+            background: #F5E6C8;
+        }
+        .feed[data-tab="pulse"] .post-card {
+            background: #F5C8C8;
+        }
+        .post-card.pulse-card { border-color: #FECACA; }
+        .post-card.dimmed-post { opacity: 0.35; pointer-events: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.65rem;
+            flex-wrap: wrap;
+        }
+
+        .post-nickname {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .post-tier-badge {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 0.18rem 0.5rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-transform: lowercase;
+        }
+        .post-tier-badge.at_the_fest {
+            background: rgba(2, 132, 199, 0.1);
+            color: var(--sky-dark);
+        }
+        .post-tier-badge.in_the_desert {
+            background: rgba(217, 119, 6, 0.1);
+            color: var(--gold-dark);
+        }
+
+        .post-time {
+            margin-left: auto;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .pulse-expires {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #DC2626;
+            letter-spacing: 0.03em;
+        }
+
+        .post-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 0.65rem;
+            word-wrap: break-word;
+        }
+
+        .post-photo {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 0.65rem;
+            max-height: 320px;
+            object-fit: cover;
+        }
+
+        /* Post footer: reactions + share + flag */
+        .post-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .post-reactions {
+            display: flex;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        /* ---- REACTION BUTTON + TOOLTIP ---- */
+        .reaction-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            background: var(--off-white);
+            border: 1px solid transparent;
+            padding: 0.3rem 0.5rem;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, transform 0.1s;
+            color: var(--text-muted);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .reaction-btn:active { transform: scale(0.9); }
+        .reaction-btn:hover { background: var(--sky-light); }
+        .reaction-btn.active {
+            background: rgba(2, 132, 199, 0.1);
+            border-color: rgba(2, 132, 199, 0.3);
+        }
+        .r-count {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* Emoji tooltip */
+        .emoji-tooltip {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F172A;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.3rem 0.65rem;
+            border-radius: 8px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 1;
+            transition: opacity 0.25s ease;
+        }
+        .emoji-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid transparent;
+            border-top-color: #0F172A;
+        }
+        .emoji-tooltip.fade { opacity: 0; }
+
+        /* ---- FLAG BUTTON ---- */
+        .post-flag-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            flex-shrink: 0;
+            opacity: 0.5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .post-flag-btn:hover { background: #FEE2E2; color: #DC2626; opacity: 1; border-color: #FECACA; }
+        .post-flag-btn.flagged { color: #DC2626; opacity: 0.8; }
+        .post-flag-btn svg { width: 12px; height: 12px; }
+
+        /* ---- SHARE BUTTON (moments polaroid only) ---- */
+        .post-share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--off-white);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+        .post-share-btn:hover { background: var(--sky-light); color: var(--sky); }
+        .post-share-btn svg { width: 13px; height: 13px; }
+
+        /* ---- ADMIN DELETE BUTTON (admin-only, public app) ---- */
+        .admin-delete-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #FCA5A5;
+            background: #FEF2F2;
+            color: #DC2626;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            opacity: 0.7;
+            transition: opacity 0.15s, background 0.15s;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.02em;
+        }
+        .admin-delete-btn:hover { opacity: 1; background: #FEE2E2; }
+
+        /* ---- HEADER PASSPHRASE BUTTON ---- */
+        .header-passphrase-btn {
+            background: none;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--sky);
+            cursor: pointer;
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+            letter-spacing: 0.01em;
+        }
+        .header-passphrase-btn:hover { background: var(--sky-light); }
+        .header-passphrase-btn:active { background: var(--sky-light); }
+
+        /* ---- PASSPHRASE BOTTOM SHEET ---- */
+        .passphrase-sheet {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            align-items: flex-end;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .passphrase-sheet.visible {
+            pointer-events: all;
+            opacity: 1;
+        }
+        .passphrase-sheet-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+        }
+        .passphrase-sheet-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem 1.5rem calc(2rem + var(--safe-bottom));
+            text-align: center;
+        }
+        .passphrase-sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 0 auto 1.75rem;
+        }
+        .passphrase-sheet-word {
+            font-family: 'Righteous', cursive;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--sky);
+            letter-spacing: 0.03em;
+            margin-bottom: 0.4rem;
+            line-height: 1.1;
+            text-transform: lowercase;
+        }
+        .passphrase-sheet-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            text-transform: lowercase;
+            margin-bottom: 2rem;
+        }
+        .passphrase-sheet-share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2.25rem;
+            background: var(--sky);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .passphrase-sheet-share-btn:hover { background: var(--sky-dark); }
+        .passphrase-sheet-share-btn:active { transform: scale(0.96); }
+
+        /* ---- READ-ONLY BANNER (watching from elsewhere) ---- */
+        .readonly-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #F1F5F9;
+            border-top: 1px solid var(--border);
+            padding: 1.1rem 1.25rem;
+            padding-bottom: calc(1.1rem + var(--safe-bottom));
+            text-align: center;
+            z-index: 20;
+            display: none;
+        }
+        .readonly-banner.visible { display: block; }
+        .readonly-banner p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ---- COMPOSE BAR ---- */
+        .compose-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem 1rem;
+            padding-bottom: calc(0.75rem + var(--safe-bottom));
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 20;
+        }
+        .compose-bar.hidden { display: none; }
+
+        .compose-input {
+            flex: 1;
+            background: var(--off-white);
+            border: 1.5px solid var(--border);
+            border-radius: 24px;
+            padding: 0.75rem 1.1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--text);
+            outline: none;
+            min-width: 0;
+            transition: border-color 0.2s;
+        }
+        .compose-input:focus { border-color: var(--sky); }
+        .compose-input::placeholder { color: var(--text-dim); }
+
+        .compose-char {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            min-width: 2rem;
+            text-align: center;
+        }
+        .compose-char.warn { color: var(--gold); }
+        .compose-char.over { color: #DC2626; }
+
+        .compose-photo-btn,
+        .compose-send-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .compose-photo-btn:active,
+        .compose-send-btn:active { transform: scale(0.9); }
+
+        .compose-photo-btn {
+            background: var(--off-white);
+            color: var(--text-muted);
+            border: 1.5px solid var(--border);
+        }
+        .compose-photo-btn.has-photo {
+            background: rgba(217, 119, 6, 0.12);
+            color: var(--gold-dark);
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+
+        .compose-send-btn {
+            background: var(--sky);
+            color: white;
+        }
+        .compose-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .compose-preview {
+            position: fixed;
+            bottom: calc(7.75rem + var(--safe-bottom));
+            left: 1rem;
+            right: 1rem;
+            z-index: 21;
+            display: none;
+        }
+        .compose-preview.visible { display: block; }
+        .compose-preview img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #F1F5F9;
+        }
+        .compose-preview-close {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 26px;
+            height: 26px;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ---- RETRY BAR ---- */
+        .retry-bar {
+            position: fixed;
+            bottom: calc(7.75rem + var(--safe-bottom));
+            left: 0.75rem;
+            right: 0.75rem;
+            z-index: 22;
+            display: none;
+            background: var(--gold-light);
+            border: 1.5px solid rgba(217, 119, 6, 0.3);
+            border-radius: 14px;
+            padding: 0.85rem 1rem;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .retry-bar.visible { display: flex; }
+        .retry-bar-text {
+            flex: 1;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gold-dark);
+        }
+        .retry-bar-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.55rem 1.1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .retry-bar-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0 0.2rem;
+        }
+
+        /* ---- TOAST ---- */
+        .toast {
+            position: fixed;
+            bottom: calc(8.75rem + var(--safe-bottom));
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: #0F172A;
+            color: white;
+            padding: 0.75rem 1.4rem;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+            max-width: calc(100vw - 2rem);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Spinner */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--text-dim);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        /* ---- OFFLINE SIGNAL BANNER ---- */
+        .offline-banner {
+            display: none;
+            background: #D97706;
+            color: white;
+            text-align: center;
+            padding: 0.55rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            flex-shrink: 0;
+            z-index: 11;
+        }
+        .offline-banner.visible { display: block; }
+
+        /* ---- QUEUED POST BADGE ---- */
+        .queued-signal-badge {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #D97706;
+            margin-left: auto;
+        }
+        .post-card.queued-card {
+            border-color: rgba(217, 119, 6, 0.4);
+            opacity: 0.88;
+        }
+
+        /* ---- ONBOARDING OVERLAYS ---- */
+
+        /* Nickname Reveal */
+        .nick-reveal-card {
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nick-reveal-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1rem;
+        }
+
+        .nick-reveal-name {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 8vw, 3rem);
+            font-weight: 400;
+            color: var(--white);
+            letter-spacing: 0.04em;
+            background: rgba(255,255,255,0.15);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .nick-reveal-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .nick-reveal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            background: rgba(255,255,255,0.22);
+            border: 2px solid rgba(255,255,255,0.45);
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .nick-reveal-btn:hover { background: rgba(255,255,255,0.3); }
+        .nick-reveal-btn:active { transform: scale(0.97); }
+
+        /* Thumbtack pin — first post onboarding card */
+        .first-post-pin {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 25%, rgba(255,255,255,0.65) 0%, transparent 38%),
+                radial-gradient(circle at 55% 60%, #0C4A6E 0%, #0284C7 45%, #7DD3FC 100%);
+            box-shadow:
+                0 5px 14px rgba(0,0,0,0.5),
+                0 2px 5px rgba(0,0,0,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.2);
+            transform: rotate(18deg);
+            margin: 0 auto 1.25rem;
+        }
+
+        /* First Post Overlay */
+        .first-post-card {
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        .first-post-label {
+            font-family: 'Righteous', cursive;
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .first-post-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 1.5rem;
+        }
+
+        .first-post-compose {
+            background: rgba(255,255,255,0.12);
+            border: 1.5px solid rgba(255,255,255,0.3);
+            border-radius: 18px;
+            padding: 1.1rem;
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .first-post-nick-line {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 0.5rem;
+        }
+
+        .first-post-textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: white;
+            line-height: 1.55;
+            resize: none;
+            min-height: 80px;
+            caret-color: white;
+        }
+
+        .first-post-textarea::placeholder { color: rgba(255,255,255,0.4); }
+
+        .first-post-feed-tag {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.5rem;
+            letter-spacing: 0.04em;
+            text-transform: lowercase;
+        }
+
+        .first-post-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-first-post {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .btn-first-post:active { transform: scale(0.97); }
+        .btn-first-post:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-first-post-primary {
+            background: rgba(255,255,255,0.22);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.45);
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-first-post-skip {
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: 1.5px solid rgba(255,255,255,0.2);
+        }
+
+        /* ---- POLAROID (moments feed, photo posts) ---- */
+        .moments-polaroid-card {}
+        .polaroid-wrap {
+            margin-bottom: 0.65rem;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .polaroid-wrap {
+                max-width: 360px;
+            }
+        }
+        .polaroid-border {
+            background: white;
+            padding: 10px 10px 80px 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-radius: 3px;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .polaroid-border {
+                padding: 8px 8px 64px 8px;
+            }
+        }
+        .polaroid-img-zone {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 2px;
+            background: var(--sky-light);
+        }
+        .polaroid-img-zone img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .polaroid-bottom-strip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 10px;
+        }
+        @media (min-width: 768px) {
+            .polaroid-bottom-strip {
+                height: 64px;
+            }
+        }
+        .polaroid-stamp {
+            font-family: 'Righteous', cursive;
+            color: #0284C7;
+            font-size: 48px;
+            line-height: 1;
+            display: block;
+            flex-shrink: 0;
+            user-select: none;
+        }
+        @media (min-width: 768px) {
+            .polaroid-stamp {
+                font-size: 52px;
+            }
+        }
+        .polaroid-caption {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            padding: 0 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ---- DEVICE POST COUNTER ---- */
+        .device-counter {
+            position: fixed;
+            bottom: calc(4.75rem + var(--safe-bottom));
+            left: 1rem;
+            right: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            z-index: 19;
+            display: none;
+            pointer-events: none;
+        }
+
+        /* ---- PHOTO PICKER BOTTOM SHEET ---- */
+        .photo-picker-sheet {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: flex-end;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .photo-picker-sheet.visible {
+            pointer-events: all;
+            opacity: 1;
+        }
+        .photo-picker-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+        }
+        .photo-picker-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem 1.25rem calc(1.5rem + var(--safe-bottom));
+        }
+        .photo-picker-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .photo-picker-btns {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .photo-picker-btn {
+            flex: 1;
+            padding: 0.9rem 0.5rem;
+            background: var(--off-white);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            transition: background 0.1s;
+        }
+        .photo-picker-btn:active { background: #E2E8F0; }
+        .picker-icon { font-size: 1.5rem; }
+        /* Camera button visibility is controlled via JS (navigator.mediaDevices detection) */
+
+        /* ---- COMPOSER CROP (inside polaroid image zone) ---- */
+        /* During crop mode, expand polaroid to show full image so handles are accessible */
+        .polaroid-img-zone.cropping {
+            aspect-ratio: unset !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+        /* Remove crop-container border-radius inside polaroid for clean look */
+        .composer-crop {
+            border-radius: 0 !important;
+            width: 100%;
+        }
+        /* Cropper img: natural width/height (not square-forced by polaroid-img-zone img rule) */
+        .polaroid-img-zone .composer-crop img {
+            width: 100%;
+            height: auto;
+            object-fit: unset;
+        }
+
+        /* ---- CROP STAGE ---- */
+        .crop-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            overflow: hidden;
+            touch-action: none;
+            user-select: none;
+            border-radius: 4px;
+        }
+        .crop-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            pointer-events: none;
+        }
+        .crop-mask {
+            position: absolute;
+            background: rgba(0,0,0,0.58);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .crop-box {
+            position: absolute;
+            z-index: 3;
+            border: 2px solid rgba(255,255,255,0.9);
+            box-sizing: border-box;
+            cursor: move;
+            touch-action: none;
+        }
+        /* 3-column guide lines */
+        .crop-box::before, .crop-box::after {
+            content: '';
+            position: absolute;
+            background: rgba(255,255,255,0.25);
+        }
+        .crop-box::before {
+            width: 1px;
+            top: 0; bottom: 0;
+            left: 33.33%;
+            box-shadow: 33.33% 0 0 rgba(255,255,255,0.25);
+        }
+        .crop-box::after {
+            height: 1px;
+            left: 0; right: 0;
+            top: 33.33%;
+            box-shadow: 0 33.33% 0 rgba(255,255,255,0.25);
+        }
+        .crop-handle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            z-index: 4;
+            touch-action: none;
+        }
+        .crop-handle::after {
+            content: '';
+            position: absolute;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        .crop-nw { top: -2px; left: -2px; cursor: nw-resize; }
+        .crop-nw::after { top: 0; left: 0; width: 14px; height: 14px; border-radius: 2px; }
+        .crop-ne { top: -2px; right: -2px; cursor: ne-resize; }
+        .crop-ne::after { top: 0; right: 0; width: 14px; height: 14px; border-radius: 2px; }
+        .crop-sw { bottom: -2px; left: -2px; cursor: sw-resize; }
+        .crop-sw::after { bottom: 0; left: 0; width: 14px; height: 14px; border-radius: 2px; }
+        .crop-se { bottom: -2px; right: -2px; cursor: se-resize; }
+        .crop-se::after { bottom: 0; right: 0; width: 14px; height: 14px; border-radius: 2px; }
+        /* Edge handles */
+        .crop-n { top: -6px; left: 50%; transform: translateX(-50%); cursor: n-resize; }
+        .crop-n::after { top: 4px; left: 50%; transform: translateX(-50%); width: 24px; height: 6px; border-radius: 3px; }
+        .crop-s { bottom: -6px; left: 50%; transform: translateX(-50%); cursor: s-resize; }
+        .crop-s::after { bottom: 4px; left: 50%; transform: translateX(-50%); width: 24px; height: 6px; border-radius: 3px; }
+        .crop-w { left: -6px; top: 50%; transform: translateY(-50%); cursor: w-resize; }
+        .crop-w::after { left: 4px; top: 50%; transform: translateY(-50%); width: 6px; height: 24px; border-radius: 3px; }
+        .crop-e { right: -6px; top: 50%; transform: translateY(-50%); cursor: e-resize; }
+        .crop-e::after { right: 4px; top: 50%; transform: translateY(-50%); width: 6px; height: 24px; border-radius: 3px; }
+
+        .crop-confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 0.9rem;
+            margin-top: 0.85rem;
+            background: var(--sky);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+        }
+        .crop-confirm-btn:active { opacity: 0.85; }
+
+        /* ---- ADD A NOTE (post-crop tap target) ---- */
+        .add-note-prompt {
+            text-align: center;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 0.85rem 0 0.35rem;
+            letter-spacing: 0.01em;
+        }
+        .add-note-prompt:hover { color: var(--text-muted); }
+        .note-input-wrap { position: relative; }
+        .note-char-count {
+            position: absolute;
+            bottom: 0.6rem;
+            right: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        /* ---- PHOTO COMPOSER (full-screen, replaces composer) ---- */
+        .photo-composer {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            background: #C8E6F5;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .photo-composer.visible { display: flex; }
+        .photo-composer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .photo-composer-header-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            color: var(--text);
+        }
+        .photo-composer-cancel {
+            background: none;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+        }
+        .photo-composer-body {
+            flex: 1;
+            padding: 1.25rem 1rem calc(1.5rem + var(--safe-bottom));
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .photo-composer-caption {
+            width: 100%;
+            padding: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            background: var(--off-white);
+            color: var(--text);
+            resize: none;
+            outline: none;
+            box-sizing: border-box;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+        .photo-composer-caption:focus { border-color: var(--sky); }
+        .photo-composer-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+        .photo-composer-charcount {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-dim);
+        }
+        .photo-composer-post-btn {
+            padding: 0.7rem 1.75rem;
+            background: var(--sky);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .photo-composer-post-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .photo-rate-limit-msg {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            flex: 1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .photo-rate-limit-msg.visible { opacity: 1; }
+
+        /* ---- FEED LIVE INDICATOR ---- */
+        .feed-updated-indicator {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            text-align: center;
+            padding: 0.35rem 0 0;
+            letter-spacing: 0.01em;
+            display: none;
+        }
+        .feed-updated-indicator.visible { display: block; }
+
+        /* ---- SWIPE HINT OVERLAY ---- */
+        .swipe-hint-overlay {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+        }
+        .swipe-hint-overlay.fading { opacity: 0; }
+        .swipe-hint-overlay.hidden { display: none; }
+        .swipe-hint-badge {
+            background: rgba(15, 23, 42, 0.72);
+            color: white;
+            border-radius: 100px;
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .swipe-arrow-left,
+        .swipe-arrow-right {
+            display: inline-block;
+            animation: swipeArrow 1.1s ease-in-out infinite;
+        }
+        .swipe-arrow-right {
+            animation-direction: reverse;
+        }
+        @keyframes swipeArrow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-6px); }
+        }
+
+        /* ---- FEED TAB DOTS ---- */
+        .feed-tab-dots {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            padding: 0.35rem 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+        .feed-tab-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #CBD5E1;
+            transition: background 0.2s, width 0.2s;
+        }
+        .feed-tab-dot.active {
+            width: 18px;
+            border-radius: 3px;
+            background: var(--sky);
+        }
+        .feed-tab-dot[data-tab="pulse"].active {
+            background: #DC2626;
+        }
+        .feed-tab-dot[data-tab="tips"].active {
+            background: var(--gold);
+        }
+        .feed-tab-dot[data-tab="notetosat"].active {
+            background: var(--sky-dark);
+        }
+
+        /* ---- TAB DESCRIPTION BAR ---- */
+        .tab-desc-bar {
+            background: var(--off-white);
+            border-bottom: 1px solid var(--border);
+            padding: 0.45rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-align: center;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        /* ---- PULL TO REFRESH ---- */
+        .ptr-indicator {
+            position: fixed;
+            top: calc(3.4rem + var(--safe-top));
+            left: 50%;
+            transform: translateX(-50%) translateY(-60px);
+            z-index: 30;
+            background: white;
+            border-radius: 24px;
+            padding: 0.45rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--sky);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            transition: transform 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .ptr-indicator.pulling { transform: translateX(-50%) translateY(0); }
+        .ptr-indicator.refreshing { transform: translateX(-50%) translateY(0); }
+
+        /* ---- MINI PLAYER ---- */
+        .mini-player {
+            position: fixed;
+            bottom: calc(4.5rem + var(--safe-bottom));
+            left: 0;
+            right: 0;
+            height: 3.25rem;
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0 0.9rem;
+            z-index: 18;
+            box-shadow: 0 -2px 10px rgba(2, 132, 199, 0.07);
+        }
+
+        .mini-player-btn {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--sky);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .mini-player-btn:active { transform: scale(0.9); background: var(--sky-dark); }
+
+        .mini-player-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.28rem;
+        }
+
+        .mini-player-label {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .mini-player-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mini-player-note {
+            font-size: 0.8rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .mini-player-track {
+            width: 100%;
+            height: 3px;
+            background: var(--sky-light);
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            touch-action: none;
+        }
+
+        .mini-player-fill {
+            height: 100%;
+            background: var(--sky);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.5s linear;
+        }
+
+        .mini-player-time {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            min-width: 2.6rem;
+            text-align: right;
+        }
+
+        /* ---- 3-COLUMN DESKTOP LAYOUT ---- */
+        @media (min-width: 1024px) {
+            .feed {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+                align-content: start;
+                overflow-y: auto;
+                padding: 1rem;
+                padding-bottom: calc(8.25rem + var(--safe-bottom));
+            }
+            /* Full-width elements spanning all 3 columns */
+            .loading-spinner,
+            .feed-empty,
+            .load-more-btn,
+            .feed-footer-text {
+                grid-column: 1 / -1;
+            }
+            /* notetosat and feed-updated-indicator stay block */
+            .feed[data-tab="notetosat"] {
+                display: block;
+            }
+        }
+    </style>
+    <script>
+    // Passphrase check — sets a flag for Good Shots tab gating (R15: passphrase gates Good Shots only, not entire app)
+    var __miragePassAccepted = false;
+    (function() {
+        try {
+            var stored = localStorage.getItem('mirage_pass_accepted');
+            if (stored) {
+                var data = JSON.parse(stored);
+                if (data.accepted && new Date() < new Date(data.expires)) __miragePassAccepted = true;
+            }
+        } catch(e) {}
+    })();
+    </script>
+</head>
+<body>
+
+<!-- ============================================================
+     LOCATION OVERLAY
+============================================================ -->
+<div class="overlay" id="locationOverlay">
+    <div class="overlay-card">
+        <div class="overlay-wordmark">mirage</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:600;color:rgba(255,255,255,0.9);margin-bottom:1.25rem;letter-spacing:0.01em;">nice to meet you</div>
+        <div class="nickname-display" id="overlayNickname">generating your name…</div>
+        <div class="overlay-btns">
+            <button class="btn-loc btn-loc-primary" id="btnShareLocation">
+                <span>📍</span> share my location
+            </button>
+            <button class="btn-loc btn-loc-secondary" id="btnJustWatch">
+                just let me watch
+            </button>
+        </div>
+        <p style="margin-top:1.5rem;font-size:0.9rem;opacity:0.75;">we just need to know if you're at the festival, in the desert valley, or somewhere else. that's the only reason we're asking.</p>
+    </div>
+</div>
+
+<!-- ============================================================
+     NICKNAME REVEAL OVERLAY
+============================================================ -->
+<div class="overlay hidden" id="nicknameRevealOverlay">
+    <div class="nick-reveal-card">
+        <div class="overlay-wordmark">mirage</div>
+        <div class="nick-reveal-label">a reminder: your desert name is</div>
+        <div class="nick-reveal-name" id="revealNickname"></div>
+        <div class="nick-reveal-sub">it's yours until may 1. it disappears when mirage does.</div>
+        <button class="nick-reveal-btn" onclick="advanceMissionToFirstPost()">got it →</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     FIRST POST OVERLAY
+============================================================ -->
+<div class="overlay hidden" id="firstPostOverlay">
+    <div class="first-post-card">
+        <div class="first-post-pin"></div>
+        <div class="overlay-wordmark" style="font-size:2.5rem;margin-bottom:1.25rem;">mirage</div>
+        <div class="first-post-label">your first post</div>
+        <div class="first-post-sub">edit it or post as-is. this seeds the feed.</div>
+
+        <div class="first-post-compose">
+            <div class="first-post-nick-line" id="firstPostNickLine"></div>
+            <textarea class="first-post-textarea" id="firstPostText" maxlength="280" rows="3"></textarea>
+            <div class="first-post-feed-tag">📸 good shots</div>
+        </div>
+
+        <div class="first-post-btns">
+            <button class="btn-first-post btn-first-post-primary" id="btnSendFirstPost" onclick="sendFirstPost()">
+                post it
+            </button>
+            <button class="btn-first-post btn-first-post-skip" onclick="skipFirstPost()">
+                skip for now
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     APP HEADER
+============================================================ -->
+<header class="app-header">
+    <div class="header-left">
+        <div class="header-logo-wrap">
+            <div class="app-logo">mirage</div>
+            <div class="header-gone-label">gone may 1</div>
+        </div>
+        <div class="geo-badge outside" id="geoBadge">Elsewhere</div>
+    </div>
+    <div class="header-right">
+        <span class="nav-nickname" id="navNickname"></span>
+        <button class="header-passphrase-btn" onclick="openPassphraseSheet()" title="today's passphrase">passphrase</button>
+    </div>
+</header>
+
+<!-- Offline signal banner -->
+<div id="offlineBanner" class="offline-banner">
+    📡 waiting for signal… posts will queue automatically.
+</div>
+
+<!-- ============================================================
+     TAB BAR
+============================================================ -->
+<nav class="tab-bar">
+    <button class="tab-btn active" data-tab="moments" onclick="switchTab('moments')">
+        📸 good shots
+    </button>
+    <button class="tab-btn" data-tab="tips" onclick="switchTab('tips')">
+        ✨ good vibes
+    </button>
+    <button class="tab-btn" data-tab="pulse" onclick="switchTab('pulse')">
+        💡 good tips
+    </button>
+    <button class="tab-btn" data-tab="notetosat" onclick="switchTab('notetosat')">
+        💬 hey mirage
+    </button>
+</nav>
+
+<!-- Feed tab dots (4 dots under tab bar) -->
+<div class="feed-tab-dots" id="feedTabDots">
+    <div class="feed-tab-dot active" data-tab="moments"></div>
+    <div class="feed-tab-dot" data-tab="tips"></div>
+    <div class="feed-tab-dot" data-tab="pulse"></div>
+    <div class="feed-tab-dot" data-tab="notetosat"></div>
+</div>
+
+<!-- Tab description bar -->
+<div class="tab-desc-bar" id="tabDescBar">photos only — captions are optional.</div>
+
+<!-- Swipe hint overlay — first-time users only, auto-fades -->
+<div class="swipe-hint-overlay hidden" id="swipeHintOverlay">
+    <div class="swipe-hint-badge">
+        <span class="swipe-arrow-left">←</span>
+        swipe between feeds
+        <span class="swipe-arrow-right">→</span>
+    </div>
+</div>
+
+<!-- ============================================================
+     FEED
+============================================================ -->
+<!-- Pull-to-refresh indicator -->
+<div class="ptr-indicator" id="ptrIndicator">↓ pull to refresh</div>
+<!-- Feed live update indicator -->
+<div class="feed-updated-indicator" id="feedUpdatedIndicator"></div>
+
+<main class="feed" id="feed">
+    <div class="loading-spinner" id="loadingSpinner">loading…</div>
+</main>
+
+<!-- ============================================================
+     PHOTO PICKER BOTTOM SHEET
+============================================================ -->
+<div class="photo-picker-sheet" id="photoPickerSheet">
+    <div class="photo-picker-backdrop" onclick="closePhotoPicker()"></div>
+    <div class="photo-picker-content">
+        <div class="photo-picker-title">add a photo</div>
+        <div class="photo-picker-btns">
+            <button class="photo-picker-btn photo-picker-camera-btn" onclick="selectPhotoSource('camera')">
+                <span class="picker-icon">📷</span>
+                <span>take a photo</span>
+            </button>
+            <button class="photo-picker-btn photo-picker-gallery-btn" onclick="selectPhotoSource('gallery')">
+                <span class="picker-icon">🖼️</span>
+                <span>choose from gallery</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     PHOTO COMPOSER (full-screen overlay — single screen per spec)
+============================================================ -->
+<div class="photo-composer" id="photoComposer">
+    <div class="photo-composer-header">
+        <button class="photo-composer-cancel" onclick="cancelPhotoComposer()">cancel</button>
+        <span class="photo-composer-header-title">new moment</span>
+        <div style="width:48px"></div>
+    </div>
+    <div class="photo-composer-body">
+
+        <!-- Polaroid — always visible from first photo selection -->
+        <div class="polaroid-wrap">
+            <div class="polaroid-border">
+                <div class="polaroid-img-zone" id="composerImgZone">
+                    <!-- Crop view: shown while cropping, hidden after confirm -->
+                    <div class="crop-container composer-crop" id="cropContainer">
+                        <img id="cropperImg" src="" alt="" draggable="false">
+                        <!-- Masks outside the crop box -->
+                        <div class="crop-mask" id="cropMaskTop" style="left:0;right:0;top:0;height:0"></div>
+                        <div class="crop-mask" id="cropMaskBottom" style="left:0;right:0;bottom:0;height:0"></div>
+                        <div class="crop-mask" id="cropMaskLeft" style="top:0;left:0;width:0"></div>
+                        <div class="crop-mask" id="cropMaskRight" style="top:0;right:0;width:0"></div>
+                        <!-- Crop selection box -->
+                        <div class="crop-box" id="cropBox">
+                            <div class="crop-handle crop-nw" data-corner="nw"></div>
+                            <div class="crop-handle crop-ne" data-corner="ne"></div>
+                            <div class="crop-handle crop-sw" data-corner="sw"></div>
+                            <div class="crop-handle crop-se" data-corner="se"></div>
+                            <div class="crop-handle crop-n" data-edge="n"></div>
+                            <div class="crop-handle crop-s" data-edge="s"></div>
+                            <div class="crop-handle crop-w" data-edge="w"></div>
+                            <div class="crop-handle crop-e" data-edge="e"></div>
+                        </div>
+                    </div>
+                    <!-- Locked image: shown after crop confirmed -->
+                    <img id="photoComposerImg" src="" alt="your photo" style="display:none; width:100%; height:100%; object-fit:cover; display:none;">
+                </div>
+                <div class="polaroid-bottom-strip">
+                    <span class="polaroid-stamp">m</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm crop button — shown while cropping, hidden after confirm -->
+        <button class="crop-confirm-btn" id="cropConfirmBtn" onclick="confirmCrop()">✓ looks good</button>
+
+        <!-- Post-crop UI: add note + post button — hidden until crop confirmed -->
+        <div id="postCropUI" style="display:none">
+            <!-- Quiet "add a note" tap target -->
+            <div class="add-note-prompt" id="addNotePrompt" onclick="showNoteInput()">add a note</div>
+            <!-- Note input — expands on tap -->
+            <div class="note-input-wrap" id="noteInputWrap" style="display:none">
+                <textarea class="photo-composer-caption" id="photoCaptionInput"
+                          placeholder="what's up?" maxlength="280"
+                          oninput="onPhotoCaptionInput()"></textarea>
+                <span class="note-char-count" id="photoCaptionCharCount">280</span>
+            </div>
+            <!-- Footer -->
+            <div class="photo-composer-footer">
+                <span class="photo-rate-limit-msg" id="photoRateLimitMsg">wait a few minutes before your next photo.</span>
+                <button class="photo-composer-post-btn" id="photoPostBtn" onclick="createPhotoPost()">post</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================================
+     COMPOSE CONTROLS
+============================================================ -->
+
+<!-- Photo preview (above compose bar — kept for legacy, hidden in new flow) -->
+<div class="compose-preview" id="composePreview" style="display:none">
+    <img id="composePreviewImg" src="" alt="photo preview">
+    <button class="compose-preview-close" onclick="clearPhoto()">✕</button>
+</div>
+
+<!-- Retry bar -->
+<div class="retry-bar" id="retryBar">
+    <div class="retry-bar-text">post failed. your text is saved.</div>
+    <button class="retry-bar-btn" onclick="retryPost()">retry</button>
+    <button class="retry-bar-dismiss" onclick="dismissRetry()">✕</button>
+</div>
+
+<!-- Device post counter -->
+<div class="device-counter" id="deviceCounter"></div>
+
+<!-- Compose bar -->
+<div class="compose-bar" id="composeBar">
+    <button class="compose-photo-btn" id="photoBtn" onclick="handlePhotoBtn()">📷</button>
+    <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+    <!-- Honeypot: invisible to humans, bots fill it automatically -->
+    <input type="text" id="hpWebsiteUrl" name="website_url" tabindex="-1"
+           autocomplete="off" aria-hidden="true"
+           style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
+    <input class="compose-input" id="composeInput" type="text" maxlength="280"
+           placeholder="what's up?"
+           oninput="onInput()" onkeydown="onKeyDown(event)">
+    <span class="compose-char" id="charCount">280</span>
+    <button class="compose-send-btn" id="sendBtn" onclick="createPost()" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+    </button>
+</div>
+
+<!-- Read-only banner for "watching from elsewhere" tier -->
+<div class="readonly-banner" id="readonlyBanner">
+    <p>you're watching from afar — tap any post to react 🌵</p>
+</div>
+
+<!-- Mini Player — Coachella Bound -->
+<div class="mini-player" id="miniPlayer">
+    <button class="mini-player-btn" id="miniPlayerBtn" onclick="miniPlayerToggle()" aria-label="Play/pause">
+        <svg id="miniPlayIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        <svg id="miniPauseIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+            <rect x="6" y="4" width="4" height="16" rx="1"/>
+            <rect x="14" y="4" width="4" height="16" rx="1"/>
+        </svg>
+    </button>
+    <div class="mini-player-info">
+        <div class="mini-player-label">
+            <span class="mini-player-note">🎵</span>
+            <span class="mini-player-title">Coachella Bound</span>
+        </div>
+        <div class="mini-player-track" id="miniPlayerTrack" onclick="miniPlayerSeek(event)">
+            <div class="mini-player-fill" id="miniPlayerFill"></div>
+        </div>
+    </div>
+    <span class="mini-player-time" id="miniPlayerTime">3:00</span>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================
+     PASSPHRASE BOTTOM SHEET
+============================================================ -->
+<div class="passphrase-sheet" id="passphraseSheet">
+    <div class="passphrase-sheet-backdrop" onclick="closePassphraseSheet()"></div>
+    <div class="passphrase-sheet-content">
+        <div class="passphrase-sheet-handle"></div>
+        <div class="passphrase-sheet-word" id="passphraseWord">—</div>
+        <div class="passphrase-sheet-label" style="font-size:0.82rem;color:#475569;max-width:280px;margin:0 auto 2rem;line-height:1.5;font-style:normal;letter-spacing:0;">share this word to get your friends in. more people = better festival for everyone.</div>
+        <button class="passphrase-sheet-share-btn" onclick="sharePassphrase()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                <polyline points="16 6 12 2 8 6"/>
+                <line x1="12" y1="2" x2="12" y2="15"/>
+            </svg>
+            share
+        </button>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// CONSTANTS
+// ============================================================
+const MIRAGE_EXPIRY_ISO = '2026-05-02T06:59:00.000Z'; // May 1 2026 11:59 PM PT = May 2 06:59 UTC
+
+// ============================================================
+// PERSISTENT STORAGE HELPERS (localStorage + cookie fallback)
+// Android Chrome may evict localStorage on browser close.
+// Cookies with explicit expiry survive browser restarts.
+// ============================================================
+const MIRAGE_COOKIE_DAYS = 35; // covers through May 1 + buffer
+
+function _setCookie(name, value, days) {
+    try {
+        const expires = new Date(Date.now() + days * 86400000).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) +
+            '; expires=' + expires + '; path=/; SameSite=Lax';
+    } catch(e) {}
+}
+
+function _getCookie(name) {
+    try {
+        const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const match = document.cookie.match(new RegExp('(?:^|;\\s*)' + escaped + '=([^;]*)'));
+        return match ? decodeURIComponent(match[1]) : null;
+    } catch(e) { return null; }
+}
+
+// Read from localStorage; fall back to cookie and restore to localStorage on hit.
+function storageGet(key) {
+    try {
+        const lsVal = localStorage.getItem(key);
+        if (lsVal !== null) return lsVal;
+    } catch(e) {}
+    const cookieVal = _getCookie('m_' + key);
+    if (cookieVal !== null) {
+        try { localStorage.setItem(key, cookieVal); } catch(e) {}
+    }
+    return cookieVal;
+}
+
+// Write to both localStorage and a cookie (default 35-day expiry).
+function storageSet(key, value, cookieDays) {
+    const days = cookieDays !== undefined ? cookieDays : MIRAGE_COOKIE_DAYS;
+    try { localStorage.setItem(key, value); } catch(e) {}
+    _setCookie('m_' + key, value, days);
+}
+
+// 5 emojis in exact order
+const EMOJIS = ['😂', '😢', '🙏', '🤔', '💙'];
+const EMOJI_TOOLTIPS = {
+    '😂': 'this is funny',
+    '😢': 'this is sad / hits different',
+    '🙏': 'thank you',
+    '🤔': 'hmm / questioning this',
+    '💙': 'i feel this'
+};
+
+// ============================================================
+// NICKNAME GENERATION
+// ============================================================
+const DESERT_ADJ = [
+    'sandy', 'dusty', 'dry', 'hazy', 'arid', 'golden', 'sun', 'red', 'salt', 'pale',
+    'burnt', 'wild', 'lone', 'bare', 'mesa', 'dune', 'gust', 'heat', 'baked', 'ridge',
+    'sage', 'silt', 'tan', 'rust', 'mesa'
+];
+
+const DESERT_NOUN = [
+    'owl', 'hawk', 'fox', 'wren', 'dove', 'coyote', 'quail', 'bloom', 'stone', 'ridge',
+    'cloud', 'rock', 'wind', 'sage', 'dune', 'peak', 'trail', 'creek', 'cactus', 'bird',
+    'snake', 'crow', 'bluff', 'drift', 'flats'
+];
+
+function generateNickname() {
+    const adj = DESERT_ADJ[Math.floor(Math.random() * DESERT_ADJ.length)];
+    const noun = DESERT_NOUN[Math.floor(Math.random() * DESERT_NOUN.length)];
+    const num = Math.floor(Math.random() * 90) + 1;
+    return `${adj}${noun}_${num}`;
+}
+
+// Nickname persisted via localStorage + cookie until May 1, 2026
+function getOrCreateNickname() {
+    const stored = storageGet('mirage_nickname_v2');
+    if (stored) {
+        try {
+            const { nick, expires } = JSON.parse(stored);
+            if (new Date() < new Date(expires)) return nick;
+        } catch(e) {}
+    }
+    const nick = generateNickname();
+    storageSet('mirage_nickname_v2', JSON.stringify({ nick, expires: MIRAGE_EXPIRY_ISO }));
+    return nick;
+}
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+    sessionId: null,
+    nickname: null,
+    geoTier: 'outside',  // 'grounds' | 'valley' | 'outside'
+    latitude: null,
+    longitude: null,
+    currentTab: __miragePassAccepted ? 'moments' : 'tips',
+    posts: [],
+    loading: false,
+    hasMore: false,
+    myReactions: {},
+    myFlags: new Set(),
+    pendingPhoto: null,
+    pendingPhotoUrl: null,
+    postFailed: false,
+    autoRefreshTimer: null,
+    pendingPostNonce: null,  // { text, nickname, tab } — dedup SSE on own posts
+    pageLoadedAt: Date.now()  // for anti-spam timing check
+};
+
+// ---- Admin mode: check if admin token is set (from admin panel localStorage/sessionStorage) ----
+const _adminToken = localStorage.getItem('mirage_admin_token') || sessionStorage.getItem('mirage_admin_token') || null;
+
+// Feed load generation counter — incremented on tab switch to discard stale responses
+let feedLoadSeq = 0;
+
+// P0 FIX: Persistent spinner reference so feed.innerHTML = '' never destroys it
+let spinnerEl = null;
+
+// ============================================================
+// GEO TIER HELPERS
+// ============================================================
+function tierDisplayName(tier) {
+    if (tier === 'grounds') return 'at the fest';
+    if (tier === 'valley') return 'in the desert';
+    return 'Elsewhere';
+}
+
+function canPost() { return state.geoTier === 'grounds' || state.geoTier === 'valley'; }
+// All tiers can react — including "watching from elsewhere"
+function canReact() { return true; }
+function isAtFest() { return state.geoTier === 'grounds'; }
+
+function tierCssClass(tier) {
+    if (tier === 'grounds') return 'at_the_fest';
+    if (tier === 'valley') return 'in_the_desert';
+    return 'outside';
+}
+
+// ============================================================
+// CLIENT-SIDE GEO CALCULATION
+// ============================================================
+const EMPIRE_POLO = { lat: 33.6815, lng: -116.2372 };
+const VALLEY_CENTER = { lat: 33.7225, lng: -116.3747 };
+const GROUNDS_RADIUS_KM = 1.5;
+const VALLEY_RADIUS_KM = 40; // expanded from 30 — covers full valley incl. Mecca/Thermal
+
+function haversineKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2)**2 +
+        Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function calcGeoTier(lat, lng) {
+    if (lat == null || lng == null) return 'outside';
+    const d = haversineKm(lat, lng, EMPIRE_POLO.lat, EMPIRE_POLO.lng);
+    if (d <= GROUNDS_RADIUS_KM) return 'grounds';
+    const d2 = haversineKm(lat, lng, VALLEY_CENTER.lat, VALLEY_CENTER.lng);
+    if (d2 <= VALLEY_RADIUS_KM) return 'valley';
+    return 'outside';
+}
+
+// ============================================================
+// SESSION INIT
+// ============================================================
+function initSession() {
+    // Session ID: persistent via localStorage + cookie (survives Android browser restart)
+    let sid = storageGet('mirage_session');
+    if (!sid) {
+        sid = crypto.randomUUID();
+        storageSet('mirage_session', sid);
+    }
+    state.sessionId = sid;
+
+    // Extract UTM params from URL — persist in sessionStorage so they survive redirects
+    const utmParams = new URLSearchParams(window.location.search);
+    const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign'];
+    const utm = {};
+    utmKeys.forEach(function(k) {
+      const v = utmParams.get(k);
+      if (v) {
+        try { sessionStorage.setItem(k, v); } catch(e) {}
+        utm[k] = v;
+      } else {
+        try { const stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
+      }
+    });
+    // Track pageview for analytics (keepalive survives page navigation)
+    fetch('/api/analytics/pageview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ device_id: sid, path: '/app' }, utm)),
+      keepalive: true
+    }).catch(() => {});
+
+    // Nickname: persistent via localStorage + cookie until expiry
+    state.nickname = getOrCreateNickname();
+
+    // Restore geo state (localStorage + cookie backup for Android persistence)
+    let savedTier = storageGet('mirage_geo_tier');
+    // Migrate old beta geo tier names to current names (returning users restore posting ability)
+    if (savedTier === 'at_the_fest') { savedTier = 'grounds'; storageSet('mirage_geo_tier', 'grounds'); }
+    else if (savedTier === 'in_the_desert') { savedTier = 'valley'; storageSet('mirage_geo_tier', 'valley'); }
+    const savedLat = storageGet('mirage_lat');
+    const savedLng = storageGet('mirage_lng');
+    // Only skip location overlay if user was previously IN the valley.
+    // Never restore 'outside' — they may have traveled into the valley since last visit.
+    // Stale 'outside' was the cause of valley users being stuck in the wrong tier.
+    if (savedTier && savedTier !== 'outside') {
+        state.geoTier = savedTier;
+        state.latitude = savedLat ? parseFloat(savedLat) : null;
+        state.longitude = savedLng ? parseFloat(savedLng) : null;
+        // Re-register session geo_tier with server on each load (idempotent, keeps last_seen fresh)
+        registerSessionGeo(state.latitude, state.longitude);
+        hideOverlay();
+    }
+
+    // Restore draft (localStorage only — drafts don't need cookie backup)
+    const draft = localStorage.getItem('mirage_draft');
+    if (draft) {
+        document.getElementById('composeInput').value = draft;
+        updateCharCount();
+    }
+}
+
+function hideOverlay() {
+    document.getElementById('locationOverlay').classList.add('hidden');
+    updateGeoBadge();
+    updateComposeVisibility();
+    // Use switchTab to ensure correct tab is active (moments for passphrase users, tips otherwise)
+    switchTab(state.currentTab);
+    connectSSE();
+    initSwipeHint();
+}
+
+function updateGeoBadge() {
+    const badge = document.getElementById('geoBadge');
+    const cls = tierCssClass(state.geoTier);
+    badge.className = `geo-badge ${cls}`;
+
+    if (state.geoTier === 'grounds') {
+        badge.innerHTML = `<span class="live-dot"></span> at the fest`;
+    } else if (state.geoTier === 'valley') {
+        badge.textContent = 'in the desert';
+    } else {
+        badge.textContent = 'Elsewhere';
+    }
+}
+
+function updateComposeVisibility() {
+    const bar = document.getElementById('composeBar');
+    const banner = document.getElementById('readonlyBanner');
+    if (canPost()) {
+        bar.classList.remove('hidden');
+        banner.classList.remove('visible');
+    } else {
+        bar.classList.add('hidden');
+        banner.classList.add('visible');
+    }
+}
+
+// ============================================================
+// LOCATION FLOW
+// ============================================================
+document.getElementById('overlayNickname').textContent = '';
+
+window.addEventListener('DOMContentLoaded', () => {
+    spinnerEl = document.getElementById('loadingSpinner');
+    initSession();
+    document.getElementById('overlayNickname').textContent = state.nickname;
+    document.getElementById('navNickname').textContent = state.nickname;
+    updateOfflineBanner();
+    registerServiceWorker();
+    startPulseCountdownTicker();
+    startTimestampUpdater();
+    updateDeviceCounter();
+    attachCropperEvents();
+});
+
+// Register this session's geo_tier with the server (server-side watcher enforcement)
+function registerSessionGeo(latitude, longitude) {
+    // Extract UTM params persisted from landing page (sessionStorage survives redirects)
+    const utm = {};
+    const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign'];
+    utmKeys.forEach(function(k) {
+      try { var stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
+    });
+
+    fetch('/api/sessions/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({
+            session_id: state.sessionId,
+            latitude,
+            longitude,
+            passphrase_required: false  // Apr 18 2026: gate removed — all new sessions are automatic
+        }, utm))
+    }).catch(() => {}); // fire-and-forget, non-fatal
+}
+
+// Meta Pixel: fire Lead event once per new user (first-time registration only)
+function firePixelLead() {
+    if (typeof fbq === 'undefined') return;
+    if (localStorage.getItem('mirage_pixel_lead_fired')) return;
+    fbq('track', 'Lead');
+    localStorage.setItem('mirage_pixel_lead_fired', '1');
+}
+
+document.getElementById('btnShareLocation').addEventListener('click', () => {
+    const btn = document.getElementById('btnShareLocation');
+    btn.disabled = true;
+    btn.textContent = 'locating…';
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            const { latitude, longitude } = pos.coords;
+            state.latitude = latitude;
+            state.longitude = longitude;
+            state.geoTier = calcGeoTier(latitude, longitude);
+            storageSet('mirage_geo_tier', state.geoTier);
+            storageSet('mirage_lat', String(latitude));
+            storageSet('mirage_lng', String(longitude));
+            registerSessionGeo(latitude, longitude); // persist tier server-side
+            firePixelLead(); // Meta Pixel: Lead on first-time registration
+            startOnboarding();
+        },
+        () => {
+            // Location denied — watch-only
+            state.geoTier = 'outside';
+            storageSet('mirage_geo_tier', 'outside');
+            registerSessionGeo(null, null); // register as watcher server-side
+            firePixelLead(); // Meta Pixel: Lead on first-time registration
+            startOnboarding();
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+});
+
+document.getElementById('btnJustWatch').addEventListener('click', () => {
+    state.geoTier = 'outside';
+    storageSet('mirage_geo_tier', 'outside');
+    registerSessionGeo(null, null); // register as watcher server-side
+    firePixelLead(); // Meta Pixel: Lead on first-time registration
+    startOnboarding();
+});
+
+// ============================================================
+// ONBOARDING FLOW
+// Order (first-time only): location → nickname reveal → mission board → first post
+// ============================================================
+
+const FIRST_POST_BY_TIER = {
+    grounds: "hello coachella/stagecoach 👋🏼 😎",
+    valley: "hello coachella/stagecoach 👋🏼 😎",
+    outside: null // can't post
+};
+
+function isFirstTime() {
+    return !storageGet('mirage_onboarding_done');
+}
+
+function markOnboardingDone() {
+    storageSet('mirage_onboarding_done', '1');
+}
+
+function startOnboarding() {
+    document.getElementById('locationOverlay').classList.add('hidden');
+    if (isFirstTime()) {
+        showNicknameReveal();
+    } else {
+        enterApp();
+    }
+}
+
+function showNicknameReveal() {
+    document.getElementById('revealNickname').textContent = state.nickname;
+    document.getElementById('nicknameRevealOverlay').classList.remove('hidden');
+}
+
+function advanceMissionToFirstPost() {
+    document.getElementById('nicknameRevealOverlay').classList.add('hidden');
+    markOnboardingDone();
+    const firstPostText = FIRST_POST_BY_TIER[state.geoTier];
+    if (firstPostText && canPost()) {
+        showFirstPostOverlay(firstPostText);
+    } else {
+        enterApp();
+    }
+}
+
+function showFirstPostOverlay(prefillText) {
+    const tierLabel = tierDisplayName(state.geoTier);
+    document.getElementById('firstPostNickLine').textContent = `${state.nickname} · ${tierLabel}`;
+    const textarea = document.getElementById('firstPostText');
+    textarea.value = prefillText;
+    document.getElementById('firstPostOverlay').classList.remove('hidden');
+    // Cursor at end
+    setTimeout(() => { textarea.focus(); textarea.setSelectionRange(textarea.value.length, textarea.value.length); }, 100);
+}
+
+async function sendFirstPost() {
+    const text = document.getElementById('firstPostText').value.trim();
+    if (!text) return;
+
+    const btn = document.getElementById('btnSendFirstPost');
+    btn.disabled = true;
+    btn.textContent = 'posting…';
+
+    try {
+        const res = await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                session_id: state.sessionId,
+                nickname: state.nickname,
+                text,
+                tab: 'moments',
+                latitude: state.latitude,
+                longitude: state.longitude,
+                photo_url: null
+            })
+        });
+        // success or fail — either way, enter the app
+    } catch (e) {}
+
+    document.getElementById('firstPostOverlay').classList.add('hidden');
+    enterApp();
+}
+
+function skipFirstPost() {
+    document.getElementById('firstPostOverlay').classList.add('hidden');
+    enterApp();
+}
+
+function enterApp() {
+    // Same as old hideOverlay but without touching the location overlay
+    updateGeoBadge();
+    updateComposeVisibility();
+    // Initialize feed data-tab attribute for background color styling
+    document.getElementById('feed').setAttribute('data-tab', state.currentTab);
+    loadPosts();
+    startAutoRefresh();
+    connectSSE();
+    initSwipeHint();
+}
+
+// ============================================================
+// SSE: REAL-TIME POST SYNC
+// ============================================================
+let sseSource = null;
+
+function connectSSE() {
+    if (sseSource) return; // Already connected
+    try {
+        sseSource = new EventSource('/api/events');
+        sseSource.onmessage = (e) => {
+            try {
+                const msg = JSON.parse(e.data);
+                if (msg.type === 'new_post') {
+                    handleSSENewPost(msg.post);
+                }
+            } catch {}
+        };
+        sseSource.onerror = () => {
+            // EventSource auto-reconnects after error — don't reset sseSource
+        };
+    } catch (e) {
+        // SSE not supported — fall back to polling
+    }
+}
+
+function handleSSENewPost(post) {
+    // Only inject posts for the current tab
+    if (post.tab !== state.currentTab) return;
+    // P0 FIX: If this matches our in-flight submission, skip it — createPost handles rendering
+    if (state.pendingPostNonce &&
+        post.nickname === state.pendingPostNonce.nickname &&
+        post.text === state.pendingPostNonce.text &&
+        post.tab === state.pendingPostNonce.tab) {
+        return;
+    }
+    // Don't add if we already have it (e.g., we created it)
+    if (state.posts.find(p => p.id === post.id)) return;
+
+    const feed = document.getElementById('feed');
+    const empty = feed.querySelector('.feed-empty');
+    if (empty) empty.remove();
+
+    const card = renderPostCard(post);
+    // Insert after any queued cards at the top
+    const firstNonQueued = feed.querySelector('.post-card:not(.queued-card)');
+    if (firstNonQueued) {
+        feed.insertBefore(card, firstNonQueued);
+    } else {
+        feed.insertBefore(card, feed.firstChild);
+    }
+    state.posts.unshift(post);
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab) {
+    // P0 FIX: Invalidate any in-flight load for the previous tab
+    feedLoadSeq++;
+    state.loading = false;
+
+    state.currentTab = tab;
+    state.posts = [];
+    state.hasMore = false;
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tab);
+    });
+    // Set feed data-tab attribute for background color styling
+    document.getElementById('feed').setAttribute('data-tab', tab);
+    // Update tab description bar
+    const TAB_DESCS = {
+        moments: 'photos only — captions are optional.',
+        tips: 'leave some love — a kind word, a lyric, anything that lifts the mood.',
+        pulse: 'share something useful — tips, lost and found, anything festivalgoers should know.',
+        notetosat: 'private note'
+    };
+    const tabDescEl = document.getElementById('tabDescBar');
+    if (tabDescEl) tabDescEl.textContent = TAB_DESCS[tab] || '';
+    // Placeholder stays "what's up?" for all tabs
+    const composeInput = document.getElementById('composeInput');
+    if (composeInput) composeInput.placeholder = "what's up?";
+
+    // Camera button: moments only
+    const photoBtn = document.getElementById('photoBtn');
+    if (photoBtn) {
+        photoBtn.style.display = (tab === 'moments') ? '' : 'none';
+        if (tab !== 'moments') clearPhoto();
+    }
+
+    // Compose bar: hide on note-to-sat tab (form, not a feed)
+    const composeBar = document.getElementById('composeBar');
+    const readonlyBanner = document.getElementById('readonlyBanner');
+    if (tab === 'notetosat') {
+        if (composeBar) composeBar.classList.add('hidden');
+        if (readonlyBanner) readonlyBanner.classList.remove('visible');
+    } else {
+        updateComposeVisibility();
+    }
+
+    // Update feed tab dots
+    document.querySelectorAll('.feed-tab-dot').forEach(d => {
+        d.classList.toggle('active', d.dataset.tab === tab);
+    });
+
+    // Dismiss swipe hint on first tab switch
+    dismissSwipeHint();
+
+    if (tab === 'notetosat') {
+        // Note to Sat is a static form — stop timer, render form, no API call
+        if (state.autoRefreshTimer) { clearInterval(state.autoRefreshTimer); state.autoRefreshTimer = null; }
+        renderNoteToSat();
+    } else if (tab === 'moments' && !isPassphraseAcceptedApp()) {
+        // Good Shots tab requires passphrase (R15: passphrase gates Good Shots only)
+        if (state.autoRefreshTimer) { clearInterval(state.autoRefreshTimer); state.autoRefreshTimer = null; }
+        renderMomentsPassphraseGate();
+    } else {
+        loadPosts();
+        // Restart timer with correct interval for this tab
+        startAutoRefresh();
+    }
+}
+
+// ============================================================
+// PASSPHRASE CHECK (Good Shots tab only — R15 spec)
+// ============================================================
+function isPassphraseAcceptedApp() {
+    if (__miragePassAccepted) return true;
+    // Re-check in case it was accepted during this session (e.g., via the inline gate)
+    try {
+        const stored = localStorage.getItem('mirage_pass_accepted');
+        if (stored) {
+            const data = JSON.parse(stored);
+            if (data.accepted && new Date() < new Date(data.expires)) {
+                __miragePassAccepted = true;
+                return true;
+            }
+        }
+    } catch(e) {}
+    return false;
+}
+
+function storePassphraseApp() {
+    localStorage.setItem('mirage_pass_accepted', JSON.stringify({
+        accepted: true,
+        expires: '2026-05-02T06:59:00.000Z'
+    }));
+    __miragePassAccepted = true;
+}
+
+function renderMomentsPassphraseGate() {
+    const feed = document.getElementById('feed');
+    feed.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.5rem;text-align:center;gap:1rem;">
+            <div style="font-size:2rem;">📸</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);">good shots is passphrase-protected</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text-muted);max-width:280px;line-height:1.5;">get the daily word from a friend or the feed — it keeps this space tight.</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;width:100%;max-width:300px;margin-top:0.5rem;">
+                <input type="text" id="momentsPassField" placeholder="passphrase..."
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                    style="flex:1;padding:0 1rem;height:48px;border:2px solid var(--border);border-radius:100px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;color:var(--text);text-align:center;outline:none;background:white;"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault();verifyMomentsPassphrase();}">
+                <button onclick="verifyMomentsPassphrase()" style="flex-shrink:0;padding:0 1.2rem;height:48px;border-radius:100px;background:var(--sky);border:none;color:white;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;">go</button>
+            </div>
+            <div id="momentsPassError" style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:#DC2626;display:none;"></div>
+        </div>`;
+    const field = document.getElementById('momentsPassField');
+    if (field) field.focus();
+}
+
+async function verifyMomentsPassphrase() {
+    const field = document.getElementById('momentsPassField');
+    if (!field) return;
+    const entered = field.value.trim().toLowerCase();
+    if (!entered) { field.focus(); return; }
+    try {
+        const res = await fetch('/api/passphrase/today');
+        if (!res.ok) throw new Error('fetch failed');
+        const { word } = await res.json();
+        if (entered === word.toLowerCase()) {
+            storePassphraseApp();
+            switchTab('moments'); // Re-enter moments — now unlocked
+        } else {
+            field.value = '';
+            field.placeholder = 'not quite. try again.';
+            const err = document.getElementById('momentsPassError');
+            if (err) { err.textContent = 'wrong word — ask a friend or check the feed.'; err.style.display = ''; }
+            setTimeout(() => { field.placeholder = 'passphrase...'; if (err) err.style.display = 'none'; }, 2000);
+        }
+    } catch(e) {
+        showToast('having trouble connecting. try again.');
+    }
+}
+
+// ============================================================
+// LOAD POSTS
+// ============================================================
+async function loadPosts(append = false) {
+    if (state.loading) return;
+    state.loading = true;
+
+    // P0 FIX: Capture the generation at the time of this call.
+    // If feedLoadSeq changes before we render (tab switch), discard the stale response.
+    const mySeq = feedLoadSeq;
+
+    const feed = document.getElementById('feed');
+
+    try {
+        // P0 FIX: Show spinner without appendChild — spinnerEl is a persistent module-level
+        // reference that is never destroyed by feed.innerHTML = ''. This fixes the bug where
+        // the spinner being a child of #feed meant feed.innerHTML='' would destroy it, causing
+        // subsequent calls to crash (spinner null → appendChild throws before try block).
+        if (!append) {
+            feed.innerHTML = '';
+            if (spinnerEl) {
+                feed.appendChild(spinnerEl);
+                spinnerEl.style.display = 'flex';
+            }
+        }
+
+        let url = `/api/posts?tab=${state.currentTab}&limit=20`;
+        if (append && state.posts.length > 0) {
+            const oldest = state.posts[state.posts.length - 1];
+            url += `&before=${encodeURIComponent(oldest.created_at)}`;
+        }
+
+        const res = await fetch(url);
+        if (res.status === 410) {
+            // Festival has ended — redirect to farewell page
+            window.location.href = '/app';
+            return;
+        }
+        if (!res.ok) throw new Error('fetch failed');
+        const data = await res.json();
+
+        // P0 FIX: Stale check — if tab was switched while loading, discard this response
+        if (mySeq !== feedLoadSeq) {
+            state.loading = false;
+            return;
+        }
+
+        // Remove spinner from feed before clearing innerHTML — prevents it being destroyed
+        if (spinnerEl && spinnerEl.parentNode === feed) feed.removeChild(spinnerEl);
+        if (spinnerEl) spinnerEl.style.display = 'none';
+
+        if (!append) {
+            state.posts = data.posts;
+        } else {
+            state.posts = [...state.posts, ...data.posts];
+        }
+
+        state.hasMore = data.posts.length === 20;
+
+        // Fetch my reactions
+        if (data.posts.length > 0 && state.sessionId) {
+            fetchMyReactions(data.posts.map(p => p.id));
+        }
+
+        if (!append) feed.innerHTML = '';
+        renderFeed(data.posts, append);
+        renderQueuedPosts();
+        if (!append) updateFeedIndicator();
+
+    } catch (e) {
+        if (mySeq !== feedLoadSeq) { state.loading = false; return; }
+        if (spinnerEl && spinnerEl.parentNode === feed) feed.removeChild(spinnerEl);
+        if (spinnerEl) spinnerEl.style.display = 'none';
+        if (!append) {
+            feed.innerHTML = "<div class='feed-empty'><span class='empty-icon'>📶</span><p>couldn't load posts. check your signal.</p></div>";
+        }
+        renderQueuedPosts();
+    } finally {
+        state.loading = false;
+    }
+}
+
+async function fetchMyReactions(postIds) {
+    try {
+        const res = await fetch('/api/my-reactions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: state.sessionId, post_ids: postIds })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            state.myReactions = { ...state.myReactions, ...data.reactions };
+            Object.entries(data.reactions).forEach(([postId, emojis]) => {
+                emojis.forEach(emoji => {
+                    const btn = document.querySelector(`[data-post="${postId}"][data-emoji="${emoji}"]`);
+                    if (btn) btn.classList.add('active');
+                });
+            });
+        }
+    } catch {}
+}
+
+// ============================================================
+// RENDER FEED
+// ============================================================
+function renderFeed(posts, append = false) {
+    const feed = document.getElementById('feed');
+
+    // Good Tips (pulse) are now permanent — no client-side TTL filtering needed
+    const filtered = posts;
+
+    if (filtered.length === 0 && !append) {
+        const emptyMessages = {
+            moments: '📸 no good shots yet. be the first.',
+            tips: '✨ no good vibes yet. drop the first.',
+            pulse: "💡 no good tips yet. share something useful."
+        };
+        feed.innerHTML = `<div class="feed-empty"><p>${emptyMessages[state.currentTab] || 'nothing here yet.'}</p></div>`;
+        return;
+    }
+
+    filtered.forEach(post => {
+        const card = renderPostCard(post);
+        feed.appendChild(card);
+    });
+
+    // Remove existing load more button
+    const existing = document.getElementById('loadMoreBtn');
+    if (existing) existing.remove();
+    const existingFooter = document.getElementById('feedFooter');
+    if (existingFooter) existingFooter.remove();
+
+    if (state.hasMore) {
+        const btn = document.createElement('button');
+        btn.id = 'loadMoreBtn';
+        btn.className = 'load-more-btn';
+        btn.textContent = 'load more';
+        btn.onclick = () => loadPosts(true);
+        feed.appendChild(btn);
+    } else if (!append || filtered.length > 0) {
+        // Show footer at end
+        const footer = document.createElement('div');
+        footer.id = 'feedFooter';
+        footer.className = 'feed-footer-text';
+        footer.innerHTML = `an experiment by sat. · <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener">@sunshinefm.bsky.social</a> · disappears may 1, 2026<br><span style="font-size:0.75em;opacity:0.65;line-height:1.5;display:block;margin-top:0.35rem">mirage is a temporary social layer for festival season in coachella valley. keep it human. no hate, harassment, threats, doxxing, scams, spam, or sexual exploitation. casual profanity is fine; targeted abuse is not. posts may be hidden or removed at any time.</span>`;
+        feed.appendChild(footer);
+    }
+}
+
+function renderPostCard(post) {
+    const card = document.createElement('div');
+    card.className = `post-card${post.tab === 'pulse' ? ' pulse-card' : ''}`;
+    card.dataset.postId = post.id;
+
+    const isAtFestPost = post.geo_tier === 'grounds';
+    const tierClass = tierCssClass(post.geo_tier);
+    const tierLabel = tierDisplayName(post.geo_tier);
+
+    // Time — store data-created-at for dynamic updates
+    const timeStr = timeAgo(post.created_at);
+
+    // Good Tips (pulse) are permanent — no expiry countdown
+    let pulseExpiryHtml = '';
+
+    // Reactions (5 active emojis — picker; legacy emojis display-only)
+    const reactionMap = {};
+    (post.reactions || []).forEach(r => { reactionMap[r.emoji] = r.count; });
+    const myReacted = state.myReactions[post.id] || [];
+
+    const reactionsHtml = EMOJIS.map(emoji => {
+        const count = reactionMap[emoji] || 0;
+        const isActive = myReacted.includes(emoji);
+        return `<button class="reaction-btn${isActive ? ' active' : ''}"
+                    data-post="${post.id}" data-emoji="${emoji}"
+                    onclick="handleReactionClick(${post.id}, '${emoji}', this)">
+                    ${emoji}${count > 0 ? `<span class="r-count">${count}</span>` : ''}
+                </button>`;
+    }).join('');
+
+    // Legacy reactions: removed emojis that still have counts — display only, no picker
+    const legacyHtml = Object.entries(reactionMap)
+        .filter(([emoji, count]) => !EMOJIS.includes(emoji) && count > 0)
+        .map(([emoji, count]) => `<span class="reaction-btn" style="opacity:0.45;cursor:default;pointer-events:none;">${emoji}<span class="r-count">${count}</span></span>`)
+        .join('');
+
+    // Flag button (not visible to others — client-side tracking only for UX)
+    const flagged = state.myFlags.has(post.id);
+    const flagHtml = post.session_id !== 'SYSTEM' ? `
+        <button class="post-flag-btn${flagged ? ' flagged' : ''}"
+                data-post="${post.id}"
+                onclick="flagPost(${post.id}, this)" title="report">
+            <svg viewBox="0 0 24 24" fill="${flagged ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+        </button>` : '';
+
+    // Admin delete button — only shown when admin token is in sessionStorage
+    const adminDeleteHtml = _adminToken ? `<button class="admin-delete-btn" onclick="deletePostAdmin(${post.id}, this)" title="Admin: delete post">✕ del</button>` : '';
+
+    // P0 FIX: Moments posts with a photo render as polaroids
+    // Share / download icon is ONLY for moments polaroid posts
+    if (post.tab === 'moments' && post.photo_url) {
+        const polaroidShareHtml = `<button class="post-share-btn" onclick="downloadPolaroid(${post.id})" title="save polaroid" style="width:auto;padding:0.3rem 0.6rem;border-radius:100px;gap:0.3rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:700;color:#475569;display:inline-flex;align-items:center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;flex-shrink:0;">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                    <polyline points="16 6 12 2 8 6"/>
+                    <line x1="12" y1="2" x2="12" y2="15"/>
+                </svg>
+                save polaroid
+            </button>`;
+        card.className = 'post-card moments-polaroid-card';
+        card.innerHTML = `
+            <div class="post-header">
+                ${isAtFestPost ? '<span class="live-dot"></span>' : ''}
+                <span class="post-nickname">${escapeHtml(post.nickname)}</span>
+                <span class="post-tier-badge ${tierClass}">${tierLabel}</span>
+                <span class="post-time" data-created-at="${post.created_at}">${timeStr}</span>
+            </div>
+            <div class="polaroid-wrap">
+                <div class="polaroid-border">
+                    <div class="polaroid-img-zone">
+                        <img src="${escapeHtml(post.photo_url)}" alt="photo" loading="lazy">
+                    </div>
+                    <div class="polaroid-bottom-strip">
+                        <span class="polaroid-stamp">m</span>
+                    </div>
+                </div>
+                ${post.text && post.text.trim() ? `<p class="polaroid-caption">${escapeHtml(post.text)}</p>` : ''}
+            </div>
+            <div class="post-footer">
+                <div class="post-reactions">${reactionsHtml}${legacyHtml}</div>
+                ${flagHtml}
+                ${polaroidShareHtml}
+                ${adminDeleteHtml}
+            </div>
+        `;
+        return card;
+    }
+
+    // Photo (non-moments or no photo) — no share button for tips/pulse
+    const photoHtml = post.photo_url
+        ? `<img class="post-photo" src="${escapeHtml(post.photo_url)}" alt="photo" loading="lazy">`
+        : '';
+
+    const isAdminPost = post.session_id === 'ADMIN';
+    const adminBadgeHtml = isAdminPost
+        ? `<span style="display:inline-flex;align-items:center;gap:0.2rem;background:#0284C7;color:white;font-size:0.62rem;font-weight:700;padding:0.15rem 0.45rem;border-radius:100px;letter-spacing:0.03em;">📌 sat</span>`
+        : '';
+
+    card.innerHTML = `
+        <div class="post-header">
+            ${isAtFestPost && !isAdminPost ? '<span class="live-dot"></span>' : ''}
+            <span class="post-nickname">${escapeHtml(isAdminPost ? 'sat' : post.nickname)}</span>
+            ${adminBadgeHtml}
+            ${!isAdminPost ? `<span class="post-tier-badge ${tierClass}">${tierLabel}</span>` : ''}
+            ${pulseExpiryHtml}
+            <span class="post-time" data-created-at="${post.created_at}">${timeStr}</span>
+        </div>
+        <div class="post-text">${escapeHtml(post.text)}</div>
+        ${photoHtml}
+        <div class="post-footer">
+            <div class="post-reactions">${reactionsHtml}${legacyHtml}</div>
+            ${isAdminPost ? '' : flagHtml}
+            ${adminDeleteHtml}
+        </div>
+    `;
+
+    return card;
+}
+
+// ============================================================
+// ADMIN DELETE (admin-only, shown when mirage_admin_token in sessionStorage)
+// ============================================================
+async function deletePostAdmin(id, btn) {
+    if (!_adminToken) return;
+    if (!confirm(`Delete post #${id}? This cannot be undone.`)) return;
+    if (btn) { btn.textContent = '…'; btn.disabled = true; }
+    try {
+        const r = await fetch(`/api/admin/posts/${id}`, {
+            method: 'DELETE',
+            headers: { 'x-admin-token': _adminToken }
+        });
+        if (r.ok) {
+            const card = btn ? btn.closest('.post-card') : document.querySelector(`[data-post-id="${id}"]`);
+            if (card) {
+                card.style.transition = 'opacity 0.3s';
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.remove();
+                    state.posts = state.posts.filter(p => p.id !== id);
+                }, 300);
+            }
+        } else {
+            if (btn) { btn.textContent = '✕ del'; btn.disabled = false; }
+            alert('Delete failed');
+        }
+    } catch (e) {
+        if (btn) { btn.textContent = '✕ del'; btn.disabled = false; }
+        alert('Delete failed: ' + e.message);
+    }
+}
+
+// ============================================================
+// PULSE COUNTDOWN — real-time ticking
+// ============================================================
+function pulseTimeRemainingStr(expiresAt) {
+    const ms = expiresAt - Date.now();
+    if (ms <= 0) return null;
+    const totalSecs = Math.ceil(ms / 1000);
+    const mins = Math.floor(totalSecs / 60);
+    const secs = totalSecs % 60;
+    if (mins === 0) return `⚡ ${secs}s`;
+    return `⚡ ${mins}m ${secs}s`;
+}
+
+function startPulseCountdownTicker() {
+    setInterval(() => {
+        document.querySelectorAll('[data-pulse-expires]').forEach(span => {
+            const expiresAt = new Date(span.dataset.pulseExpires);
+            const ms = expiresAt - Date.now();
+            if (ms <= 0) {
+                // Remove expired pulse card
+                const card = span.closest('.post-card');
+                if (card) {
+                    const postId = parseInt(card.dataset.postId);
+                    state.posts = state.posts.filter(p => p.id !== postId);
+                    card.style.transition = 'opacity 0.4s';
+                    card.style.opacity = '0';
+                    setTimeout(() => card.remove(), 400);
+                }
+            } else {
+                span.textContent = pulseTimeRemainingStr(expiresAt);
+            }
+        });
+    }, 1000);
+}
+
+// ============================================================
+// TIMESTAMP — dynamic updates without page refresh
+// ============================================================
+function timeAgo(dateStr) {
+    const date = new Date(dateStr);
+    const diffMs = Date.now() - date;
+    const diffSec = diffMs / 1000;
+
+    if (diffSec < 60) return 'just now';
+
+    if (diffSec < 3600) {
+        const mins = Math.floor(diffSec / 60);
+        return mins === 1 ? '1 minute ago' : `${mins} minutes ago`;
+    }
+
+    if (diffSec < 86400) {
+        const hrs = Math.floor(diffSec / 3600);
+        return hrs === 1 ? '1 hour ago' : `${hrs} hours ago`;
+    }
+
+    // Check if yesterday
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const isYesterday = date.toDateString() === yesterday.toDateString();
+
+    const timeStr = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    }).toLowerCase().replace(/\./g, '');
+
+    if (isYesterday) return `yesterday at ${timeStr}`;
+
+    const monthStr = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+    }).toLowerCase();
+    return `${monthStr} at ${timeStr}`;
+}
+
+function startTimestampUpdater() {
+    // Update timestamps every 30 seconds
+    setInterval(() => {
+        document.querySelectorAll('[data-created-at]').forEach(el => {
+            el.textContent = timeAgo(el.dataset.createdAt);
+        });
+    }, 30000);
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// ============================================================
+// REACTIONS — with emoji tooltip on tap
+// ============================================================
+function showEmojiTooltip(btn, emoji) {
+    // Remove any existing tooltip on this button
+    const existing = btn.querySelector('.emoji-tooltip');
+    if (existing) existing.remove();
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'emoji-tooltip';
+    tooltip.textContent = EMOJI_TOOLTIPS[emoji] || emoji;
+    btn.appendChild(tooltip);
+
+    // Start fade after 700ms, remove after 1000ms total
+    setTimeout(() => tooltip.classList.add('fade'), 700);
+    setTimeout(() => { if (tooltip.parentNode) tooltip.remove(); }, 1000);
+}
+
+function handleReactionClick(postId, emoji, btn) {
+    // Show tooltip first (always, regardless of tier)
+    showEmojiTooltip(btn, emoji);
+    // Then toggle reaction
+    toggleReaction(postId, emoji, btn);
+}
+
+async function toggleReaction(postId, emoji, btn) {
+    const isActive = btn.classList.contains('active');
+    btn.classList.toggle('active');
+
+    // Optimistic count update
+    const countEl = btn.querySelector('.r-count');
+    const currentCount = countEl ? parseInt(countEl.textContent) : 0;
+    const newCount = isActive ? Math.max(0, currentCount - 1) : currentCount + 1;
+    if (newCount === 0 && countEl) {
+        countEl.remove();
+    } else if (newCount > 0) {
+        if (countEl) {
+            countEl.textContent = newCount;
+        } else {
+            const span = document.createElement('span');
+            span.className = 'r-count';
+            span.textContent = newCount;
+            btn.appendChild(span);
+        }
+    }
+
+    function revertReactionUI() {
+        btn.classList.toggle('active');
+        // Restore original count display
+        const countElNow = btn.querySelector('.r-count');
+        if (currentCount === 0) {
+            if (countElNow) countElNow.remove();
+        } else {
+            if (countElNow) {
+                countElNow.textContent = currentCount;
+            } else {
+                const span = document.createElement('span');
+                span.className = 'r-count';
+                span.textContent = currentCount;
+                btn.appendChild(span);
+            }
+        }
+    }
+
+    try {
+        const res = await fetch(`/api/posts/${postId}/react`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                session_id: state.sessionId,
+                emoji
+            })
+        });
+        if (!res.ok) {
+            revertReactionUI();
+            showToast('reaction didn\'t send');
+        } else {
+            if (!state.myReactions[postId]) state.myReactions[postId] = [];
+            if (isActive) {
+                state.myReactions[postId] = state.myReactions[postId].filter(e => e !== emoji);
+            } else {
+                state.myReactions[postId].push(emoji);
+            }
+        }
+    } catch {
+        revertReactionUI();
+        showToast('reaction didn\'t send — no signal');
+    }
+}
+
+// ============================================================
+// FLAG MECHANIC
+// ============================================================
+async function flagPost(postId, btn) {
+    if (state.myFlags.has(postId)) return; // Already flagged this session
+
+    try {
+        const res = await fetch(`/api/posts/${postId}/flag`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: state.sessionId })
+        });
+
+        if (res.ok) {
+            state.myFlags.add(postId);
+            btn.classList.add('flagged');
+            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`;
+            showToast('reported');
+
+            // Check if post hit threshold — dim it locally
+            const data = await res.json();
+            if (data.flag_count >= 3) {
+                const card = btn.closest('.post-card');
+                if (card) card.classList.add('dimmed-post');
+            }
+        }
+    } catch {
+        showToast('couldn\'t report right now');
+    }
+}
+
+// ============================================================
+// COMPOSE
+// ============================================================
+function onInput() {
+    const val = document.getElementById('composeInput').value;
+    updateCharCount();
+    localStorage.setItem('mirage_draft', val);
+}
+
+function onKeyDown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!document.getElementById('sendBtn').disabled) createPost();
+    }
+}
+
+function updateCharCount() {
+    const input = document.getElementById('composeInput');
+    const count = document.getElementById('charCount');
+    const remaining = 280 - input.value.length;
+    count.textContent = remaining;
+    count.className = 'compose-char';
+    if (remaining <= 20) count.classList.add('warn');
+    if (remaining < 0) count.classList.add('over');
+
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.disabled = input.value.trim().length === 0 || remaining < 0;
+}
+
+// ============================================================
+// PHOTO — PICKER + COMPOSER
+// ============================================================
+function handlePhotoBtn() {
+    if (state.pendingPhoto || document.getElementById('photoComposer').classList.contains('visible')) {
+        cancelPhotoComposer();
+    } else {
+        showPhotoPicker();
+    }
+}
+
+async function showPhotoPicker() {
+    // Detect camera availability via browser API (don't hardcode by screen size)
+    const cameraBtn = document.querySelector('.photo-picker-camera-btn');
+    if (cameraBtn) {
+        let hasCamera = false;
+        try {
+            if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                hasCamera = devices.some(d => d.kind === 'videoinput');
+                // If no labels returned (permissions not granted yet), assume camera on mobile
+                if (!hasCamera && devices.some(d => d.kind === 'videoinput' || d.deviceId === '')) {
+                    hasCamera = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                }
+            } else {
+                hasCamera = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            }
+        } catch (e) {
+            hasCamera = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+        cameraBtn.style.display = hasCamera ? '' : 'none';
+    }
+    document.getElementById('photoPickerSheet').classList.add('visible');
+}
+
+function closePhotoPicker() {
+    document.getElementById('photoPickerSheet').classList.remove('visible');
+}
+
+function selectPhotoSource(source) {
+    closePhotoPicker();
+    const input = document.getElementById('photoInput');
+    if (source === 'camera') {
+        input.setAttribute('capture', 'environment');
+    } else {
+        input.removeAttribute('capture');
+    }
+    setTimeout(() => input.click(), 100);
+}
+
+function handlePhoto(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // Allow up to 20MB — we crop client-side, output will be small
+    if (file.size > 20 * 1024 * 1024) {
+        showToast('photo too large (max 20mb)');
+        input.value = '';
+        return;
+    }
+
+    // Don't set pendingPhoto yet — wait for crop confirmation
+    if (state.pendingPhotoUrl) URL.revokeObjectURL(state.pendingPhotoUrl);
+    const url = URL.createObjectURL(file);
+    state.pendingPhotoUrl = url;
+
+    // Reset composer state
+    document.getElementById('photoCaptionInput').value = '';
+    document.getElementById('photoCaptionCharCount').textContent = '280';
+    document.getElementById('photoRateLimitMsg').classList.remove('visible');
+    document.getElementById('photoPostBtn').disabled = false;
+    document.getElementById('photoPostBtn').textContent = 'post';
+    document.getElementById('addNotePrompt').style.display = '';
+    document.getElementById('noteInputWrap').style.display = 'none';
+    // Single-screen layout: show crop view, hide locked image + post-crop UI
+    document.getElementById('cropContainer').style.display = '';
+    document.getElementById('cropConfirmBtn').style.display = '';
+    document.getElementById('photoComposerImg').style.display = 'none';
+    document.getElementById('postCropUI').style.display = 'none';
+    // Expand polaroid zone during cropping so portrait images are fully visible
+    document.getElementById('composerImgZone').classList.add('cropping');
+    document.getElementById('photoComposer').classList.add('visible');
+
+    document.getElementById('photoBtn').classList.add('has-photo');
+    document.getElementById('photoBtn').textContent = '✕';
+
+    // Init cropper after composer renders
+    setTimeout(() => initCropper(url), 120);
+}
+
+function cancelPhotoComposer() {
+    state.pendingPhoto = null;
+    if (state.pendingPhotoUrl) URL.revokeObjectURL(state.pendingPhotoUrl);
+    state.pendingPhotoUrl = null;
+
+    // Reset single-screen composer state
+    document.getElementById('cropContainer').style.display = '';
+    document.getElementById('cropConfirmBtn').style.display = '';
+    document.getElementById('postCropUI').style.display = 'none';
+    document.getElementById('composerImgZone').classList.remove('cropping');
+    const cropperImgEl = document.getElementById('cropperImg');
+    if (cropperImgEl) cropperImgEl.src = '';
+    const previewImgEl = document.getElementById('photoComposerImg');
+    if (previewImgEl) { previewImgEl.src = ''; previewImgEl.style.display = 'none'; }
+
+    document.getElementById('photoComposer').classList.remove('visible');
+    document.getElementById('photoCaptionInput').value = '';
+    document.getElementById('addNotePrompt').style.display = '';
+    document.getElementById('noteInputWrap').style.display = 'none';
+    document.getElementById('photoBtn').classList.remove('has-photo');
+    document.getElementById('photoBtn').textContent = '📷';
+    document.getElementById('photoInput').value = '';
+    cropper.dragging = false;
+}
+
+function clearPhoto() {
+    cancelPhotoComposer();
+}
+
+function showNoteInput() {
+    document.getElementById('addNotePrompt').style.display = 'none';
+    document.getElementById('noteInputWrap').style.display = '';
+    setTimeout(() => document.getElementById('photoCaptionInput').focus(), 80);
+}
+
+function onPhotoCaptionInput() {
+    const val = document.getElementById('photoCaptionInput').value;
+    const remaining = 280 - val.length;
+    const countEl = document.getElementById('photoCaptionCharCount');
+    countEl.textContent = remaining;
+    countEl.style.color = remaining < 0 ? '#DC2626' : remaining <= 20 ? 'var(--gold)' : '';
+    document.getElementById('photoPostBtn').disabled = remaining < 0;
+}
+
+// ============================================================
+// CROPPER
+// ============================================================
+const cropper = {
+    img: null,
+    naturalW: 0, naturalH: 0,
+    containerW: 0, displayH: 0,
+    scale: 1,
+    boxX: 0, boxY: 0, boxSize: 0,
+    dragging: false,
+    dragMode: null,
+    startClientX: 0, startClientY: 0,
+    startBoxX: 0, startBoxY: 0, startBoxSize: 0
+};
+
+function initCropper(imgUrl) {
+    const img = document.getElementById('cropperImg');
+    const container = document.getElementById('cropContainer');
+
+    img.onload = () => {
+        cropper.img = img;
+        cropper.naturalW = img.naturalWidth;
+        cropper.naturalH = img.naturalHeight;
+        cropper.containerW = container.offsetWidth || 320;
+        cropper.scale = cropper.naturalW / cropper.containerW;
+        cropper.displayH = cropper.naturalH / cropper.scale;
+        container.style.height = cropper.displayH + 'px';
+
+        // Initial crop: centered square, min(width, full display height)
+        const minDim = Math.min(cropper.containerW, cropper.displayH);
+        cropper.boxSize = minDim;
+        cropper.boxX = (cropper.containerW - minDim) / 2;
+        cropper.boxY = (cropper.displayH - minDim) / 2;
+        updateCropUI();
+    };
+    img.src = imgUrl;
+}
+
+function updateCropUI() {
+    const box = document.getElementById('cropBox');
+    box.style.left   = cropper.boxX + 'px';
+    box.style.top    = cropper.boxY + 'px';
+    box.style.width  = cropper.boxSize + 'px';
+    box.style.height = cropper.boxSize + 'px';
+
+    const W = cropper.containerW;
+    const H = cropper.displayH;
+    const bx = cropper.boxX, by = cropper.boxY, bs = cropper.boxSize;
+
+    const top    = document.getElementById('cropMaskTop');
+    const bottom = document.getElementById('cropMaskBottom');
+    const left   = document.getElementById('cropMaskLeft');
+    const right  = document.getElementById('cropMaskRight');
+
+    top.style.height    = by + 'px';
+    bottom.style.height = Math.max(0, H - by - bs) + 'px';
+    left.style.top      = by + 'px';
+    left.style.height   = bs + 'px';
+    left.style.width    = Math.max(0, bx) + 'px';
+    right.style.top     = by + 'px';
+    right.style.height  = bs + 'px';
+    right.style.width   = Math.max(0, W - bx - bs) + 'px';
+}
+
+function getCropPoint(e) {
+    const rect = document.getElementById('cropContainer').getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+}
+
+function onCropStart(e) {
+    const corner = e.target.dataset.corner;
+    const edge   = e.target.dataset.edge;
+    const pt = getCropPoint(e);
+    // Only start drag on box or handles
+    if (!corner && !edge && e.target.id !== 'cropBox') return;
+    e.preventDefault();
+    cropper.dragging = true;
+    cropper.dragMode = corner || edge || 'move';
+    cropper.startClientX  = pt.x;
+    cropper.startClientY  = pt.y;
+    cropper.startBoxX     = cropper.boxX;
+    cropper.startBoxY     = cropper.boxY;
+    cropper.startBoxSize  = cropper.boxSize;
+}
+
+function onCropMove(e) {
+    if (!cropper.dragging) return;
+    e.preventDefault();
+    const pt = getCropPoint(e);
+    const dx = pt.x - cropper.startClientX;
+    const dy = pt.y - cropper.startClientY;
+    const W = cropper.containerW, H = cropper.displayH;
+    const MIN = 60;
+
+    if (cropper.dragMode === 'move') {
+        cropper.boxX = Math.max(0, Math.min(W - cropper.boxSize, cropper.startBoxX + dx));
+        cropper.boxY = Math.max(0, Math.min(H - cropper.boxSize, cropper.startBoxY + dy));
+    } else {
+        // Resize — always keep square, use the dominant axis delta
+        let delta = 0, newSize, newX = cropper.startBoxX, newY = cropper.startBoxY;
+        switch (cropper.dragMode) {
+            case 'se': case 'e': case 's':
+                delta = Math.max(dx, dy);
+                newSize = Math.max(MIN, Math.min(cropper.startBoxSize + delta, W - newX, H - newY));
+                break;
+            case 'sw': case 'w':
+                delta = Math.max(-dx, dy);
+                newSize = Math.max(MIN, Math.min(cropper.startBoxSize + delta, cropper.startBoxX + cropper.startBoxSize, H - newY));
+                newX = cropper.startBoxX + cropper.startBoxSize - newSize;
+                break;
+            case 'ne': case 'n':
+                delta = Math.max(dx, -dy);
+                newSize = Math.max(MIN, Math.min(cropper.startBoxSize + delta, W - newX, cropper.startBoxY + cropper.startBoxSize));
+                newY = cropper.startBoxY + cropper.startBoxSize - newSize;
+                break;
+            case 'nw':
+                delta = Math.max(-dx, -dy);
+                newSize = Math.max(MIN, Math.min(cropper.startBoxSize + delta, cropper.startBoxX + cropper.startBoxSize, cropper.startBoxY + cropper.startBoxSize));
+                newX = cropper.startBoxX + cropper.startBoxSize - newSize;
+                newY = cropper.startBoxY + cropper.startBoxSize - newSize;
+                break;
+            default:
+                newSize = cropper.startBoxSize;
+        }
+        cropper.boxSize = newSize;
+        cropper.boxX = Math.max(0, newX);
+        cropper.boxY = Math.max(0, newY);
+    }
+    updateCropUI();
+}
+
+function onCropEnd() {
+    cropper.dragging = false;
+}
+
+function attachCropperEvents() {
+    const container = document.getElementById('cropContainer');
+    if (!container) return;
+    container.addEventListener('mousedown',  onCropStart, { passive: false });
+    container.addEventListener('touchstart', onCropStart, { passive: false });
+    document.addEventListener('mousemove',   onCropMove,  { passive: false });
+    document.addEventListener('touchmove',   onCropMove,  { passive: false });
+    document.addEventListener('mouseup',     onCropEnd);
+    document.addEventListener('touchend',    onCropEnd);
+}
+
+function confirmCrop() {
+    const canvas = document.createElement('canvas');
+    canvas.width  = 480;
+    canvas.height = 480;
+    const ctx = canvas.getContext('2d');
+
+    // Map display crop coords → natural image coords
+    const srcX    = cropper.boxX    * cropper.scale;
+    const srcY    = cropper.boxY    * cropper.scale;
+    const srcSize = cropper.boxSize * cropper.scale;
+
+    ctx.drawImage(cropper.img, srcX, srcY, srcSize, srcSize, 0, 0, 480, 480);
+
+    canvas.toBlob(blob => {
+        if (!blob) { showToast('crop failed — try again'); return; }
+        state.pendingPhoto = blob;
+
+        // Switch from crop view to locked square preview
+        const previewImg = document.getElementById('photoComposerImg');
+        previewImg.src = URL.createObjectURL(blob);
+        previewImg.style.display = 'block';
+
+        document.getElementById('cropContainer').style.display = 'none';
+        document.getElementById('cropConfirmBtn').style.display = 'none';
+        // Restore square polaroid (remove cropping expansion)
+        document.getElementById('composerImgZone').classList.remove('cropping');
+        document.getElementById('postCropUI').style.display = '';
+    }, 'image/jpeg', 0.65);
+}
+
+// ---- Photo rate limit (5 min between photo posts) ----
+function checkPhotoRateLimit() {
+    const last = localStorage.getItem('mirage_last_photo_post');
+    if (!last) return true;
+    return Date.now() - parseInt(last) >= 5 * 60 * 1000;
+}
+function recordPhotoPost() {
+    localStorage.setItem('mirage_last_photo_post', Date.now().toString());
+}
+
+// ---- Create Photo Post ----
+async function createPhotoPost() {
+    if (!state.pendingPhoto) return;
+
+    // Rate limit check
+    if (!checkPhotoRateLimit()) {
+        const msg = document.getElementById('photoRateLimitMsg');
+        msg.classList.add('visible');
+        setTimeout(() => msg.classList.remove('visible'), 3000);
+        return;
+    }
+
+    const captionInput = document.getElementById('photoCaptionInput');
+    const caption = captionInput.value.trim();
+
+    const postBtn = document.getElementById('photoPostBtn');
+    postBtn.disabled = true;
+    postBtn.textContent = 'posting…';
+
+    try {
+        // Convert cropped blob to base64 data URL — stored directly in DB (no R2 dependency)
+        let photoUrl;
+        try {
+            photoUrl = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error('read failed'));
+                reader.readAsDataURL(state.pendingPhoto);
+            });
+        } catch (e) {
+            showToast('photo processing failed — try again');
+            postBtn.disabled = false;
+            postBtn.textContent = 'post';
+            return;
+        }
+
+        state.pendingPostNonce = { text: caption, nickname: state.nickname, tab: 'moments' };
+
+        const res = await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                session_id: state.sessionId,
+                nickname: state.nickname,
+                text: caption,
+                tab: 'moments',
+                latitude: state.latitude,
+                longitude: state.longitude,
+                photo_url: photoUrl
+            })
+        });
+
+        if (!res.ok) {
+            state.pendingPostNonce = null;
+            const errData = await res.json().catch(() => ({}));
+            showToast(errData.error || 'post failed');
+            postBtn.disabled = false;
+            postBtn.textContent = 'post';
+            return;
+        }
+
+        const data = await res.json();
+        state.pendingPostNonce = null;
+        state.posts.unshift(data.post);
+
+        recordPhotoPost();
+        incrementDevicePostCount('moments');
+        cancelPhotoComposer();
+
+        if (state.currentTab === 'moments') {
+            const feed = document.getElementById('feed');
+            const empty = feed.querySelector('.feed-empty');
+            if (empty) empty.remove();
+            const card = renderPostCard({ ...data.post, reactions: [] });
+            feed.insertBefore(card, feed.firstChild);
+        }
+
+        showToast('posted ✓');
+
+    } catch (err) {
+        state.pendingPostNonce = null;
+        showToast('post failed — no signal');
+        postBtn.disabled = false;
+        postBtn.textContent = 'post';
+    }
+}
+
+// ============================================================
+// CREATE POST
+// ============================================================
+async function createPost() {
+    const input = document.getElementById('composeInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.disabled = true;
+
+    // Good Shots (moments) is photos-only — block text-only submissions
+    if (state.currentTab === 'moments' && !state.pendingPhoto) {
+        showToast('good shots are photos only 📸 — tap the camera');
+        sendBtn.disabled = false;
+        return;
+    }
+
+    // P0 FIX: Track this in-flight post so SSE dedup can identify it
+    state.pendingPostNonce = { text, nickname: state.nickname, tab: state.currentTab };
+
+    try {
+        let photoUrl = null;
+
+        if (state.pendingPhoto) {
+            const formData = new FormData();
+            formData.append('photo', state.pendingPhoto);
+            const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
+            if (uploadRes.ok) {
+                const uploadData = await uploadRes.json();
+                photoUrl = uploadData.url;
+            }
+        }
+
+        const res = await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                session_id: state.sessionId,
+                nickname: state.nickname,
+                text,
+                tab: state.currentTab,
+                latitude: state.latitude,
+                longitude: state.longitude,
+                photo_url: photoUrl,
+                // Anti-spam fields
+                website_url: (document.getElementById('hpWebsiteUrl') || {}).value || '',
+                page_load_ms: Date.now() - state.pageLoadedAt
+            })
+        });
+
+        if (!res.ok) {
+            state.pendingPostNonce = null;
+            const err = await res.json();
+            showToast(err.error || 'post failed');
+            state.postFailed = true;
+            localStorage.setItem('mirage_draft', text);
+            showRetryBar();
+            return;
+        }
+
+        const data = await res.json();
+
+        // P0 FIX: Add to state.posts IMMEDIATELY (before any await/DOM work)
+        // so SSE dedup check works even if SSE fires between microtasks
+        state.pendingPostNonce = null;
+        state.posts.unshift(data.post);
+
+        // Increment device post counter
+        incrementDevicePostCount(data.post.tab);
+
+        // Success: clear input, draft, photo
+        input.value = '';
+        localStorage.removeItem('mirage_draft');
+        updateCharCount();
+        clearPhoto();
+        hideRetryBar();
+        state.postFailed = false;
+
+        // Prepend to feed (SSE will also fire but dedup via state.posts catches it)
+        const feed = document.getElementById('feed');
+        const empty = feed.querySelector('.feed-empty');
+        if (empty) empty.remove();
+
+        const card = renderPostCard({ ...data.post, reactions: [] });
+        feed.insertBefore(card, feed.firstChild);
+
+        showToast('posted ✓');
+
+    } catch (err) {
+        state.pendingPostNonce = null;
+        // Network failure — queue to IndexedDB
+        const postPayload = {
+            session_id: state.sessionId,
+            nickname: state.nickname,
+            text,
+            tab: state.currentTab,
+            latitude: state.latitude,
+            longitude: state.longitude,
+            photo_url: null
+        };
+        try {
+            const queueId = await enqueuePost(postPayload);
+            input.value = '';
+            localStorage.removeItem('mirage_draft');
+            updateCharCount();
+            clearPhoto();
+            const feed = document.getElementById('feed');
+            const empty = feed.querySelector('.feed-empty');
+            if (empty) empty.remove();
+            const queuedCard = renderQueuedCard({ ...postPayload, queueId });
+            feed.insertBefore(queuedCard, feed.firstChild);
+            showToast('📡 queued — will send when signal returns');
+        } catch (queueErr) {
+            state.postFailed = true;
+            localStorage.setItem('mirage_draft', text);
+            showRetryBar();
+            showToast('post failed. your text is saved.');
+        }
+    } finally {
+        updateCharCount();
+    }
+}
+
+function showRetryBar() { document.getElementById('retryBar').classList.add('visible'); }
+function hideRetryBar() { document.getElementById('retryBar').classList.remove('visible'); }
+function dismissRetry() { hideRetryBar(); state.postFailed = false; }
+function retryPost() {
+    const draft = localStorage.getItem('mirage_draft');
+    if (draft) {
+        document.getElementById('composeInput').value = draft;
+        updateCharCount();
+    }
+    hideRetryBar();
+    createPost();
+}
+
+// ============================================================
+// SHARE
+// ============================================================
+function sharePost(postId, nick, textPreview) {
+    const shareText = `"${textPreview}…" — ${nick} on mirage`;
+    const url = 'https://mirage.sunshine.fm/app';
+    if (navigator.share) {
+        navigator.share({ title: 'mirage', text: shareText, url }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(url).then(() => showToast('link copied')).catch(() => showToast('mirage.sunshine.fm'));
+    }
+}
+
+function shareApp() {
+    const text = 'festival season is almost here. mirage is a pop-up social network for the coachella valley — gone may 1. 🌵';
+    const url = 'https://mirage.sunshine.fm';
+    if (navigator.share) {
+        navigator.share({ title: 'mirage', text, url }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(text + ' ' + url).then(() => showToast('link copied to clipboard')).catch(() => showToast('mirage.sunshine.fm'));
+    }
+}
+
+// ============================================================
+// AUTO REFRESH — per-tab intervals
+// Pulse: 30s (urgent by design), Moments + Tips: 2min
+// ============================================================
+function getRefreshInterval() {
+    return state.currentTab === 'pulse' ? 30000 : 120000;
+}
+
+function startAutoRefresh() {
+    if (state.autoRefreshTimer) clearInterval(state.autoRefreshTimer);
+    state.autoRefreshTimer = setInterval(() => {
+        if (!document.hidden) loadPosts(false);
+    }, getRefreshInterval());
+}
+
+// ============================================================
+// LIVE FEED INDICATOR
+// ============================================================
+let lastFeedUpdate = null;
+
+function updateFeedIndicator() {
+    lastFeedUpdate = Date.now();
+    const el = document.getElementById('feedUpdatedIndicator');
+    if (!el) return;
+    el.classList.add('visible');
+    el.textContent = 'updated just now';
+}
+
+// Update the relative time every 30s
+setInterval(() => {
+    if (!lastFeedUpdate) return;
+    const el = document.getElementById('feedUpdatedIndicator');
+    if (!el || !el.classList.contains('visible')) return;
+    const diffMs = Date.now() - lastFeedUpdate;
+    const diffMin = Math.floor(diffMs / 60000);
+    if (diffMin < 1) {
+        el.textContent = 'updated just now';
+    } else if (diffMin === 1) {
+        el.textContent = 'updated 1 min ago';
+    } else {
+        el.textContent = `updated ${diffMin} min ago`;
+    }
+}, 30000);
+
+// ============================================================
+// PULL TO REFRESH — attaches to the feed element (body overflow:hidden, feed scrolls)
+// ============================================================
+(function initPullToRefresh() {
+    let touchStartY = 0;
+    let isPulling = false;
+    let ptrActive = false;
+    const THRESHOLD = 60; // px to pull before triggering refresh
+
+    const ptrEl = document.getElementById('ptrIndicator');
+
+    // Feed is the scrolling container — listen on it
+    const feedEl = document.getElementById('feed');
+    if (!feedEl) return;
+
+    feedEl.addEventListener('touchstart', (e) => {
+        // Only trigger if feed is scrolled to top
+        if (feedEl.scrollTop > 5) return;
+        // Don't trigger inside photo composer or picker sheet
+        if (document.getElementById('photoComposer').classList.contains('visible')) return;
+        touchStartY = e.touches[0].clientY;
+        isPulling = true;
+    }, { passive: true });
+
+    feedEl.addEventListener('touchmove', (e) => {
+        if (!isPulling) return;
+        const delta = e.touches[0].clientY - touchStartY;
+        if (delta <= 0) { isPulling = false; return; }
+        if (!ptrEl) return;
+        if (delta > THRESHOLD) {
+            ptrEl.textContent = '↑ release to refresh';
+            ptrEl.classList.add('pulling');
+            ptrActive = true;
+        } else {
+            ptrEl.textContent = '↓ pull to refresh';
+            ptrEl.classList.add('pulling');
+            ptrActive = false;
+        }
+    }, { passive: true });
+
+    feedEl.addEventListener('touchend', () => {
+        if (!isPulling) return;
+        isPulling = false;
+        if (!ptrEl) return;
+        if (ptrActive) {
+            ptrEl.textContent = '↻ refreshing…';
+            ptrEl.classList.add('refreshing');
+            ptrActive = false;
+            loadPosts(false).then(() => {
+                ptrEl.classList.remove('pulling', 'refreshing');
+                ptrEl.textContent = '↓ pull to refresh';
+            }).catch(() => {
+                ptrEl.classList.remove('pulling', 'refreshing');
+                ptrEl.textContent = '↓ pull to refresh';
+            });
+        } else {
+            ptrEl.classList.remove('pulling', 'refreshing');
+        }
+    }, { passive: true });
+})();
+
+// ============================================================
+// OFFLINE SIGNAL BANNER
+// ============================================================
+function updateOfflineBanner() {
+    const banner = document.getElementById('offlineBanner');
+    if (!banner) return;
+    if (!navigator.onLine) banner.classList.add('visible');
+    else banner.classList.remove('visible');
+}
+
+window.addEventListener('online', () => { updateOfflineBanner(); retryQueuedPosts(); });
+window.addEventListener('offline', updateOfflineBanner);
+
+// ============================================================
+// INDEXEDDB OFFLINE QUEUE
+// ============================================================
+const IDB_NAME = 'mirage-queue';
+const IDB_STORE = 'pending-posts';
+
+function openIDB() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open(IDB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(IDB_STORE)) {
+                db.createObjectStore(IDB_STORE, { keyPath: 'queueId', autoIncrement: true });
+            }
+        };
+        req.onsuccess = (e) => resolve(e.target.result);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function enqueuePost(postData) {
+    const db = await openIDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        const store = tx.objectStore(IDB_STORE);
+        const req = store.add({ ...postData, queuedAt: Date.now() });
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function dequeuePost(queueId) {
+    const db = await openIDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        const store = tx.objectStore(IDB_STORE);
+        const req = store.delete(queueId);
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function getAllQueuedPosts() {
+    const db = await openIDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(IDB_STORE, 'readonly');
+        const store = tx.objectStore(IDB_STORE);
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+function renderQueuedCard(queuedPost) {
+    const card = document.createElement('div');
+    card.className = 'post-card queued-card';
+    card.id = `queued-${queuedPost.queueId}`;
+    card.innerHTML = `
+        <div class="post-header">
+            <span class="post-nickname">${escapeHtml(queuedPost.nickname)}</span>
+            <span class="queued-signal-badge">📡 sending when signal returns</span>
+        </div>
+        <div class="post-text">${escapeHtml(queuedPost.text)}</div>
+    `;
+    return card;
+}
+
+async function renderQueuedPosts() {
+    try {
+        const queued = await getAllQueuedPosts();
+        const relevant = queued.filter(p => p.tab === state.currentTab);
+        const feed = document.getElementById('feed');
+        feed.querySelectorAll('.queued-card').forEach(el => el.remove());
+        relevant.slice().reverse().forEach(q => {
+            if (!document.getElementById(`queued-${q.queueId}`)) {
+                const card = renderQueuedCard(q);
+                feed.insertBefore(card, feed.firstChild);
+            }
+        });
+    } catch (e) {}
+}
+
+let retryInProgress = false;
+async function retryQueuedPosts() {
+    if (retryInProgress || !navigator.onLine) return;
+    retryInProgress = true;
+    try {
+        const queued = await getAllQueuedPosts();
+        if (queued.length === 0) return;
+        for (const post of queued) {
+            try {
+                const res = await fetch('/api/posts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: post.session_id,
+                        nickname: post.nickname,
+                        text: post.text,
+                        tab: post.tab,
+                        latitude: post.latitude,
+                        longitude: post.longitude,
+                        photo_url: post.photo_url || null
+                    })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    await dequeuePost(post.queueId);
+                    const qCard = document.getElementById(`queued-${post.queueId}`);
+                    if (qCard && post.tab === state.currentTab) {
+                        const realCard = renderPostCard({ ...data.post, reactions: [] });
+                        qCard.replaceWith(realCard);
+                    } else if (qCard) {
+                        qCard.remove();
+                    }
+                    showToast('queued post sent ✓');
+                } else if (res.status === 429 || res.status === 403) {
+                    await dequeuePost(post.queueId);
+                    const qCard = document.getElementById(`queued-${post.queueId}`);
+                    if (qCard) qCard.remove();
+                    showToast("post couldn't send — location or rate limit");
+                }
+            } catch (networkErr) {}
+        }
+    } finally {
+        retryInProgress = false;
+    }
+}
+
+setInterval(() => { if (navigator.onLine) retryQueuedPosts(); }, 30000);
+
+// ============================================================
+// SERVICE WORKER REGISTRATION
+// ============================================================
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+            console.log('[Mirage] Service worker registered:', reg.scope);
+            // Check for waiting SW and activate immediately (cache-busting)
+            if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            reg.addEventListener('updatefound', () => {
+                const newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // New SW available — reload to pick up latest assets
+                        newWorker.postMessage({ type: 'SKIP_WAITING' });
+                        window.location.reload();
+                    }
+                });
+            });
+        }).catch((err) => {
+            console.warn('[Mirage] Service worker registration failed:', err);
+        });
+    }
+}
+
+// ============================================================
+// PWA INSTALL PROMPT (Android Chrome)
+// ============================================================
+let pwaInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    pwaInstallPrompt = e;
+    console.log('[Mirage] PWA install prompt ready');
+    // Show a subtle "Add to Home Screen" button if present in the UI
+    const btn = document.getElementById('pwaInstallBtn');
+    if (btn) btn.classList.remove('hidden');
+});
+
+// ============================================================
+// DEVICE POST COUNTER — private, local only
+// ============================================================
+function getDevicePostCounts() {
+    try { return JSON.parse(localStorage.getItem('mirage_post_counts') || '{"hints":0,"pulse":0}'); }
+    catch { return { hints: 0, pulse: 0 }; }
+}
+
+function incrementDevicePostCount(tab) {
+    const counts = getDevicePostCounts();
+    if (tab === 'tips') counts.hints++;
+    else if (tab === 'pulse') counts.pulse++;
+    localStorage.setItem('mirage_post_counts', JSON.stringify(counts));
+    updateDeviceCounter();
+}
+
+function updateDeviceCounter() {
+    const el = document.getElementById('deviceCounter');
+    if (!el) return;
+    const counts = getDevicePostCounts();
+    const parts = [];
+    if (counts.hints > 0) parts.push(`${counts.hints} good vibes post${counts.hints !== 1 ? 's' : ''}`);
+    if (counts.pulse > 0) parts.push(`${counts.pulse} good tips post${counts.pulse !== 1 ? 's' : ''}`);
+    if (parts.length === 0) {
+        el.style.display = 'none';
+    } else {
+        el.textContent = `you've dropped ${parts.join(' · ')}.`;
+        el.style.display = 'block';
+    }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// PASSPHRASE SHEET
+// ============================================================
+let passphraseLoaded = false;
+
+async function openPassphraseSheet() {
+    const sheet = document.getElementById('passphraseSheet');
+    if (!sheet) return;
+    sheet.classList.add('visible');
+
+    // Fetch today's word if not already loaded
+    if (!passphraseLoaded) {
+        try {
+            const res = await fetch('/api/passphrase/today');
+            if (res.ok) {
+                const data = await res.json();
+                const wordEl = document.getElementById('passphraseWord');
+                if (wordEl && data.word) {
+                    wordEl.textContent = data.word.toLowerCase();
+                    passphraseLoaded = true;
+                }
+            }
+        } catch (e) {
+            // Show feedback so user knows it's not their fault
+            const wordEl = document.getElementById('passphraseWord');
+            if (wordEl && wordEl.textContent === '—') showToast('couldn\'t load passphrase — check signal');
+        }
+    }
+}
+
+function closePassphraseSheet() {
+    const sheet = document.getElementById('passphraseSheet');
+    if (sheet) sheet.classList.remove('visible');
+}
+
+function sharePassphrase() {
+    const wordEl = document.getElementById('passphraseWord');
+    const word = wordEl ? wordEl.textContent.trim() : '';
+    const url = 'https://mirage.sunshine.fm';
+    const shareWord = word && word !== '—' ? word : '';
+    const text = shareWord
+        ? `help make the festival better for everyone. today's passphrase is ${shareWord}. → ${url}`
+        : `help make the festival better for everyone. ask me for the passphrase. → ${url}`;
+    if (navigator.share) {
+        navigator.share({ title: 'mirage', text }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(text).then(() => showToast('copied!')).catch(() => showToast(url));
+    }
+}
+
+// ============================================================
+// POLAROID DOWNLOAD (moments posts with photo only)
+// ============================================================
+async function downloadPolaroid(postId) {
+    const post = state.posts.find(p => p.id === postId);
+    if (!post || !post.photo_url) return;
+
+    showToast('preparing polaroid…');
+
+    try {
+        // Canvas dimensions
+        const cw = 600;
+        const margin = 30;
+        const polPad = 10;
+        const polBottomH = 80;
+        const imgSize = cw - margin * 2 - polPad * 2; // 500
+        const polH = polPad + imgSize + polBottomH; // 590
+        const nickH = 44;
+        const hasCaption = !!(post.text && post.text.trim());
+        const captionH = hasCaption ? 50 : 0;
+        const ch = margin + nickH + 16 + polH + captionH + margin;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = cw;
+        canvas.height = ch;
+        const ctx = canvas.getContext('2d');
+
+        // White background
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, cw, ch);
+
+        // Wait for fonts
+        await document.fonts.ready;
+
+        // Nickname
+        let nickY = margin + 28;
+        ctx.font = 'bold 17px "DM Sans", sans-serif';
+        ctx.fillStyle = '#0F172A';
+        ctx.textAlign = 'left';
+        ctx.fillText(post.nickname, margin, nickY);
+
+        // Tier badge (text, next to nickname)
+        const nickWidth = ctx.measureText(post.nickname).width;
+        const tier = post.geo_tier;
+        if (tier === 'grounds' || tier === 'desert') {
+            const badgeText = tier === 'grounds' ? 'at the fest' : 'in the desert';
+            const badgeColor = tier === 'grounds' ? '#0369A1' : '#92400E';
+            const badgeBg = tier === 'grounds' ? 'rgba(2,132,199,0.1)' : 'rgba(217,119,6,0.1)';
+            ctx.font = 'bold 11px "DM Sans", sans-serif';
+            const bw = ctx.measureText(badgeText).width + 16;
+            const bx = margin + nickWidth + 10;
+            const by = nickY - 16;
+            ctx.fillStyle = badgeBg;
+            roundRect(ctx, bx, by, bw, 20, 10, true, false);
+            ctx.fillStyle = badgeColor;
+            ctx.textAlign = 'left';
+            ctx.fillText(badgeText, bx + 8, nickY - 1);
+        }
+
+        // Polaroid frame
+        const polX = margin;
+        const polY = margin + nickH + 16;
+        const polW = cw - margin * 2;
+
+        ctx.shadowColor = 'rgba(0,0,0,0.18)';
+        ctx.shadowBlur = 18;
+        ctx.shadowOffsetY = 6;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(polX, polY, polW, polH);
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+
+        // Image
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        await new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve; // continue even if image fails
+            img.src = post.photo_url;
+        });
+        const imgX = polX + polPad;
+        const imgY = polY + polPad;
+        if (img.complete && img.naturalWidth > 0) {
+            ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
+        } else {
+            // fallback: sky-blue placeholder
+            ctx.fillStyle = '#E0F2FE';
+            ctx.fillRect(imgX, imgY, imgSize, imgSize);
+        }
+
+        // m stamp (bottom-right of polaroid, Righteous font)
+        ctx.font = '400 54px Righteous, cursive';
+        ctx.fillStyle = '#0284C7';
+        ctx.textAlign = 'right';
+        const stampX = polX + polW - 12;
+        const stampY = polY + polPad + imgSize + polBottomH - 16;
+        ctx.fillText('m', stampX, stampY);
+
+        // Caption
+        if (hasCaption) {
+            ctx.textAlign = 'left';
+            ctx.font = 'italic 15px "DM Sans", sans-serif';
+            ctx.fillStyle = '#475569';
+            const caption = post.text.length > 90 ? post.text.substring(0, 87) + '…' : post.text;
+            ctx.fillText(caption, polX + 4, polY + polH + 34);
+        }
+
+        // Export
+        canvas.toBlob(async (blob) => {
+            if (!blob) { showToast('could not save'); return; }
+            const filename = `mirage-${(post.nickname || 'moment').replace(/\s+/g, '-').toLowerCase()}.png`;
+
+            // Mobile: native share sheet with file
+            if (navigator.share && navigator.canShare) {
+                const file = new File([blob], filename, { type: 'image/png' });
+                if (navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({ files: [file], title: 'mirage' });
+                        return;
+                    } catch (e) {
+                        if (e.name === 'AbortError') return;
+                        // fall through to download
+                    }
+                }
+            }
+
+            // Desktop / fallback: file download
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+        }, 'image/png');
+
+    } catch (e) {
+        console.warn('[Mirage] polaroid download failed:', e);
+        showToast('could not save polaroid');
+    }
+}
+
+// Canvas helper: rounded rectangle fill
+function roundRect(ctx, x, y, w, h, r, fill, stroke) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    if (fill) ctx.fill();
+    if (stroke) ctx.stroke();
+}
+
+// ============================================================
+// SWIPE HINT (first-time users only)
+// ============================================================
+let swipeHintDismissed = false;
+let swipeHintTimer = null;
+
+function initSwipeHint() {
+    // Only on touch devices + first visit
+    if (!('ontouchstart' in window)) return;
+    const alreadySeen = storageGet('mirage_swipe_hint_seen');
+    if (alreadySeen) return;
+    // Show the hint
+    const el = document.getElementById('swipeHintOverlay');
+    if (el) el.classList.remove('hidden');
+    // Auto-dismiss after 3 seconds
+    swipeHintTimer = setTimeout(() => dismissSwipeHint(), 3000);
+}
+
+function dismissSwipeHint() {
+    if (swipeHintDismissed) return;
+    swipeHintDismissed = true;
+    if (swipeHintTimer) { clearTimeout(swipeHintTimer); swipeHintTimer = null; }
+    storageSet('mirage_swipe_hint_seen', '1');
+    const el = document.getElementById('swipeHintOverlay');
+    if (!el) return;
+    el.classList.add('fading');
+    setTimeout(() => el.classList.add('hidden'), 650);
+}
+
+// ============================================================
+// NOTE TO SAT (contact form tab)
+// ============================================================
+function renderNoteToSat() {
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'notetosat-wrapper';
+    wrapper.innerHTML = `
+        <div class="notetosat-intro">
+            <p>hi there, i'm sat, team lead at mirage. i built mirage here in the coachella valley because i wanted a different kind of space for festival season.</p>
+            <p style="margin-top:0.85rem;">something lighter. less performative. more on-the-ground. a place for real moments, good vibes, useful tips, and the kind of honesty that usually gets squeezed out when everything is built around attention and algorithms.</p>
+            <p style="margin-top:0.85rem;">think of it like an old-school community bulletin board.</p>
+            <p style="margin-top:0.85rem;">mirage is also a 30-day experiment, and that's much of the beauty. it shows up, it lives for a moment, and then it disappears.</p>
+            <p style="margin-top:0.85rem;">if you've got feedback, ideas for how to make it better for next year, or just a note of appreciation - send me a note. i'm listening.</p>
+        </div>
+        <div class="notetosat-form" id="noteSatForm">
+            <textarea
+                class="notetosat-textarea"
+                id="noteSatText"
+                placeholder="what's on your mind?"
+                maxlength="500"
+                oninput="updateNoteCharCount()"
+            ></textarea>
+            <div class="notetosat-footer">
+                <span class="notetosat-char" id="noteSatCharCount">500</span>
+                <button class="notetosat-btn" id="noteSatBtn" onclick="submitNoteToSat()">send</button>
+            </div>
+        </div>
+        <div class="notetosat-confirm hidden" id="noteSatConfirm">
+            <span>sent. thank you 🙏</span>
+        </div>
+    `;
+    feed.appendChild(wrapper);
+}
+
+function updateNoteCharCount() {
+    const textarea = document.getElementById('noteSatText');
+    const counter = document.getElementById('noteSatCharCount');
+    if (textarea && counter) {
+        counter.textContent = 500 - textarea.value.length;
+    }
+}
+
+async function submitNoteToSat() {
+    const textarea = document.getElementById('noteSatText');
+    const btn = document.getElementById('noteSatBtn');
+    const confirm = document.getElementById('noteSatConfirm');
+    const form = document.getElementById('noteSatForm');
+    if (!textarea || !btn) return;
+
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    btn.disabled = true;
+    btn.textContent = 'sending…';
+
+    try {
+        const res = await fetch('/api/notetosat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                text,
+                nickname: state.nickname,
+                session_id: state.sessionId
+            })
+        });
+
+        if (res.ok) {
+            // Show confirmation, reset form
+            textarea.value = '';
+            updateNoteCharCount();
+            btn.disabled = false;
+            btn.textContent = 'send';
+            if (confirm) {
+                confirm.classList.remove('hidden');
+                setTimeout(() => confirm.classList.add('hidden'), 2800);
+            }
+        } else {
+            btn.disabled = false;
+            btn.textContent = 'send';
+            showToast('something went wrong. try again.');
+        }
+    } catch (e) {
+        btn.disabled = false;
+        btn.textContent = 'send';
+        showToast('having trouble connecting. try again.');
+    }
+}
+
+// ============================================================
+// SWIPE TAB NAVIGATION (mobile only)
+// ============================================================
+(function initSwipeNav() {
+    const TABS = ['moments', 'tips', 'pulse', 'notetosat'];
+    const SWIPE_THRESHOLD = 50; // px horizontal movement to trigger tab switch
+
+    // Only on touch devices
+    if (!('ontouchstart' in window)) return;
+
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+    let swipeActive = false;
+
+    const feedEl = document.getElementById('feed');
+    if (!feedEl) return;
+
+    feedEl.addEventListener('touchstart', (e) => {
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+        swipeActive = true;
+    }, { passive: true });
+
+    feedEl.addEventListener('touchend', (e) => {
+        if (!swipeActive) return;
+        swipeActive = false;
+
+        const deltaX = e.changedTouches[0].clientX - swipeStartX;
+        const deltaY = e.changedTouches[0].clientY - swipeStartY;
+
+        // Require horizontal motion to dominate (not a vertical scroll/PTR)
+        if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+        if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+        const currentIndex = TABS.indexOf(state.currentTab);
+        if (currentIndex === -1) return;
+
+        let nextIndex;
+        if (deltaX < 0) {
+            // Swipe left → next tab
+            nextIndex = Math.min(currentIndex + 1, TABS.length - 1);
+        } else {
+            // Swipe right → previous tab
+            nextIndex = Math.max(currentIndex - 1, 0);
+        }
+
+        if (nextIndex !== currentIndex) {
+            switchTab(TABS[nextIndex]);
+        }
+    }, { passive: true });
+})();
+
+// ---- MINI PLAYER: Coachella Bound ----
+(function() {
+    var MP3_URL = 'https://pub-869e2a4a45f246969e59fbb5b78ef626.r2.dev/Coachella%20Bound.mp3';
+    var audio = new Audio();
+    audio.src = MP3_URL;
+    audio.loop = true;
+    audio.preload = 'metadata';
+
+    var isPlaying = false;
+    var playIcon = document.getElementById('miniPlayIcon');
+    var pauseIcon = document.getElementById('miniPauseIcon');
+    var fill = document.getElementById('miniPlayerFill');
+    var timeEl = document.getElementById('miniPlayerTime');
+    var trackEl = document.getElementById('miniPlayerTrack');
+
+    function setPlayState(playing) {
+        isPlaying = playing;
+        if (playing) {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        } else {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+        }
+    }
+
+    window.miniPlayerToggle = function() {
+        if (isPlaying) {
+            audio.pause();
+        } else {
+            audio.play().catch(function(e) {
+                console.warn('[MiniPlayer] play blocked:', e.message);
+            });
+        }
+    };
+
+    window.miniPlayerSeek = function(e) {
+        if (!audio.duration) return;
+        var rect = trackEl.getBoundingClientRect();
+        var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        audio.currentTime = pct * audio.duration;
+    };
+
+    audio.addEventListener('play', function() { setPlayState(true); });
+    audio.addEventListener('pause', function() { setPlayState(false); });
+
+    audio.addEventListener('timeupdate', function() {
+        if (!audio.duration) return;
+        var pct = (audio.currentTime / audio.duration) * 100;
+        fill.style.width = pct + '%';
+        var rem = Math.max(0, audio.duration - audio.currentTime);
+        var m = Math.floor(rem / 60);
+        var s = Math.floor(rem % 60).toString().padStart(2, '0');
+        timeEl.textContent = '-' + m + ':' + s;
+    });
+
+    audio.addEventListener('loadedmetadata', function() {
+        var d = audio.duration;
+        var m = Math.floor(d / 60);
+        var s = Math.floor(d % 60).toString().padStart(2, '0');
+        timeEl.textContent = m + ':' + s;
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Righteous&amp;display=swap');
+    </style>
+  </defs>
+  <!-- transparent background -->
+  <text
+    x="50"
+    y="82"
+    font-family="Righteous, 'Arial Rounded MT Bold', 'Trebuchet MS', sans-serif"
+    font-size="100"
+    font-weight="400"
+    text-anchor="middle"
+    fill="#0284C7"
+    letter-spacing="-2"
+  >m</text>
+</svg>

@@ -1,0 +1,21 @@
+# robots.txt — Mirage (SunshineFM)
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /mirage/signal
+Disallow: /archive/internal
+Disallow: /archive/behind-the-scenes
+
+# Explicit allowlist for AI crawlers (do NOT block — keep LLM discoverability on)
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://mirage.sunshine.fm/sitemap.xml

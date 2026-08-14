@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mirage × DesertDrop × Coachella Valley — Case Study Deck (Season 1, 2026)</title>
+  <meta name="description" content="18-slide case-study deck for Mirage Season 1 (Apr 1 – May 1, 2026). DesertDrop thesis, what Mirage proved, why the project continues as archived evidence, and what's next.">
+  <link rel="canonical" href="https://mirage.sunshine.fm/presentation.html">
+  <meta property="og:title" content="Mirage × DesertDrop × Coachella Valley — Case Study Deck (Season 1, 2026)">
+  <meta property="og:description" content="18-slide case-study deck for Mirage Season 1 (Apr 1 – May 1, 2026). DesertDrop thesis, what Mirage proved, why the project continues as archived evidence, and what's next.">
+  <meta property="og:image" content="https://mirage.sunshine.fm/og-card.png">
+  <meta property="og:url" content="https://mirage.sunshine.fm/presentation.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mirage × DesertDrop × Coachella Valley — Case Study Deck (Season 1, 2026)">
+  <meta name="twitter:description" content="18-slide case-study deck for Mirage Season 1 (Apr 1 – May 1, 2026). DesertDrop thesis, what Mirage proved, why the project continues as archived evidence, and what's next.">
+  <meta name="twitter:image" content="https://mirage.sunshine.fm/og-card.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.css" />
+
+  <style>
+    /* ─── MIRAGE / SUNSHINEFM DESIGN SYSTEM ───────────────── */
+    :root {
+      --blue:        #0284C7;
+      --blue-dark:   #0369A1;
+      --blue-mid:    #0EA5E9;
+      --blue-light:  #E0F2FE;
+      --blue-xlight: #F0F9FF;
+      --gold:        #F59E0B;
+      --gold-dark:   #D97706;
+      --ink:         #0F172A;
+      --ink-mid:     #1E293B;
+      --ink-muted:   #475569;
+      --ink-faint:   #94A3B8;
+      --white:       #FFFFFF;
+      --sand:        #FDF8F0;
+      --border:      #E2E8F0;
+      --card-bg:     #F8FAFC;
+    }
+
+    /* ─── REVEAL OVERRIDES ─────────────────────────────── */
+    .reveal-viewport { background: var(--white); }
+
+    .reveal .slides {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      height: 100%;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ─── SLIDE SHELL ──────────────────────────────────── */
+    .slide {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3.5rem 4rem;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── SLIDE VARIANTS ───────────────────────────────── */
+    .slide-hero {
+      background: linear-gradient(155deg, #002f4b 0%, var(--blue-dark) 40%, var(--blue) 100%);
+      color: var(--white);
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide-dark {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .slide-dark-blue {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #003d6b 100%);
+      color: var(--white);
+    }
+
+    .slide-content { background: var(--white); }
+    .slide-sand    { background: var(--sand); }
+
+    .slide-section {
+      background: var(--blue-xlight);
+      border-left: 8px solid var(--blue);
+    }
+
+    /* ─── WORDMARK ──────────────────────────────────────── */
+    .wordmark {
+      font-family: 'Righteous', cursive;
+      font-size: clamp(4.5rem, 13vw, 8rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--white);
+      text-shadow: 0 4px 30px rgba(0,0,0,0.25);
+      margin: 0 0 0.1em;
+    }
+    .wordmark-sm    { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+    .wordmark-blue  { color: var(--blue); text-shadow: none; }
+    .wordmark-gold  { color: var(--gold); text-shadow: none; }
+
+    /* ─── SECTION BADGE / LABEL ─────────────────────────── */
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin: 0 0 0.45rem;
+      display: block;
+    }
+    .section-num-light { color: rgba(255,255,255,0.45); }
+
+    /* ─── HEADINGS ──────────────────────────────────────── */
+    .slide-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5.5vw, 3.6rem);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      margin: 0 0 0.4em;
+      color: var(--ink);
+    }
+    .slide-heading-white { color: var(--white); }
+    .slide-heading-blue  { color: var(--blue); }
+    .slide-heading-gold  { color: var(--gold); }
+    .slide-heading-lg {
+      font-size: clamp(2.4rem, 7vw, 4.8rem);
+      line-height: 1;
+    }
+    .slide-heading-xl {
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      line-height: 0.92;
+    }
+
+    .slide-subhead {
+      font-size: clamp(1rem, 2.3vw, 1.3rem);
+      line-height: 1.55;
+      color: var(--ink-muted);
+      margin: 0 0 0.35em;
+      font-weight: 400;
+    }
+    .slide-subhead-white { color: rgba(255,255,255,0.78); }
+
+    /* ─── HERO ELEMENTS ─────────────────────────────────── */
+    .hero-supertitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.8rem, 1.6vw, 1.1rem);
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 17vw, 11rem);
+      letter-spacing: -0.01em;
+      line-height: 0.9;
+      color: var(--gold);
+      margin: 0 0 0.1em;
+      text-shadow: 0 4px 40px rgba(245,158,11,0.35);
+    }
+
+    .hero-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.5;
+      max-width: 640px;
+      margin: 0 auto 0.3em;
+      font-weight: 300;
+    }
+
+    .hero-small {
+      font-size: clamp(0.75rem, 1.4vw, 0.92rem);
+      color: rgba(255,255,255,0.42);
+      font-style: italic;
+      margin-top: 0.2em;
+    }
+
+    .hero-glass-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 2rem;
+      padding: 0.5rem 1.2rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.04em;
+    }
+    .hero-glass-bar .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ─── SEASON PILL ─────────────────────────────────────── */
+    .season-pill {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1.5px solid rgba(245,158,11,0.4);
+      border-radius: 100px;
+      padding: 0.28em 0.85em;
+      margin-bottom: 1.4rem;
+    }
+
+    /* ─── DIVIDER ────────────────────────────────────────── */
+    .slide-rule {
+      width: 3.5rem; height: 3px;
+      background: var(--gold);
+      border: none;
+      margin: 0.7rem 0 1.3rem;
+      border-radius: 2px;
+    }
+    .slide-rule-center { margin: 0.7rem auto 1.3rem; }
+    .slide-rule-blue   { background: var(--blue); }
+    .slide-rule-white  { background: rgba(255,255,255,0.3); }
+
+    /* ─── GRID LAYOUTS ───────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.4rem;
+      align-items: start;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────────── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.3rem 1.4rem;
+    }
+    .card-dark {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 1.3rem 1.4rem;
+    }
+    .card-gold {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.22);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+    }
+    .card-blue {
+      background: var(--blue-xlight);
+      border: 1px solid var(--blue-light);
+      border-radius: 12px;
+      padding: 1.3rem 1.4rem;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+    .card-title-white { color: var(--white); }
+    .card-title-gold  { color: var(--gold); }
+    .card-body {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+    .card-body-white { color: rgba(255,255,255,0.7); }
+
+    /* ─── BIG-NUMBER GRID ─────────────────────────────────── */
+    .big-num-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.4rem;
+      margin-top: 0.8rem;
+    }
+    .big-num-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .big-num-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 3.8rem);
+      color: var(--blue);
+      line-height: 1;
+      display: block;
+    }
+    .big-num-value-gold  { color: var(--gold); }
+    .big-num-value-ink   { color: var(--ink); }
+    .big-num-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-top: 0.35rem;
+      display: block;
+      line-height: 1.35;
+    }
+
+    /* ─── BULLET LIST ────────────────────────────────────── */
+    .bullet-list {
+      list-style: none;
+      padding: 0; margin: 0;
+    }
+    .bullet-list li {
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      padding: 0.6rem 0;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: var(--ink-mid);
+      border-bottom: 1px solid var(--border);
+    }
+    .bullet-list li:last-child { border-bottom: none; }
+    .bullet-list li::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.44em;
+    }
+    .bullet-list-white li {
+      color: rgba(255,255,255,0.82);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+    .bullet-list-lg li { font-size: 1.35rem; padding: 0.75rem 0; }
+
+    /* ─── TIMELINE STRIP ─────────────────────────────────── */
+    .timeline-strip {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 0.6rem;
+    }
+    .timeline-node {
+      flex: 1;
+      position: relative;
+      padding: 1rem 1.1rem;
+    }
+    .timeline-node::after {
+      content: '→';
+      position: absolute;
+      right: -0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .timeline-node:last-child::after { display: none; }
+    .timeline-node-date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-node-date-gold { color: var(--gold); }
+    .timeline-node-label {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+    .timeline-node-label-white { color: rgba(255,255,255,0.65); }
+
+    /* 3-node simple flow (Slide 2, 5) */
+    .flow-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.6rem;
+    }
+    .flow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      border-radius: 100px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--white);
+    }
+    .flow-pill-light {
+      background: var(--blue-xlight);
+      border: 1px solid var(--blue-light);
+      color: var(--blue-dark);
+    }
+    .flow-pill-gold {
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--gold-dark);
+    }
+    .flow-arrow {
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ─── COST / DONUT VIZ ───────────────────────────────── */
+    .cost-bar-wrap {
+      margin-top: 0.8rem;
+    }
+    .cost-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.7rem;
+    }
+    .cost-bar-label {
+      width: 180px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      flex-shrink: 0;
+    }
+    .cost-bar-track {
+      flex: 1;
+      height: 24px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .cost-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.6rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+    }
+    .cost-bar-fill-blue  { background: var(--blue); color: var(--white); }
+    .cost-bar-fill-gold  { background: var(--gold); color: var(--ink); }
+
+    /* ─── HORIZONTAL SEASON TIMELINE (Slide 7) ─────────────── */
+    .season-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 0.5rem;
+    }
+    .season-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .season-row:last-child { border-bottom: none; }
+    .season-row-date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--blue);
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .season-row-date-gold { color: var(--gold); }
+    .season-row-event {
+      font-size: 1.1rem;
+      color: var(--ink-mid);
+    }
+    .season-row-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .season-row-dot-blue  { background: var(--blue); }
+    .season-row-dot-gold  { background: var(--gold); }
+    .season-row-dot-red   { background: #EF4444; }
+
+    /* ─── BAR CHART (Slide 9) ────────────────────────────── */
+    .bar-chart-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5rem;
+      height: 200px;
+      margin-top: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      gap: 0.4rem;
+    }
+    .bar-fill {
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 0.4rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+    .bar-fill-muted { background: var(--ink-faint); }
+    .bar-fill-gold  { background: var(--gold); color: var(--ink); }
+    .bar-fill-blue  { background: var(--blue); }
+    .bar-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ─── SCORECARD (Slide 10) ───────────────────────────── */
+    .scorecard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+    }
+    .scorecard-col-head {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.7rem;
+    }
+    .scorecard-worked { color: var(--blue); }
+    .scorecard-failed { color: #EF4444; }
+
+    .scorecard-list {
+      list-style: none;
+      padding: 0; margin: 0;
+    }
+    .scorecard-list li {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      padding: 0.45rem 0;
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .scorecard-list li:last-child { border-bottom: none; }
+    .scorecard-list li::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.4em;
+    }
+    .scorecard-worked-list li::before { background: var(--blue); }
+    .scorecard-failed-list li::before { background: #EF4444; }
+
+    .bottom-caption {
+      margin-top: 1.4rem;
+      padding: 0.9rem 1.2rem;
+      background: var(--sand);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      font-size: 1.1rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .bottom-caption strong { color: var(--ink); }
+
+    /* ─── STAT STRIP (Slide 4) ───────────────────────────── */
+    .stat-strip {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      padding: 1rem 1.3rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      align-items: center;
+    }
+    .stat-strip-item {
+      text-align: center;
+    }
+    .stat-strip-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.2rem);
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+    .stat-strip-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.2rem;
+    }
+    .stat-strip-sep {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ─── PULL QUOTE ─────────────────────────────────────── */
+    .pull-quote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: 0.03em;
+      line-height: 1.18;
+      color: var(--gold);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .slide { padding: 2rem 2.2rem; }
+      .two-col, .three-col, .scorecard { grid-template-columns: 1fr; }
+      .big-num-grid { grid-template-columns: 1fr 1fr; }
+      .bar-chart-wrap { height: 140px; }
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 1 — HOOK
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-hero" style="justify-content:center;align-items:center;text-align:center;">
+        <div class="hero-supertitle" style="color:rgba(255,255,255,0.7);">Mirage × DesertDrop × Coachella Valley</div>
+
+        <div class="season-pill">Ongoing Case Study · Season 1, 2026</div>
+
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(0.85rem,1.8vw,1.15rem);letter-spacing:0.35em;color:rgba(255,255,255,0.55);margin-bottom:0.5rem;">under</div>
+
+        <div class="hero-price">$500</div>
+
+        <hr class="slide-rule slide-rule-center" style="margin:0.6rem auto 1rem;" />
+
+        <p class="hero-tagline">
+          a social network built in the coachella valley<br />with agents
+        </p>
+
+        <p class="hero-small">
+          mirage appeared april 1.&nbsp;&nbsp;disappeared may 1.
+        </p>
+
+        <div class="hero-glass-bar" style="margin-top:2.2rem;">
+          <span class="dot"></span>
+          SunshineFM · Rancho Mirage, California
+        </div>
+      </div>
+      <aside class="notes">
+        [01 — DesertDrop Thesis] This deck frames the talk as an ongoing case study — Mirage is the season-1 evidence of the DesertDrop thesis. The headline is the number. Under $500. Not a prototype. Not a demo. A real social network — posts, reactions, feeds, media layer, ad campaigns, archival — that ran for 30 days during festival season in the Coachella Valley. No employees. No VC. No engineering team. Built here, with agents. This talk is about what that means.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 2 — THE SURPRISE
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark">
+        <span class="section-num section-num-light">01 — DesertDrop Thesis</span>
+
+        <h2 class="slide-heading slide-heading-white slide-heading-lg" style="max-width:760px;margin-bottom:0.2em;">
+          mirage is the season-1 evidence<br />of the desertdrop thesis
+        </h2>
+
+
+
+        <div style="font-family:'Righteous',cursive;font-size:clamp(2.2rem,6vw,4rem);color:var(--gold);margin-bottom:1.2rem;letter-spacing:0.04em;">mirage</div>
+
+        <div class="two-col" style="max-width:780px;gap:1.4rem;align-items:start;">
+          <ul class="bullet-list bullet-list-white">
+            <li>no accounts</li>
+            <li>no profiles</li>
+            <li>no algorithmic feed</li>
+          </ul>
+          <ul class="bullet-list bullet-list-white">
+            <li>local-first</li>
+            <li>passphrase entry</li>
+            <li>gone on may 1</li>
+          </ul>
+        </div>
+
+        <p style="margin-top:0.6rem;font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);font-style:italic;">evidence archived at /case-study</p>
+
+        <div style="margin-top:1.6rem;">
+          <div style="font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.7rem;">lifecycle</div>
+          <div class="flow-strip">
+            <div class="flow-pill">APR 1<br /><span style="font-size:0.65rem;opacity:0.6;font-family:'DM Sans',sans-serif;letter-spacing:0;">appears</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-pill" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--gold);">festival<br /><span style="font-size:0.65rem;opacity:0.75;font-family:'DM Sans',sans-serif;letter-spacing:0;">coachella + stagecoach</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-pill" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25);color:#FCA5A5;">MAY 1<br /><span style="font-size:0.65rem;opacity:0.6;font-family:'DM Sans',sans-serif;letter-spacing:0;">disappears</span></div>
+          </div>
+          <p style="margin-top:0.7rem;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);font-style:italic;">archived, not wrapped.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        [01 — DesertDrop Thesis] Mirage is the season-1 evidence of the DesertDrop thesis — that the Coachella Valley should not just consume AI tools from elsewhere; it should build its own. Most social networks are built to last forever. This one was built to disappear, then get archived. No accounts means no friction. No profiles means no performance. No algorithm means no anxiety. You show up, post, read, leave. The passphrase was the same for everyone in the Valley during festival season. That was the whole mechanic.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 3 — THE PRODUCT
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-content">
+        <span class="section-num">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading" style="max-width:640px;">four simple spaces</h2>
+        <hr class="slide-rule" />
+
+        <div class="two-col" style="max-width:860px;gap:1.6rem;">
+          <div class="card" style="border-left:4px solid #C8E6F5;">
+            <div class="card-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.06em;color:var(--blue-dark);">good shots</div>
+            <div class="card-body">Photos from the season. The desert in all its light — sunrise, festival grounds, quiet roads, golden hour. The visual memory of the month.</div>
+          </div>
+          <div class="card" style="border-left:4px solid #F5E6C8;">
+            <div class="card-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.06em;color:var(--gold-dark);">good vibes</div>
+            <div class="card-body">Encouragement, song lyrics, shoutouts. The emotional pulse of festival season — high energy, collective joy, strangers cheering each other on.</div>
+          </div>
+          <div class="card" style="border-left:4px solid #BBF7D0;">
+            <div class="card-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.06em;color:#16A34A;">good tips</div>
+            <div class="card-body">Water. Lines. Routes. Shade. Logistics. The practical layer that makes festival weekends survivable — local knowledge, real time, from people who were there.</div>
+          </div>
+          <div class="card" style="border-left:4px solid #DDD6FE;">
+            <div class="card-title" style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.06em;color:#7C3AED;">hey mirage</div>
+            <div class="card-body">Private feedback to the builder. Not a public feed. A direct line to the person running the experiment — thoughts, bugs, questions, suggestions.</div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] Four tabs. No more. Good Shots was the photo tab — not Instagram, just photos. Good Vibes was the mood tab — lyrics, encouragement, collective energy. Good Tips was the utility tab — the stuff you actually needed to survive festival weekend. And Hey Mirage was private feedback to me. Simple. Each tab had one job.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 4 — THE MEDIA LAYER
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark-blue">
+        <span class="section-num section-num-light">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading slide-heading-white" style="max-width:680px;margin-bottom:0.15em;">mirage was not just an app</h2>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);color:var(--gold);letter-spacing:0.04em;margin:0 0 1.2rem;">it was a tiny media world</h3>
+
+        <div class="three-col" style="max-width:900px;gap:1.2rem;">
+          <div class="card-dark">
+            <div class="card-title-white" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.4rem;">coachella bound</div>
+            <div class="card-body-white" style="font-size:0.82rem;">AI-generated soundtrack. A custom track that played before the app launched — setting the season's tone before a single post was made.</div>
+          </div>
+          <div class="card-dark">
+            <div class="card-title-white" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.4rem;">ai video ads</div>
+            <div class="card-body-white" style="font-size:0.82rem;">Seven ad creatives generated with AI. Desert visuals, Sora-style motion, Mirage branding. Ran on Meta during festival weekends.</div>
+          </div>
+          <div class="card-dark">
+            <div class="card-title-white" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.4rem;">local press</div>
+            <div class="card-body-white" style="font-size:0.82rem;">KESQ covered Mirage — local news, desert market, the story of a community app built by one person with AI. Earned media, no PR firm.</div>
+          </div>
+          <div class="card-dark">
+            <div class="card-title-white" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.4rem;">social feed</div>
+            <div class="card-body-white" style="font-size:0.82rem;">Temporary posts, public to Valley participants. Gone when the app went down. No archives, no screenshots — in the moment only.</div>
+          </div>
+          <div class="card-dark" style="grid-column:span 2;">
+            <div class="card-title-white" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.4rem;">farewell page</div>
+            <div class="card-body-white" style="font-size:0.82rem;">When Mirage shut down May 1, the app redirected to a farewell page with the full Season 1 archive — stats, screenshots, the story. A curated ending, not just a 404.</div>
+          </div>
+        </div>
+
+        <div class="stat-strip" style="max-width:640px;margin-top:1.2rem;">
+          <div class="stat-strip-item">
+            <span class="stat-strip-value">1</span>
+            <div class="stat-strip-label">soundtrack</div>
+          </div>
+          <div class="stat-strip-sep"></div>
+          <div class="stat-strip-item">
+            <span class="stat-strip-value">7</span>
+            <div class="stat-strip-label">ad creatives</div>
+          </div>
+          <div class="stat-strip-sep"></div>
+          <div class="stat-strip-item">
+            <span class="stat-strip-value">30</span>
+            <div class="stat-strip-label">days live</div>
+          </div>
+          <div class="stat-strip-sep"></div>
+          <div class="stat-strip-item">
+            <span class="stat-strip-value">1</span>
+            <div class="stat-strip-label">local news story</div>
+          </div>
+        </div>
+
+        <!-- Media Thumbnails for Slide 4 -->
+        <div style="margin-top:2rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:start;">
+          <a href="https://www.youtube.com/watch?v=QpQIf8VFc0o" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.5rem;cursor:pointer;text-decoration:none;align-items:center;">
+            <div style="width:140px;height:180px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:2rem;">🎵</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.8);text-align:center;max-width:140px;">Coachella Bound</div>
+          </a>
+          <a href="https://kesq.com/news/local-news/2026/04/08/new-ai-powered-tool-for-festival-season-rolls-out-ahead-of-coachella/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.5rem;cursor:pointer;text-decoration:none;align-items:center;">
+            <div style="width:140px;height:180px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:2rem;">📺</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.8);text-align:center;max-width:140px;">KESQ News</div>
+          </a>
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] The app was one layer. But there was a media world around it. A soundtrack before the app even launched. AI-generated video ads running on Meta. Local press — KESQ picked it up. A live social feed that was ephemeral by design. And when it ended, a farewell page that told the story. This is what a media product looks like when one person with agents builds it.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 5 — THE REAL MACHINE
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark">
+        <span class="section-num section-num-light">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading slide-heading-white" style="margin-bottom:0.15em;">this was not just ai</h2>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,3.8vw,2.5rem);color:var(--gold);letter-spacing:0.04em;margin:0 0 1.4rem;">this was agents</h3>
+
+        <p style="font-size:0.95rem;color:rgba(255,255,255,0.72);max-width:680px;line-height:1.65;margin-bottom:1.6rem;">
+          Agents helped build, test, monitor, revise, summarize, advertise, and archive.<br />
+          Not just generating text — running processes, catching bugs, shipping features.
+        </p>
+
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:1.3rem 1.6rem;max-width:900px;">
+          <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.9rem;">workflow loop</div>
+          <div class="flow-strip" style="flex-wrap:nowrap;gap:0.5rem;">
+            <div class="flow-pill" style="font-size:0.85rem;padding:0.5rem 0.8rem;">SAT<br /><span style="font-size:0.6rem;opacity:0.5;font-family:'DM Sans',sans-serif;letter-spacing:0;">sets direction</span></div>
+            <span class="flow-arrow" style="font-size:0.9rem;">→</span>
+            <div class="flow-pill" style="font-size:0.85rem;padding:0.5rem 0.8rem;background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--gold);">AGENTS<br /><span style="font-size:0.6rem;opacity:0.75;font-family:'DM Sans',sans-serif;letter-spacing:0;">draft / build / check</span></div>
+            <span class="flow-arrow" style="font-size:0.9rem;">→</span>
+            <div class="flow-pill" style="font-size:0.85rem;padding:0.5rem 0.8rem;">SAT<br /><span style="font-size:0.6rem;opacity:0.5;font-family:'DM Sans',sans-serif;letter-spacing:0;">judges</span></div>
+            <span class="flow-arrow" style="font-size:0.9rem;">→</span>
+            <div class="flow-pill" style="font-size:0.85rem;padding:0.5rem 0.8rem;background:rgba(2,132,199,0.2);border-color:rgba(2,132,199,0.35);color:#7DD3FC;">SHIP<br /><span style="font-size:0.6rem;opacity:0.75;font-family:'DM Sans',sans-serif;letter-spacing:0;">deploy</span></div>
+            <span class="flow-arrow" style="font-size:0.9rem;">→</span>
+            <div class="flow-pill" style="font-size:0.85rem;padding:0.5rem 0.8rem;background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:var(--gold);">AGENTS<br /><span style="font-size:0.6rem;opacity:0.75;font-family:'DM Sans',sans-serif;letter-spacing:0;">monitor</span></div>
+            <span class="flow-arrow" style="font-size:0.9rem;">→</span>
+            <div class="flow-pill" style="font-size:0.85rem;padding:0.5rem 0.8rem;">REVISE<br /><span style="font-size:0.6rem;opacity:0.5;font-family:'DM Sans',sans-serif;letter-spacing:0;">repeat</span></div>
+          </div>
+        </div>
+
+        <p style="margin-top:1.4rem;font-size:0.82rem;color:rgba(255,255,255,0.38);font-style:italic;">
+          The loop ran daily. Sometimes hourly during festival weekends.
+        </p>
+
+        <!-- AI-Generated Ad Creatives Grid -->
+        <div style="margin-top:2.5rem;max-width:900px;">
+          <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1rem;">7 AI-Generated Ad Creatives</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;">
+            <a href="https://www.youtube.com/watch?v=QpQIf8VFc0o" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 1</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=vcOUiyZjkJ8" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 2</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=_FiB_gmQ83E" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 3</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=z_Xa75CRHCY" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 4</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=hDbtP4F5yJU" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 5</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=3qEY_k20aF4" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 6</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=9gpYde1vpIc" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:0.4rem;cursor:pointer;text-decoration:none;align-items:center;">
+              <div style="width:80px;height:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;">▶</div>
+              <div style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-align:center;width:80px;">Ad 7</div>
+            </a>
+          </div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:0.8rem;">Click any thumbnail to play in YouTube</div>
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] The distinction matters. AI generates. Agents execute. The loop here was real: I set the direction, agents drafted and built and checked, I judged and decided, we shipped, agents monitored what happened, we revised. That loop ran the entire 30 days. It's not magic. It's a new way of doing software with a smaller team — where the team is mostly machines and the human is the editor, not the coder.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 6 — THE COST REVEAL
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark">
+        <span class="section-num section-num-light">02 — What Mirage Proved</span>
+
+        <div class="two-col" style="max-width:960px;gap:3rem;align-items:center;">
+          <div>
+            <h2 class="slide-heading slide-heading-white" style="margin-bottom:0.1em;">under $500 was the headline</h2>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,4vw,2.8rem);color:var(--gold);letter-spacing:0.04em;margin:0 0 1.2rem;">$329 was the actual total</h3>
+
+            <div style="display:flex;flex-direction:column;gap:0.6rem;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+                <span style="font-size:0.92rem;color:rgba(255,255,255,0.7);">Platform + infrastructure</span>
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--blue-mid);">$98</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+                <span style="font-size:0.92rem;color:rgba(255,255,255,0.7);">Ads + distribution fees</span>
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);">$231</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+                <span style="font-size:0.92rem;color:rgba(255,255,255,0.7);">Employees</span>
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:rgba(255,255,255,0.35);">$0</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0.7rem 0;">
+                <span style="font-size:1rem;color:rgba(255,255,255,0.9);font-weight:600;">Total</span>
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white);">$329</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.8rem;">where the money went</div>
+
+            <!-- Simple visual donut-style bar -->
+            <div style="display:flex;flex-direction:column;gap:0.7rem;">
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+                  <span style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Build / Platform</span>
+                  <span style="font-size:0.8rem;color:var(--blue-mid);font-weight:600;">30%</span>
+                </div>
+                <div style="height:20px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;">
+                  <div style="width:30%;height:100%;background:var(--blue-mid);border-radius:4px;display:flex;align-items:center;padding:0 0.5rem;">
+                    <span style="font-family:'Bebas Neue',sans-serif;font-size:0.8rem;color:var(--white);">$98</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+                  <span style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Attention / Distribution</span>
+                  <span style="font-size:0.8rem;color:var(--gold);font-weight:600;">70%</span>
+                </div>
+                <div style="height:20px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;">
+                  <div style="width:70%;height:100%;background:var(--gold);border-radius:4px;display:flex;align-items:center;padding:0 0.5rem;">
+                    <span style="font-family:'Bebas Neue',sans-serif;font-size:0.8rem;color:var(--ink);">$231</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p style="margin-top:1.2rem;font-size:0.82rem;font-style:italic;color:rgba(255,255,255,0.45);line-height:1.6;">
+              building got cheap.<br /><strong style="color:rgba(255,255,255,0.7);font-style:normal;">attention did not.</strong>
+            </p>
+
+            <div style="margin-top:0.9rem;display:flex;gap:1.2rem;">
+              <div style="text-align:center;">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--white);">7</div>
+                <div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);">ad creatives</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--white);">0</div>
+                <div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);">employees</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--white);">30</div>
+                <div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);">days live</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] The breakdown is more interesting than the total. Thirty percent went to actually building and running the thing. Seventy percent went to getting people to show up. That ratio is the story of the modern internet. Building is cheap. Attention is not. And no amount of AI changes that — at least not yet.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 7 — THE SEASON ARC
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-content">
+        <span class="section-num">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading" style="max-width:640px;margin-bottom:0.2em;">mirage had a beginning,<br />middle, and end</h2>
+        <hr class="slide-rule" />
+
+        <div style="max-width:820px;">
+          <div class="season-timeline">
+            <div class="season-row">
+              <div class="season-row-dot season-row-dot-blue"></div>
+              <div class="season-row-date">MARCH 18</div>
+              <div class="season-row-event">Build starts — idea to first commit</div>
+            </div>
+            <div class="season-row">
+              <div class="season-row-dot season-row-dot-blue"></div>
+              <div class="season-row-date">APRIL 1</div>
+              <div class="season-row-event">Launch — Mirage goes live, passphrase distributed</div>
+            </div>
+            <div class="season-row">
+              <div class="season-row-dot season-row-dot-gold"></div>
+              <div class="season-row-date" style="color:var(--gold-dark);">APR 10–13</div>
+              <div class="season-row-event" style="color:var(--ink);font-weight:600;">Coachella Weekend 1 — peak traffic, peak energy</div>
+            </div>
+            <div class="season-row">
+              <div class="season-row-dot" style="background:#FDE68A;"></div>
+              <div class="season-row-date" style="color:#92400E;">APR 17–19</div>
+              <div class="season-row-event">Coachella Weekend 2</div>
+            </div>
+            <div class="season-row">
+              <div class="season-row-dot" style="background:#D1FAE5;"></div>
+              <div class="season-row-date" style="color:#065F46;">APR 24–26</div>
+              <div class="season-row-event">Stagecoach — country festival, different crowd</div>
+            </div>
+            <div class="season-row">
+              <div class="season-row-dot season-row-dot-red"></div>
+              <div class="season-row-date" style="color:#DC2626;">MAY 1</div>
+              <div class="season-row-event">Shutdown — 11:59 PM PT. Farewell page goes live.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.4rem;display:flex;align-items:center;gap:0;">
+            <!-- Horizontal timeline bar -->
+            <div style="flex:1;height:8px;background:linear-gradient(90deg,var(--blue) 0%,var(--gold) 35%,#FDE68A 55%,#D1FAE5 75%,#EF4444 100%);border-radius:8px;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:0.3rem;">
+            <span style="font-size:0.65rem;color:var(--ink-faint);letter-spacing:0.08em;">MAR 18</span>
+            <span style="font-size:0.65rem;color:var(--gold-dark);font-weight:600;letter-spacing:0.08em;">W1 PEAK</span>
+            <span style="font-size:0.65rem;color:var(--ink-faint);letter-spacing:0.08em;">MAY 1</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] This was not an app that launched and then just ran. It had a designed arc. It built up to Coachella Weekend 1, which is where almost all the traffic came from. Weekend 2 and Stagecoach were much quieter. And it ended on purpose — May 1, 11:59 PM Pacific time, exactly as announced. The planned ending was part of what made it interesting — and is what produced the evidence the case study now preserves.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 8 — WHAT HAPPENED
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-content">
+        <span class="section-num">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading" style="max-width:640px;margin-bottom:0.15em;">small experiment. real signal.</h2>
+        <hr class="slide-rule" />
+
+        <div class="big-num-grid" style="max-width:900px;">
+          <div class="big-num-item">
+            <span class="big-num-value">753</span>
+            <span class="big-num-label">pageviews</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value">363</span>
+            <span class="big-num-label">unique devices</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value">68</span>
+            <span class="big-num-label">sessions</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value big-num-value-gold">245</span>
+            <span class="big-num-label">total posts</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value">52</span>
+            <span class="big-num-label">organic posts</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value">92</span>
+            <span class="big-num-label">reactions</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value big-num-value-gold">$329</span>
+            <span class="big-num-label">total investment</span>
+          </div>
+          <div class="big-num-item">
+            <span class="big-num-value big-num-value-ink">0</span>
+            <span class="big-num-label">employees</span>
+          </div>
+        </div>
+
+        <div class="bottom-caption" style="max-width:700px;">
+          <strong>These are not viral numbers.</strong> They're not supposed to be. This was a $329 experiment in local, ephemeral, festival-specific social. The signal is that it reached real people, generated real posts, and taught real lessons — at a cost that's essentially rounding error.
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] Let the numbers speak. 753 pageviews. 363 unique devices. 68 sessions. 245 total posts, 52 of which were organic from real users — not seeded by me. 92 reactions. $329 total. These are not viral numbers. They're not supposed to be. The story here is not scale. It's signal. At $329, you learned something. That is the new cost of a hypothesis — and those numbers are the case study's primary Season-1 evidence layer.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 9 — THE PULSE
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-sand">
+        <span class="section-num">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading" style="max-width:720px;margin-bottom:0.15em;">coachella weekend 1 showed the pulse</h2>
+        <hr class="slide-rule" />
+
+        <div class="two-col" style="max-width:920px;gap:2.4rem;align-items:start;">
+          <div>
+            <!-- Bar chart -->
+            <div style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:0.6rem;">pageviews by period</div>
+            <div class="bar-chart-wrap">
+              <div class="bar-col">
+                <div class="bar-fill bar-fill-muted" style="height:8%;">&nbsp;</div>
+                <div class="bar-label">pre-launch<br />ramp</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar-fill bar-fill-gold" style="height:91%;font-size:1.1rem;font-weight:700;">686</div>
+                <div class="bar-label" style="color:var(--gold-dark);font-weight:700;">coachella<br />w1</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar-fill bar-fill-blue" style="height:5%;">&nbsp;</div>
+                <div class="bar-label">coachella<br />w2</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar-fill bar-fill-muted" style="height:4%;">&nbsp;</div>
+                <div class="bar-label">stagecoach</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="big-num-grid" style="grid-template-columns:1fr 1fr;gap:1rem;">
+              <div class="big-num-item" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2);">
+                <span class="big-num-value big-num-value-gold" style="font-size:clamp(2rem,5vw,3rem);">686</span>
+                <span class="big-num-label">pageviews<br />coachella w1</span>
+              </div>
+              <div class="big-num-item" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2);">
+                <span class="big-num-value big-num-value-gold" style="font-size:clamp(2rem,5vw,3rem);">91%</span>
+                <span class="big-num-label">of season<br />traffic</span>
+              </div>
+              <div class="big-num-item">
+                <span class="big-num-value" style="font-size:clamp(2rem,5vw,3rem);">300+</span>
+                <span class="big-num-label">unique devices<br />w1</span>
+              </div>
+              <div class="big-num-item">
+                <span class="big-num-value" style="font-size:clamp(2rem,5vw,3rem);">59</span>
+                <span class="big-num-label">sessions<br />w1</span>
+              </div>
+            </div>
+
+            <div class="bottom-caption" style="margin-top:1.1rem;background:rgba(245,158,11,0.08);border-left-color:var(--gold);">
+              <strong>not proof of scale.</strong> proof of pulse.
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] Coachella Weekend 1 was 91% of all season traffic. That number tells you exactly when the community was alive. It also tells you what we missed: we did not have the physical layer — QR codes, flyers, ambassadors — to capture that moment at full intensity. The pulse was real. We didn't have the pipes to channel it. That's the lesson the case study preserves so Season 2 plans can solve it.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 10 — WHAT WORKED / WHAT FAILED
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-content">
+        <span class="section-num">02 — What Mirage Proved</span>
+
+        <h2 class="slide-heading" style="max-width:700px;margin-bottom:0.2em;">season 1: the honest scorecard</h2>
+        <hr class="slide-rule" />
+
+        <div class="scorecard" style="max-width:900px;">
+          <div>
+            <div class="scorecard-col-head scorecard-worked">what worked</div>
+            <ul class="scorecard-list scorecard-worked-list">
+              <li>AI video ads — reached real people, generated traffic spikes</li>
+              <li>Coachella Bound — set the season's tone before launch</li>
+              <li>Good Tips — highest engagement of any feed during weekends</li>
+              <li>No-account posting — zero friction onboarding, people just posted</li>
+              <li>Passphrase mechanic — local identity without accounts or profiles</li>
+              <li>Farewell page — a designed ending that people appreciated</li>
+              <li>Agent monitoring — caught bugs and regressions in real time</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="scorecard-col-head scorecard-failed">what failed</div>
+            <ul class="scorecard-list scorecard-failed-list">
+              <li>Not enough QR codes — the physical distribution layer was too thin</li>
+              <li>No ambassadors — no one on the ground at the festivals</li>
+              <li>Weak physical activation — no presence where the crowd actually was</li>
+              <li>Broken flows after deploys — some users hit dead ends mid-weekend</li>
+              <li>Ad disapproval — Meta rejected several creatives, limiting reach</li>
+              <li>Platform friction — passphrase confusion for some new arrivals</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bottom-caption" style="max-width:900px;">
+          <strong>agents made building cheaper.</strong> they did not make reality disappear.
+        </div>
+      </div>
+      <aside class="notes">
+        [02 — What Mirage Proved] The honest list — what works and what doesn't is the most cited section of the case study. What worked: the ads, the soundtrack, the tips feed, the no-account mechanic, the passphrase, the farewell page, and the agent monitoring loop. What failed: physical distribution, ambassadors, post-deploy stability, Meta ad approval. The biggest lesson is that software got easier. Attention still requires humans on the ground, relationships, and physical presence. That doesn't change just because the app was built by agents.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 11 — THE ACTUAL LESSON (TRANSITION)
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide" style="background:linear-gradient(160deg,#0f172a 0%,#0c2a3a 45%,#0369a1 100%);color:var(--white);justify-content:center;align-items:flex-start;">
+        <span class="section-num section-num-light">03 — Why It Stays Archived</span>
+
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5.5vw,3.8rem);letter-spacing:0.04em;line-height:1.05;color:rgba(255,255,255,0.55);margin:0 0 0.1em;">mirage is archived as evidence</h2>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5.5vw,3.8rem);letter-spacing:0.04em;line-height:1.05;color:var(--white);margin:0 0 0.8em;">because the thesis is ongoing.</h2>
+
+        <hr class="slide-rule slide-rule-white" />
+
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:0.03em;line-height:1.25;color:var(--gold);max-width:820px;margin:0.6em 0 1.6em;">
+          the cost of going from idea to<br />working product has collapsed.
+        </p>
+
+        <!-- Before/After comparison -->
+        <div class="two-col" style="max-width:860px;gap:2rem;align-items:stretch;">
+          <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:1.6rem 1.8rem;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.18em;color:#FCA5A5;margin-bottom:1rem;">BEFORE</div>
+            <div style="display:flex;flex-direction:column;gap:0.7rem;">
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#EF4444;flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:rgba(255,255,255,0.8);">team</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#EF4444;flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:rgba(255,255,255,0.8);">months</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#EF4444;flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:rgba(255,255,255,0.8);">capital</span>
+              </div>
+            </div>
+          </div>
+          <div style="background:rgba(2,132,199,0.12);border:1px solid rgba(2,132,199,0.3);border-radius:14px;padding:1.6rem 1.8rem;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.18em;color:#7DD3FC;margin-bottom:1rem;">NOW</div>
+            <div style="display:flex;flex-direction:column;gap:0.7rem;">
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:rgba(255,255,255,0.9);">founder</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:rgba(255,255,255,0.9);">agents</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:rgba(255,255,255,0.9);">weeks</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.8rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+                <span style="font-size:clamp(1.2rem,2.8vw,1.6rem);color:var(--gold);font-weight:700;">under $500</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [03 — Why It Stays Archived] Mirage Season 1 was archived, not wrapped, because the thesis it exists to test is ongoing. The shut-down dispatched on May 1 — that was the season-1 evidence window. But the case study continues so future seasons and follow-on builders can read what the $329 actually bought. This is the pivot point of the talk. Mirage is not important because it was a great social network. It wasn't. It's important because it proves the new cost equation. A working product, a real media layer, actual users, earned press coverage — under $500. That number used to require a team. Now it doesn't. That changes everything about who gets to build.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 12 — FROM APP TO ECOSYSTEM
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-content">
+        <span class="section-num">03 — Why It Stays Archived</span>
+
+        <h2 class="slide-heading slide-heading-lg" style="max-width:820px;margin-bottom:0.15em;">what if 100 people here<br />did their version of this?</h2>
+        <p style="font-size:clamp(1.4rem,3vw,2rem);color:var(--ink-muted);margin:0 0 1.4rem;line-height:1.5;">not 100 social networks.<br />100 local experiments.</p>
+
+        <hr class="slide-rule" />
+
+        <!-- Multiplication visual -->
+        <div style="margin-top:0.4rem;max-width:900px;">
+          <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
+            <div style="text-align:center;min-width:120px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4rem);color:var(--blue);line-height:1;">1</div>
+              <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-faint);margin-top:0.2rem;">experiment</div>
+            </div>
+            <div style="font-size:2rem;color:var(--gold);font-weight:700;">→</div>
+            <div style="text-align:center;min-width:120px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4rem);color:var(--blue);line-height:1;">10</div>
+              <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-faint);margin-top:0.2rem;">experiments</div>
+            </div>
+            <div style="font-size:2rem;color:var(--gold);font-weight:700;">→</div>
+            <div style="text-align:center;min-width:120px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4rem);color:var(--gold);line-height:1;">100</div>
+              <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dark);font-weight:600;margin-top:0.2rem;">experiments</div>
+            </div>
+            <div style="font-size:2rem;color:var(--gold);font-weight:700;">→</div>
+            <div style="text-align:center;min-width:130px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4rem);color:var(--ink);line-height:1;">1,000</div>
+              <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-faint);margin-top:0.2rem;">experiments</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem;padding:1.2rem 1.6rem;background:var(--blue-xlight);border-left:5px solid var(--blue);border-radius:0 10px 10px 0;max-width:680px;">
+          <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:0.04em;color:var(--blue-dark);margin:0;line-height:1.2;">ecosystems start with reps.</p>
+        </div>
+
+        <p style="margin-top:1.4rem;font-size:clamp(1rem,2vw,1.3rem);color:var(--ink-muted);line-height:1.6;max-width:640px;">
+          Each one teaches you something. Each failure is cheap. Each iteration is fast. That's how you build an economy of builders — not by waiting for the perfect idea.
+        </p>
+        <p style="margin-top:0.6rem;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);font-style:italic;max-width:640px;">evidence for the next-season question, not a call to ship.</p>
+      </div>
+      <aside class="notes">
+        [03 — Why It Stays Archived] The case study preserves this slide so the next season's question can be answered against documented Season-1 evidence. The power of the cost collapse is not that one person can now build a social network. It's that a hundred people can run a hundred local experiments — a restaurant tool, a tourism guide, a student project — and the region learns from all of them simultaneously. Ecosystems start with reps. More experiments means more learning means more capacity. That's the multiplier.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 13 — THE NEW FOUNDER STACK
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark">
+        <span class="section-num section-num-light">03 — Why It Stays Archived</span>
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:0.78rem;letter-spacing:0.18em;color:rgba(255,255,255,0.4);margin:-0.2rem 0 0.7rem;text-transform:uppercase;">archive of what made this possible in Season 1.</p>
+
+        <h2 class="slide-heading slide-heading-white slide-heading-lg" style="margin-bottom:0.8rem;">the new founder stack</h2>
+
+        <div class="two-col" style="max-width:960px;gap:3rem;align-items:start;">
+          <!-- Stack ladder -->
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(2,132,199,0.2);border-left:4px solid var(--blue);border-radius:0 8px 8px 0;margin-bottom:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">7</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:var(--white);">distribution</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(2,132,199,0.16);border-left:4px solid rgba(2,132,199,0.6);border-radius:0 8px 8px 0;margin-bottom:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">6</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:var(--white);">iteration</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(2,132,199,0.12);border-left:4px solid rgba(2,132,199,0.45);border-radius:0 8px 8px 0;margin-bottom:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">5</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:var(--white);">real-world feedback</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(245,158,11,0.14);border-left:4px solid rgba(245,158,11,0.5);border-radius:0 8px 8px 0;margin-bottom:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">4</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:var(--gold);">fast prototype</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(245,158,11,0.18);border-left:4px solid rgba(245,158,11,0.7);border-radius:0 8px 8px 0;margin-bottom:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">3</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:var(--gold);">agentic workflows</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(255,255,255,0.08);border-left:4px solid rgba(255,255,255,0.3);border-radius:0 8px 8px 0;margin-bottom:3px;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">2</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:rgba(255,255,255,0.85);">human taste</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;padding:0.7rem 1.2rem;background:rgba(255,255,255,0.12);border-left:4px solid rgba(255,255,255,0.55);border-radius:0 8px 8px 0;">
+              <span style="font-family:'Bebas Neue',sans-serif;font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);width:1.6rem;text-align:right;flex-shrink:0;">1</span>
+              <span style="font-size:clamp(1.2rem,2.6vw,1.6rem);color:var(--white);font-weight:600;">local problem</span>
+            </div>
+          </div>
+
+          <!-- Right side: the insight -->
+          <div>
+            <p style="font-size:clamp(1rem,2.2vw,1.35rem);color:rgba(255,255,255,0.72);line-height:1.7;margin-bottom:1.8rem;">
+              Notice what's missing:<br />
+              <strong style="color:rgba(255,255,255,0.9);">a computer science degree.</strong><br />
+              A venture capital term sheet.<br />
+              A co-founder who codes.
+            </p>
+
+            <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:12px;padding:1.3rem 1.5rem;">
+              <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.3rem,3vw,2rem);letter-spacing:0.03em;color:var(--gold);line-height:1.3;margin:0;">
+                the bottleneck is no longer<br />"can you code?"<br />
+                <span style="color:var(--white);">it is "can you direct the tools?"</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [03 — Why It Stays Archived] The stack is preserved as the documented evidence on what made a $329 Season 1 build possible — so the next region reading the case study doesn't have to re-derive it. The stack starts at the bottom with the thing that hasn't changed: a real problem. Human taste — knowing what's good, what resonates, what the community actually needs. Then the tools do the heavy lifting: agents draft, build, test, iterate. The bottleneck has moved. It used to be coding. Now it's direction. Taste + judgment + a local problem is the new starting point for building something real.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 14 — THE RISK
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark-blue" style="justify-content:center;">
+        <span class="section-num section-num-light">03 — Why It Stays Archived</span>
+
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3.8vw,2.8rem);letter-spacing:0.04em;color:rgba(255,255,255,0.6);margin:0 0 0.4em;line-height:1.1;">the risk is not simply<br />that ai exists</h2>
+
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5.5vw,3.8rem);letter-spacing:0.03em;line-height:1.15;color:var(--white);max-width:860px;margin:0 0 2rem;">
+          the risk is that the coachella valley keeps doing what it has always done<br />
+          <span style="color:var(--gold);">while other regions learn to experiment faster.</span>
+        </p>
+
+        <hr class="slide-rule slide-rule-white" />
+
+        <!-- Two-path fork -->
+        <div class="two-col" style="max-width:820px;gap:1.8rem;margin-top:1.4rem;align-items:stretch;">
+          <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:14px;padding:1.5rem 1.8rem;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.2em;color:#FCA5A5;margin-bottom:1rem;">PATH 1</div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;">
+              <span style="font-size:clamp(1.3rem,2.8vw,1.7rem);color:rgba(255,255,255,0.75);">wait</span>
+              <span style="font-size:clamp(1.3rem,2.8vw,1.7rem);color:rgba(255,255,255,0.75);">consume</span>
+              <span style="font-size:clamp(1.3rem,2.8vw,1.7rem);color:rgba(255,255,255,0.75);">outsource</span>
+            </div>
+          </div>
+          <div style="background:rgba(2,132,199,0.15);border:1px solid rgba(2,132,199,0.35);border-radius:14px;padding:1.5rem 1.8rem;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.2em;color:#7DD3FC;margin-bottom:1rem;">PATH 2</div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;">
+              <span style="font-size:clamp(1.3rem,2.8vw,1.7rem);color:var(--white);">experiment</span>
+              <span style="font-size:clamp(1.3rem,2.8vw,1.7rem);color:var(--white);">build</span>
+              <span style="font-size:clamp(1.3rem,2.8vw,1.7rem);color:var(--gold);font-weight:700;">learn</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:1.4rem;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(0.85rem,1.8vw,1.15rem);letter-spacing:0.18em;color:rgba(255,255,255,0.55);text-transform:uppercase;">the case study tracks which path the next 30 days takes.</p>
+      </div>
+      <aside class="notes">
+        [03 — Why It Stays Archived] The fork is preserved as a documented milestone because Mirage Season 1 cannot, on its own, settle the question — and the case study exists to keep tracking it. The real risk is not that AI exists. Every region has access to the same tools. The risk is that some regions will use those tools to run experiments, learn faster, and compound that learning — while other regions keep waiting for someone else to build for them, keep outsourcing, keep consuming products made elsewhere. The gap between those two paths will widen faster than anyone expects because the feedback loops are short now.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 15 — THE OPPORTUNITY
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-sand">
+        <span class="section-num">03 — Why It Stays Archived</span>
+
+        <h2 class="slide-heading slide-heading-lg" style="max-width:800px;margin-bottom:0.1em;">the valley does not need<br />to become silicon valley</h2>
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4.5vw,3rem);letter-spacing:0.04em;color:var(--blue);margin:0 0 1.2rem;line-height:1.1;">we can build a founder economy</p>
+
+        <hr class="slide-rule" />
+
+        <!-- Two column: left list, right wheel concept -->
+        <div class="two-col" style="max-width:960px;gap:2.4rem;align-items:start;">
+          <div>
+            <p style="font-size:clamp(1rem,2.1vw,1.3rem);color:var(--ink-muted);margin:0 0 1rem;line-height:1.65;">built from what's already here:</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">tourism</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">hospitality</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">music</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">wellness</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">design</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">students</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">career switchers</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">retirees</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">small businesses</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);">civic problems</div>
+              <div style="padding:0.55rem 0.9rem;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:clamp(1rem,2.2vw,1.3rem);color:var(--ink-mid);grid-column:span 2;text-align:center;">global visitors</div>
+            </div>
+          </div>
+
+          <!-- Wheel / ecosystem visual -->
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;">
+            <div style="position:relative;width:260px;height:260px;">
+              <!-- Center -->
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110px;height:110px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;z-index:2;">
+                <span style="font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:0.08em;color:var(--white);line-height:1.2;">founder<br />economy</span>
+              </div>
+              <!-- Outer ring dots -->
+              <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:52px;height:52px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.58rem;color:var(--ink);font-weight:700;text-align:center;line-height:1.2;padding:4px;">tourism</span>
+              </div>
+              <div style="position:absolute;top:14%;right:4%;width:52px;height:52px;background:rgba(2,132,199,0.3);border:2px solid var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.58rem;color:var(--blue-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">music</span>
+              </div>
+              <div style="position:absolute;top:50%;right:0;transform:translateY(-50%);width:52px;height:52px;background:rgba(2,132,199,0.15);border:2px solid rgba(2,132,199,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.58rem;color:var(--blue-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">wellness</span>
+              </div>
+              <div style="position:absolute;bottom:6%;right:10%;width:52px;height:52px;background:rgba(245,158,11,0.15);border:2px solid rgba(245,158,11,0.35);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.58rem;color:var(--gold-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">students</span>
+              </div>
+              <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:52px;height:52px;background:rgba(245,158,11,0.2);border:2px solid rgba(245,158,11,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.58rem;color:var(--gold-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">design</span>
+              </div>
+              <div style="position:absolute;bottom:6%;left:10%;width:52px;height:52px;background:rgba(2,132,199,0.15);border:2px solid rgba(2,132,199,0.35);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.55rem;color:var(--blue-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">hospitality</span>
+              </div>
+              <div style="position:absolute;top:50%;left:0;transform:translateY(-50%);width:52px;height:52px;background:rgba(245,158,11,0.1);border:2px solid rgba(245,158,11,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.55rem;color:var(--gold-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">small biz</span>
+              </div>
+              <div style="position:absolute;top:14%;left:4%;width:52px;height:52px;background:rgba(2,132,199,0.2);border:2px solid rgba(2,132,199,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <span style="font-size:0.55rem;color:var(--blue-dark);font-weight:700;text-align:center;line-height:1.2;padding:4px;">civic probs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:1.4rem;font-family:'DM Sans',sans-serif;font-size:clamp(0.9rem,1.8vw,1.05rem);letter-spacing:0.06em;color:var(--ink-faint);font-style:italic;max-width:680px;">tracked as ongoing case-study evidence at /case-study.</p>
+      </div>
+      <aside class="notes">
+        [03 — Why It Stays Archived] The wheel is documented as the open feedstock the case study tracks — startup talent, regional strengths, follow-on feedstocks. Silicon Valley succeeded because of one specific feedstock: computer science graduates. The Coachella Valley has completely different feedstocks — and they're all valid starting points for building something real. Tourism operators who know what visitors actually need. Music professionals who understand the experience economy. Retirees who've spent 30 years building domain expertise in some field. The new founder stack doesn't require coding. It requires a problem worth solving.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 16 — THE INTELLIGENCE LAYER
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-dark">
+        <span class="section-num section-num-light">04 — What Comes Next</span>
+
+        <div class="two-col" style="max-width:960px;gap:3rem;align-items:start;">
+          <div>
+            <h2 class="slide-heading slide-heading-white" style="margin-bottom:0.2em;">sunshinefm is the lab</h2>
+            <h2 class="slide-heading slide-heading-gold" style="margin-bottom:1.2rem;">aicv is the intelligence layer</h2>
+
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+              <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.22);border-radius:12px;padding:1.1rem 1.4rem;">
+                <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:var(--gold);margin-bottom:0.4rem;">sunshinefm</div>
+                <div style="font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,255,255,0.78);line-height:1.6;">experiments · media · prototypes · public learning</div>
+              </div>
+              <div style="background:rgba(2,132,199,0.12);border:1px solid rgba(2,132,199,0.28);border-radius:12px;padding:1.1rem 1.4rem;">
+                <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:var(--blue-mid);margin-bottom:0.4rem;">aicv</div>
+                <div style="font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,255,255,0.78);line-height:1.6;">making the coachella valley legible to ai systems themselves</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-layer diagram -->
+          <div>
+            <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.2rem;">the architecture</div>
+
+            <!-- Layer diagram -->
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <div style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:0.9rem 1.2rem;text-align:center;">
+                <span style="font-family:'Righteous',cursive;font-size:0.95rem;color:var(--gold);">sunshinefm labs</span>
+                <span style="font-size:0.8rem;color:rgba(255,255,255,0.5);display:block;margin-top:0.2rem;">experiments</span>
+              </div>
+              <div style="text-align:center;font-size:1.1rem;color:var(--gold);">↓</div>
+              <div style="background:rgba(2,132,199,0.18);border:1px solid rgba(2,132,199,0.35);border-radius:10px;padding:0.9rem 1.2rem;text-align:center;">
+                <span style="font-family:'Righteous',cursive;font-size:0.95rem;color:var(--blue-mid);">aicv</span>
+                <span style="font-size:0.8rem;color:rgba(255,255,255,0.5);display:block;margin-top:0.2rem;">regional intelligence layer</span>
+              </div>
+              <div style="text-align:center;font-size:1.1rem;color:var(--gold);">↓</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+                <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.65rem 0.8rem;text-align:center;font-size:clamp(0.85rem,1.8vw,1rem);color:rgba(255,255,255,0.7);">agents</div>
+                <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.65rem 0.8rem;text-align:center;font-size:clamp(0.85rem,1.8vw,1rem);color:rgba(255,255,255,0.7);">founders</div>
+                <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.65rem 0.8rem;text-align:center;font-size:clamp(0.85rem,1.8vw,1rem);color:rgba(255,255,255,0.7);">funders</div>
+                <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.65rem 0.8rem;text-align:center;font-size:clamp(0.85rem,1.8vw,1rem);color:rgba(255,255,255,0.7);">workforce</div>
+              </div>
+            </div>
+
+            <div style="margin-top:1.3rem;padding:1rem 1.3rem;background:rgba(245,158,11,0.08);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;">
+              <p style="font-size:clamp(1rem,2.2vw,1.3rem);color:rgba(255,255,255,0.82);line-height:1.55;margin:0;">
+                <strong style="color:var(--gold);">if agents cannot understand the valley,</strong><br />
+                they will not route opportunity here.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:1.2rem;text-align:center;font-family:'DM Sans',sans-serif;font-size:clamp(0.85rem,1.8vw,1.05rem);letter-spacing:0.06em;color:rgba(255,255,255,0.45);font-style:italic;">season-1 evidence is the first published layer of that legibility.</p>
+      </div>
+      <aside class="notes">
+        [04 — What Comes Next] SunshineFM is the experiment arm — we build things, publish what we learn, run it in public. AICV is the infrastructure layer — it's about making the Coachella Valley legible to AI systems themselves. Because here's the thing: agents are already routing talent, capital, and opportunity. If the Valley isn't represented in the data those agents use, if they can't understand the local economy, the culture, the assets — they'll route opportunity elsewhere. AICV is the long game.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 17 — THE INVITATION
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-content">
+        <span class="section-num">04 — What Comes Next</span>
+
+        <h2 class="slide-heading slide-heading-lg slide-heading-blue" style="max-width:760px;margin-bottom:0.2em;">what could you test<br />in 30 days for under $500?</h2>
+
+        <hr class="slide-rule slide-rule-blue" />
+
+        <!-- 8-tile idea grid -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;max-width:940px;margin-bottom:1.6rem;">
+          <div style="padding:0.9rem 1rem;background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--blue-dark);line-height:1.35;">restaurant<br />tool</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--blue-dark);line-height:1.35;">tourism<br />guide</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.22);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--gold-dark);line-height:1.35;">nonprofit<br />donor workflow</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.22);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--gold-dark);line-height:1.35;">student<br />media project</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--blue-dark);line-height:1.35;">property mgmt<br />assistant</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.22);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--gold-dark);line-height:1.35;">city service<br />prototype</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:var(--blue-xlight);border:1px solid var(--blue-light);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--blue-dark);line-height:1.35;">wellness<br />intake app</div>
+          </div>
+          <div style="padding:0.9rem 1rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.22);border-radius:10px;">
+            <div style="font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--gold-dark);line-height:1.35;">festival<br />logistics tool</div>
+          </div>
+        </div>
+
+        <!-- CTA bar -->
+        <div style="background:var(--ink);border-radius:14px;padding:1.2rem 1.8rem;max-width:940px;display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);"></div>
+            <span style="font-size:clamp(1rem,2.2vw,1.3rem);color:var(--white);font-weight:600;">submit a follow-on experiment.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);"></div>
+            <span style="font-size:clamp(1rem,2.2vw,1.3rem);color:var(--white);font-weight:600;">host a documented session.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);"></div>
+            <span style="font-size:clamp(1rem,2.2vw,1.3rem);color:var(--white);font-weight:600;">subscribe to sunshinefm</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--gold);"></div>
+            <span style="font-size:clamp(1rem,2.2vw,1.3rem);color:var(--white);font-weight:600;">talk to aicv</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [04 — What Comes Next] These tiles are framed as case-study examples for the follow-on archive — not pitches for the audience to ship their own startup. This is the invitation. Not "become a programmer." Not "raise funding." Just: what problem do you see every day that nobody has solved locally? Can you describe it clearly enough that agents can help you build a rough version? In 30 days, for under $500, you can find out if the problem is real and if people will use what you made. That's the new bar for a hypothesis.
+      </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 18 — CLOSING
+    ═══════════════════════════════════════════════════════ -->
+    <section>
+      <div class="slide slide-hero" style="justify-content:center;align-items:center;text-align:center;">
+        <div style="max-width:780px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:0.2em;">mirage season 1 is archived</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);letter-spacing:0.1em;color:rgba(255,255,255,0.7);margin-bottom:1.2em;">the case study continues</div>
+
+          <hr class="slide-rule slide-rule-center slide-rule-white" style="width:5rem;margin:0 auto 1.6rem;" />
+
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,11vw,7.5rem);letter-spacing:0.03em;line-height:0.95;color:var(--white);text-shadow:0 4px 40px rgba(0,0,0,0.3);">
+            we can<br />build it here
+          </div>
+
+          <div class="hero-glass-bar" style="margin:2.4rem auto 0;display:inline-flex;">
+            <span class="dot"></span>
+            sunshinefm · aicv · coachella valley · 2026
+          </div>
+        </div>
+
+        <!-- QR Code — bottom-right, subtle -->
+        <div style="position:absolute;bottom:2.4rem;right:2.8rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;">
+          <div style="background:rgba(255,255,255,0.96);border-radius:10px;padding:10px;box-shadow:0 2px 20px rgba(0,0,0,0.25);">
+            <div id="qr-slide18" style="width:120px;height:120px;"></div>
+          </div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.06em;color:rgba(255,255,255,0.65);text-align:center;line-height:1.3;">
+            case study at /case-study
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        [04 — What Comes Next] Mirage Season 1 was archived, not wrapped, because the DesertDrop thesis is ongoing. The app dispatched on May 1, but the project continues as documented evidence. Mirage was 30 days, $329, one person, a desert, and festival season. It wasn't a company. It was season-1 evidence. The lesson is that the tools are here now. The question is whether the Valley will use them — and the case study exists to keep tracking that answer. We can build it here. That's not a slogan. That's just true. — QR code bottom-right links to the canonical case-study entry at mirage.sunshine.fm/case-study
+      </aside>
+    </section>
+
+  </div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    controls: true,
+    controlsLayout: 'bottom-right',
+    progress: true,
+    center: false,
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [RevealNotes],
+  });
+
+
+</script>
+
+<!-- QR Code library + render for closing slide -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  (function() {
+    function renderQR() {
+      var el = document.getElementById('qr-slide18');
+      if (!el || !window.QRCode) return;
+      new QRCode(el, {
+        text: 'https://mirage.sunshine.fm/case-study',
+        width: 120,
+        height: 120,
+        colorDark: '#0F172A',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderQR);
+    } else {
+      renderQR();
+    }
+  })();
+</script>
+</body>
+</html>

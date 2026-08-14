@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mirage — ongoing case study & canonical evidence for local ai (season 1, 2026)</title>
+    <meta name="description" content="Ongoing case study and canonical evidence for local AI in the Coachella Valley, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026). Read the canonical write-up at /case-study.">
+    <link rel="canonical" href="https://mirage.sunshine.fm">
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json?v=11A">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0284C7">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Mirage">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+
+    <!-- OG Meta Tags -->
+    <meta property="og:title" content="mirage — ongoing case study & canonical evidence for local ai">
+    <meta property="og:description" content="Ongoing case study and canonical evidence for local AI in the Coachella Valley, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026). Read the canonical write-up at /case-study.">
+    <meta property="og:image" content="https://mirage.sunshine.fm/og-card.png">
+    <meta property="og:url" content="https://mirage.sunshine.fm">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="mirage — ongoing case study & canonical evidence for local ai">
+    <meta name="twitter:description" content="Ongoing case study and canonical evidence for local AI in the Coachella Valley, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026). Read the canonical write-up at /case-study.">
+    <meta name="twitter:image" content="https://mirage.sunshine.fm/og-card.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "SunshineFM",
+          "url": "https://www.sunshine.fm",
+          "description": "Coachella Valley radio and experimental media infrastructure."
+        },
+        {
+          "@type": "WebSite",
+          "name": "Mirage",
+          "alternateName": "Mirage — SunshineFM",
+          "url": "https://mirage.sunshine.fm",
+          "description": "Ongoing canonical case study and documented evidence for temporary social infrastructure and AI-assisted local product builds, anchored on a 30-day Season 1 build (Apr 1 – May 1, 2026) in the Coachella Valley.",
+          "inLanguage": "en",
+          "publisher": { "@type": "Organization", "name": "SunshineFM" }
+        },
+        {
+          "@type": ["ScholarlyArticle", "CreativeWork"],
+          "headline": "Mirage — SunshineFM Case Study (Season 1, 2026)",
+          "description": "Ongoing canonical case study and documented evidence for temporary social infrastructure and AI-assisted local product builds.",
+          "url": "https://mirage.sunshine.fm/case-study",
+          "sameAs": [
+            "https://mirage.sunshine.fm/case-study.html",
+            "https://mirage.sunshine.fm/season1.html"
+          ],
+          "datePublished": "2026-05-04",
+          "dateModified": "2026-07-16",
+          "inLanguage": "en",
+          "isAccessibleForFree": true,
+          "about": { "@type": "Place", "name": "Coachella Valley" },
+          "isBasedOn": [
+            {
+              "@type": "Article",
+              "url": "https://mirage.sunshine.fm/season1.html",
+              "datePublished": "2026-05-04"
+            }
+          ],
+          "citation": [
+            {
+              "@type": "CreativeWork",
+              "name": "Mirage — SunshineFM",
+              "url": "https://mirage.sunshine.fm"
+            }
+          ],
+          "author": { "@type": "Organization", "name": "SunshineFM" },
+          "publisher": { "@type": "Organization", "name": "SunshineFM" },
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://mirage.sunshine.fm/case-study" }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1420341739378694');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1420341739378694&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --sky: #0284C7;
+            --sky-dark: #0369A1;
+            --sky-mid: #0EA5E9;
+            --sky-light: #E0F2FE;
+            --gold: #D97706;
+            --gold-bright: #F59E0B;
+            --gold-dark: #92400E;
+            --white: #FFFFFF;
+            --text: #0F172A;
+            --text-muted: #1E3A5F;
+            --border: #BAE6FD;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================
+           HERO — clean, no animation, no button
+        ============================================================ */
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 1.5rem 5rem;
+            position: relative;
+            background: linear-gradient(180deg,
+                #0369A1 0%,
+                #0284C7 30%,
+                #0EA5E9 55%,
+                #7DD3FC 75%,
+                #E0F2FE 90%,
+                #ffffff 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .hero-wordmark {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(5rem, 22vw, 10rem);
+            font-weight: 400;
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            color: var(--white);
+            text-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.1rem, 3.5vw, 1.35rem);
+            font-weight: 600;
+            color: rgba(255,255,255,0.95);
+            max-width: 400px;
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-dates {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(1.4rem, 4.5vw, 2rem);
+            font-weight: 400;
+            color: var(--white);
+            letter-spacing: 0.03em;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+        }
+
+        .hero-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.15rem);
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+            max-width: 380px;
+            line-height: 1.5;
+        }
+
+        .hero-mission {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(1.1rem, 3.8vw, 1.35rem);
+            font-weight: 700;
+            color: #FDE68A;
+            max-width: 380px;
+            text-align: center;
+            letter-spacing: 0.01em;
+            margin-top: 1.25rem;
+            line-height: 1.4;
+        }
+
+        /* ============================================================
+           CARD FLOAT GAP — animated cards live HERE between hero + how-it-works
+        ============================================================ */
+        .card-float-gap {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: var(--white);
+            /* Fade cards before they reach the hero edge (top) */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 35%, rgba(0,0,0,1) 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.9) 35%, rgba(0,0,0,1) 70%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* floating text cards */
+        .float-card {
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 12px 14px;
+            max-width: 220px;
+            text-align: left;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            animation: floatUp linear infinite;
+            will-change: transform;
+        }
+
+        .float-card .fc-nick {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--sky);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .float-card .fc-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            color: #334155;
+            line-height: 1.4;
+        }
+
+        .float-card .fc-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ADE80;
+            flex-shrink: 0;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        /* floating polaroid cards */
+        .float-polaroid {
+            background: white;
+            padding: 8px 8px 24px 8px;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.12);
+            border-radius: 3px;
+            animation: floatUp linear infinite;
+            will-change: transform;
+            max-width: 120px;
+        }
+
+        .float-polaroid .fp-img {
+            width: 104px;
+            height: 80px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, #7DD3FC 0%, #0EA5E9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+
+        .float-polaroid .fp-stamp {
+            position: absolute;
+            bottom: 5px;
+            left: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 10px;
+            color: var(--sky);
+            letter-spacing: 0.02em;
+        }
+
+        @keyframes floatUp {
+            0%   { transform: translateY(240px); opacity: 0; }
+            8%   { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { transform: translateY(-60px); opacity: 0; }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+        }
+
+        /* ============================================================
+           HOW IT WORKS
+        ============================================================ */
+        .how-section {
+            padding: 4rem 1.5rem 3rem;
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* ============================================================
+           SHARED SECTION STYLES
+        ============================================================ */
+        .section {
+            padding: 4rem 1.5rem;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* Section titles: Righteous, sky blue */
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--sky);
+            margin-bottom: 0.6rem;
+            text-align: center;
+        }
+
+        .section-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            color: #334155;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--sky);
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.02em;
+        }
+
+        .step-text {
+            padding-top: 0.6rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.15rem;
+            color: #1E293B;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        /* ============================================================
+           CTA BUTTON
+        ============================================================ */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.1rem 3rem;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,0.25); }
+        .cta-btn:active { transform: scale(0.97); }
+
+        /* ============================================================
+           HERO GATE — inline passphrase entry above the fold
+        ============================================================ */
+        .hero-gate-section {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.65rem;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .hero-stat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.28);
+            border-radius: 100px;
+            padding: 0.4rem 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.95);
+        }
+
+        .hero-stat-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ADE80;
+            animation: dotPulse 1.4s ease-in-out infinite;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .hero-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .hero-pass-input {
+            flex: 1;
+            padding: 0 1.25rem;
+            height: 54px;
+            border: 2px solid rgba(255,255,255,0.55);
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px; /* 16px prevents iOS zoom */
+            font-weight: 600;
+            color: #0F172A;
+            text-align: center;
+            outline: none;
+            background: rgba(255,255,255,0.95);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .hero-pass-input:focus {
+            border-color: var(--gold-bright);
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.35);
+        }
+
+        .hero-pass-input::placeholder { color: #94A3B8; font-weight: 500; }
+
+        .hero-pass-input.error {
+            border-color: #DC2626;
+            animation: heroShake 0.3s ease;
+        }
+
+        @keyframes heroShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        .hero-enter-btn {
+            flex-shrink: 0;
+            padding: 0 1.35rem;
+            height: 54px;
+            border-radius: 100px;
+            background: var(--gold);
+            border: none;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+            letter-spacing: 0.01em;
+        }
+
+        .hero-enter-btn:hover { background: #B45309; }
+        .hero-enter-btn:active { transform: scale(0.97); }
+        .hero-enter-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .hero-gate-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.55);
+            text-align: center;
+        }
+
+        /* ============================================================
+           PASSPHRASE GATE (bottom / scroll-through)
+        ============================================================ */
+        .passphrase-gate {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gate-input-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            animation: gateIn 0.2s ease;
+        }
+        .gate-input-wrap.visible { display: flex; }
+
+        @keyframes gateIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gate-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 1rem 1.25rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px; /* 16px prevents iOS zoom */
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+            background: white;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .gate-input:focus { border-color: var(--sky); }
+        .gate-input.error { border-color: #DC2626; animation: shake 0.3s ease; }
+        .gate-input::placeholder { color: #94A3B8; font-weight: 500; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        /* ============================================================
+           SWIPEABLE CARDS — shared
+        ============================================================ */
+        .cards-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 0.25rem 1.25rem;
+            scrollbar-width: none;
+        }
+        .cards-scroll::-webkit-scrollbar { display: none; }
+
+        /* Scroll dots indicator */
+        .scroll-dots {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 0.25rem;
+        }
+        .scroll-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #CBD5E1;
+            transition: background 0.2s, width 0.2s;
+        }
+        .scroll-dot.active {
+            width: 18px;
+            border-radius: 3px;
+            background: var(--sky);
+        }
+
+        .scroll-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: #94A3B8;
+            margin-bottom: 0.75rem;
+            align-self: flex-start;
+        }
+        .scroll-hint svg { width: 14px; height: 14px; }
+
+        /* ============================================================
+           TIER CARDS — taller, more breathing room, larger fonts
+        ============================================================ */
+        .swipe-card {
+            flex: 0 0 85vw;
+            max-width: 340px;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            padding: 2.25rem 2rem;
+            text-align: left;
+        }
+
+        .tier-card-1 { background: linear-gradient(135deg, #0369A1, #0EA5E9); color: white; }
+        .tier-card-2 { background: linear-gradient(135deg, #D97706, #F59E0B); color: white; }
+        .tier-card-3 { background: #F1F5F9; color: var(--text); }
+
+        .tier-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1rem;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            text-transform: lowercase;
+        }
+
+        .tier-card-1 .tier-badge { background: rgba(255,255,255,0.2); color: white; }
+        .tier-card-2 .tier-badge { background: rgba(255,255,255,0.25); color: white; }
+        .tier-card-3 .tier-badge { background: #E2E8F0; color: #475569; }
+
+        .tier-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #4ADE80;
+            animation: dotPulse 1.4s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        /* Card headers: Bebas Neue, lowercase */
+        .swipe-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 6vw, 2.4rem);
+            letter-spacing: 0.04em;
+            margin-bottom: 0.65rem;
+            line-height: 1;
+            text-transform: lowercase;
+        }
+
+        .swipe-card .card-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .tier-perms {
+            list-style: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .tier-perms li {
+            padding: 0.35rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .tier-perms li::before {
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .tier-perms .can::before { content: '✓'; font-weight: 700; }
+        .tier-perms .cannot::before { content: '✗'; opacity: 0.5; }
+        .tier-perms .cannot { opacity: 0.55; }
+
+        /* Featured superpower — tier 1 only — inline line, no box */
+        .tier-featured {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+            line-height: 1.45;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .tier-featured .feat-dot {
+            flex-shrink: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4ADE80;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .tier-no-dot {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        .tier-warm {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            font-style: italic;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* ============================================================
+           FEED CARDS — slightly taller
+        ============================================================ */
+        .feed-swipe-card {
+            flex: 0 0 85vw;
+            max-width: 340px;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            padding: 2rem 1.75rem;
+            background: var(--white);
+            border: 2px solid #E2E8F0;
+            text-align: left;
+        }
+
+        /* Card headers: Bebas Neue, lowercase */
+        .feed-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 5.5vw, 2.2rem);
+            letter-spacing: 0.06em;
+            color: var(--sky-dark);
+            margin-bottom: 0.5rem;
+            text-transform: lowercase;
+        }
+
+        .feed-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            color: #334155;
+            margin-bottom: 1.5rem;
+            line-height: 1.55;
+        }
+
+        /* ============================================================
+           POLAROID POST FORMAT
+        ============================================================ */
+        .polaroid-post {
+            background: white;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+            border-radius: 3px;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .polaroid-photo-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #7DD3FC 0%, #0EA5E9 60%, #0369A1 100%);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 0;
+            overflow: hidden;
+            object-fit: cover;
+        }
+
+        .polaroid-white-strip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .polaroid-m-stamp {
+            font-family: 'Righteous', cursive;
+            font-size: 20px;
+            color: var(--sky);
+            letter-spacing: 0.02em;
+        }
+
+        /* Reactions sit BELOW the polaroid */
+        .polaroid-reactions-below {
+            display: flex;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            padding: 0.35rem 0 0;
+        }
+
+        .sample-reaction-pill {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 100px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            color: #64748B;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Polaroid caption area (above white strip) */
+        .polaroid-caption-area {
+            padding: 8px 2px 0;
+        }
+
+        .polaroid-nick {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--sky);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .polaroid-nick .live-dot-small {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ADE80;
+            animation: dotPulse 1.4s ease-in-out infinite;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .polaroid-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.45;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           REGULAR SAMPLE POSTS (local knowledge, now)
+        ============================================================ */
+        .sample-post {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid #E2E8F0;
+        }
+
+        .sample-post-nick {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--sky);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .sample-post-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .live-dot-small {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ADE80;
+            animation: dotPulse 1.4s ease-in-out infinite;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        footer {
+            background: #0F172A;
+            color: rgba(255,255,255,0.55);
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        footer a { color: var(--gold-bright); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* ============================================================
+           SECTION DIVIDER
+        ============================================================ */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #E2E8F0, transparent);
+            margin: 0 1.5rem;
+        }
+
+        /* ============================================================
+           PASSPHRASE CONFIRM BUTTON
+        ============================================================ */
+        .gate-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 340px;
+        }
+        .gate-input-row .gate-input {
+            flex: 1;
+            max-width: none;
+        }
+        .gate-confirm-btn {
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--sky);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s, transform 0.1s;
+            box-shadow: 0 2px 10px rgba(2,132,199,0.3);
+        }
+        .gate-confirm-btn:hover { background: var(--sky-dark); transform: scale(1.05); }
+        .gate-confirm-btn:active { transform: scale(0.95); }
+
+        /* ============================================================
+           "BE A BETTER ANGEL" CTA SECTION
+        ============================================================ */
+        .final-cta-section {
+            text-align: center;
+            padding: 4rem 1.5rem 3rem;
+        }
+        .final-cta-header {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 7vw, 3rem);
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            color: var(--sky);
+            margin-bottom: 2rem;
+        }
+
+        /* ============================================================
+           DESKTOP ROW LAYOUT FOR TIER + FEED CARDS
+        ============================================================ */
+        @media (min-width: 768px) {
+            .cards-scroll {
+                overflow-x: visible;
+                scroll-snap-type: none;
+                flex-wrap: nowrap;
+                gap: 1.25rem;
+                padding: 0.5rem 0 1rem;
+            }
+            .swipe-card {
+                flex: 1 1 0;
+                max-width: none;
+            }
+            .feed-swipe-card {
+                flex: 1 1 0;
+                max-width: none;
+            }
+            .scroll-hint { display: none; }
+            .scroll-dots { display: none; }
+        }
+
+        /* ============================================================
+           FLOAT ZONE — extends into hero's lower half
+        ============================================================ */
+        .card-float-gap {
+            position: relative;
+            height: 360px !important;
+            margin-top: -200px !important;
+            z-index: 1;
+        }
+        .hero { z-index: 3; }
+
+        /* ============================================================
+           TOAST
+        ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0F172A;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            z-index: 9999;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ============================================================
+           DESKTOP TAB SYSTEM — tier cards + feed cards
+        ============================================================ */
+        .desktop-tab-bar {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            /* Tab selector bar */
+            .desktop-tab-bar {
+                display: flex;
+                gap: 2rem;
+                margin-bottom: 1.5rem;
+                align-items: flex-end;
+            }
+
+            .desktop-tab-btn {
+                font-family: 'Bebas Neue', sans-serif;
+                font-size: 1.5rem;
+                letter-spacing: 0.04em;
+                text-transform: lowercase;
+                background: none;
+                border: none;
+                border-bottom: 3px solid transparent;
+                padding: 0.35rem 0;
+                cursor: pointer;
+                color: #CBD5E1;
+                transition: color 0.15s, border-color 0.15s;
+                line-height: 1;
+            }
+
+            /* Tab mode — override 3-col layout, show one card full-width */
+            .cards-scroll.desktop-tab-mode {
+                overflow-x: visible;
+                scroll-snap-type: none;
+                flex-wrap: nowrap;
+                gap: 0;
+                padding: 0;
+                min-height: 280px;
+            }
+
+            .desktop-tab-mode .swipe-card,
+            .desktop-tab-mode .feed-swipe-card {
+                flex: 0 0 100%;
+                max-width: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .desktop-hidden {
+                display: none !important;
+            }
+
+            /* Tier card — 2-column desktop layout */
+            .tier-card-cols {
+                display: flex;
+                gap: 2.5rem;
+                align-items: flex-start;
+                margin-top: 1rem;
+            }
+            .tier-card-left { flex: 1.3; }
+            .tier-card-right { flex: 1; }
+
+            /* Feed card — side-by-side info + posts on desktop */
+            .feed-swipe-card.desktop-visible {
+                display: flex !important;
+                gap: 2.5rem;
+                align-items: flex-start;
+            }
+            .feed-card-info {
+                flex: 0 0 220px;
+            }
+            .feed-card-content {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     SECTION 1 — HERO (clean, no button, no animation)
+============================================================ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-wordmark">mirage</div>
+        <p class="hero-tagline">a pop-up good vibes network for the festival season</p>
+        <div class="hero-dates">appears april 1 and vanishes may 1.</div>
+        <p class="hero-mission">making the festival better for everyone.</p>
+
+        <!-- Direct entry: passphrase gate removed Apr 18 2026 — visitors enter without the word -->
+        <div class="hero-gate-section" id="heroGateSection">
+            <div class="hero-stat-badge" id="heroStatBadge" style="display:none;">
+                <span class="hero-stat-dot"></span>
+                <span id="heroStatText"></span>
+            </div>
+            <a href="/app" class="hero-enter-btn" id="heroEnterBtn" style="text-decoration:none;">enter mirage →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     CARD FLOAT GAP — animated posts + polaroids float here,
+     between hero bottom and how-it-works top. hero stays clean.
+============================================================ -->
+<div class="card-float-gap" id="cardFloatGap"></div>
+
+<!-- ============================================================
+     SECTION 2 — HOW IT WORKS + first Enter Mirage button
+============================================================ -->
+<div class="how-section">
+    <div class="section-title" style="text-align:center; margin-bottom:2rem;">here's how <span style="color:#F59E0B;font-weight:700;font-family:'Righteous',cursive;letter-spacing:0.04em;">Mirage</span> is different</div>
+
+    <div class="steps-list">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">we figure out roughly where you are. no sign-ups needed.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">you get a random desert nickname. it's fun. keep it until may 1st.</div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">capture a moment, share a tip, learn from each other.</div>
+        </div>
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================
+     SECTION 3 — TIER CARDS
+============================================================ -->
+<div class="section">
+    <div class="section-title">proximity is your superpower</div>
+
+    <div class="scroll-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        swipe
+    </div>
+
+    <div class="desktop-tab-bar" id="tierTabBar"></div>
+
+    <div class="cards-scroll" id="tierScroll">
+
+        <!-- Tier 1: at the fest -->
+        <div class="swipe-card tier-card-1">
+            <div class="tier-badge"><span class="tier-dot"></span> at the fest</div>
+            <div class="tier-card-cols">
+                <div class="tier-card-left">
+                    <h3>if you're here.</h3>
+                    <p class="card-sub">empire polo fields. festival grounds. parking lots. campsites.</p>
+                </div>
+                <div class="tier-card-right">
+                    <ul class="tier-perms">
+                        <li class="can">you can post to all four feeds</li>
+                        <li class="can">you can react to any post</li>
+                        <li style="padding-top:0.75rem;border-top:1px solid rgba(255,255,255,0.2);margin-top:0.75rem;display:flex;align-items:center;gap:0.5rem;"><span class="tier-dot"></span> you get the live pulse status icon</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 2: in the desert -->
+        <div class="swipe-card tier-card-2">
+            <div class="tier-badge">in the desert</div>
+            <div class="tier-card-cols">
+                <div class="tier-card-left">
+                    <h3>if you're nearby.</h3>
+                    <p class="card-sub">palm springs, palm desert, indio, and other desert cities.</p>
+                </div>
+                <div class="tier-card-right">
+                    <ul class="tier-perms">
+                        <li class="can">you can post to all four feeds</li>
+                        <li class="can">you can react to all posts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 3: watching from elsewhere -->
+        <div class="swipe-card tier-card-3">
+            <div class="tier-badge" style="background:#E2E8F0;color:#64748B;">elsewhere</div>
+            <div class="tier-card-cols">
+                <div class="tier-card-left">
+                    <h3>if you're joining from elsewhere.</h3>
+                    <p class="card-sub">you can see everything happening at the fest and in the desert in real time.</p>
+                </div>
+                <div class="tier-card-right">
+                    <ul class="tier-perms" style="color:#475569;">
+                        <li class="can" style="color:#475569;">you can view all four feeds</li>
+                        <li class="can" style="color:#475569;">you can react</li>
+                        <li style="display:flex;align-items:flex-start;gap:0.5rem;color:#D97706;padding:0.35rem 0;font-weight:600;"><span style="color:#D97706;">⚠</span><span>you cannot post</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-dots" id="tierDots">
+        <div class="scroll-dot active"></div>
+        <div class="scroll-dot"></div>
+        <div class="scroll-dot"></div>
+    </div>
+</div>
+
+<!-- ============================================================
+     SECTION 5 — THREE FEEDS
+============================================================ -->
+<div class="section">
+    <div class="section-title">you have four feeds</div>
+    <div class="section-desc">good shots, good vibes, good tips, and hey mirage — each one has its own energy.</div>
+
+    <div class="scroll-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        swipe
+    </div>
+
+    <div class="desktop-tab-bar" id="feedTabBar"></div>
+
+    <div class="cards-scroll" id="feedScroll">
+
+        <!-- good shots — polaroid format -->
+        <div class="feed-swipe-card" style="background:#C8E6F5;border-color:#93C5FD;">
+            <div class="feed-card-info">
+                <div class="feed-name">good shots</div>
+                <div class="feed-desc">photos only — share what you're seeing. captions are optional.</div>
+            </div>
+            <div class="feed-card-content">
+                <!-- Polaroid sample post — matches live app structure -->
+                <div style="background:white;padding:10px 10px 56px 10px;box-shadow:0 4px 20px rgba(0,0,0,0.18);border-radius:3px;position:relative;margin-bottom:0.5rem;">
+                    <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:2px;background:linear-gradient(160deg,#7DD3FC 0%,#0EA5E9 45%,#F59E0B 75%,#EA580C 100%);">
+                    </div>
+                    <div style="position:absolute;bottom:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;">
+                        <span style="font-family:'Righteous',cursive;font-size:36px;color:#0284C7;line-height:1;">m</span>
+                    </div>
+                </div>
+                <div style="font-family:'DM Sans',sans-serif;font-size:0.82rem;color:#0369A1;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem;">
+                    <span class="live-dot-small"></span>
+                    <strong>dustfox_33</strong> · <span style="font-size:0.7rem;font-weight:600;background:rgba(2,132,199,0.15);color:#0369A1;padding:0.1rem 0.45rem;border-radius:100px;">at the fest</span>
+                </div>
+                <div style="font-family:'DM Sans',sans-serif;font-size:0.88rem;color:#0F172A;font-style:italic;margin-bottom:0.6rem;line-height:1.4;">"sunset over the main stage just hit different tonight. nothing prepared me for this."</div>
+                <!-- Reactions below the polaroid -->
+                <div class="polaroid-reactions-below">
+                    <span class="sample-reaction-pill">💐 12</span>
+                    <span class="sample-reaction-pill">🩵 8</span>
+                    <span class="sample-reaction-pill">👏 5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- good vibes -->
+        <div class="feed-swipe-card" style="background:#F5E6C8;border-color:#D97706;">
+            <div class="feed-card-info">
+                <div class="feed-name">good vibes</div>
+                <div class="feed-desc">leave some love — a kind word, a lyric, anything that lifts the mood.</div>
+            </div>
+            <div class="feed-card-content">
+                <div class="sample-post" style="background:white;border-color:#FDE68A;margin-bottom:0.75rem;">
+                    <div class="sample-post-nick">
+                        <span class="live-dot-small"></span>
+                        cactusbird_7 · <span style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:600;background:rgba(2,132,199,0.1);color:#0369A1;padding:0.1rem 0.45rem;border-radius:100px;">at the fest</span>
+                    </div>
+                    <div class="sample-post-text">that set just changed something in me. grateful to be here. all of us, right now.</div>
+                </div>
+                <div class="sample-post" style="background:white;border-color:#FDE68A;">
+                    <div class="sample-post-nick">
+                        mesaowl_22 · <span style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:600;background:rgba(217,119,6,0.1);color:#92400E;padding:0.1rem 0.45rem;border-radius:100px;">in the desert</span>
+                    </div>
+                    <div class="sample-post-text">strangers becoming friends at 2am in the desert. this is the only place like this in the world.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- good tips -->
+        <div class="feed-swipe-card" style="background:#F5C8C8;border-color:#FCA5A5;">
+            <div class="feed-card-info">
+                <div class="feed-name" style="color:#DC2626;">good tips</div>
+                <div class="feed-desc">helpful info for festivalgoers — tips, lost and found, anything worth knowing. good tips don't expire.</div>
+            </div>
+            <div class="feed-card-content">
+                <div class="sample-post" style="background:#FFF5F5;border-color:#FECACA;margin-bottom:0.6rem;">
+                    <div class="sample-post-nick" style="color:#DC2626;">
+                        sandyowl_14 · <span style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:600;background:rgba(217,119,6,0.1);color:#92400E;padding:0.1rem 0.45rem;border-radius:100px;">in the desert</span>
+                    </div>
+                    <div class="sample-post-text">i-10 westbound backed up past cathedral city, take highway 111.</div>
+                </div>
+                <div class="sample-post" style="background:#FFF5F5;border-color:#FECACA;margin-bottom:0.6rem;">
+                    <div class="sample-post-nick" style="color:#DC2626;">
+                        <span class="live-dot-small"></span>
+                        dustcreek_9 · <span style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:600;background:rgba(2,132,199,0.1);color:#0369A1;padding:0.1rem 0.45rem;border-radius:100px;">at the fest</span>
+                    </div>
+                    <div class="sample-post-text">main stage set starting 10 minutes late. confirmed by staff at the rail.</div>
+                </div>
+                <div class="sample-post" style="background:#FFF5F5;border-color:#FECACA;">
+                    <div class="sample-post-nick" style="color:#DC2626;">
+                        <span class="live-dot-small"></span>
+                        saltflat_3 · <span style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:600;background:rgba(2,132,199,0.1);color:#0369A1;padding:0.1rem 0.45rem;border-radius:100px;">at the fest</span>
+                    </div>
+                    <div class="sample-post-text">medical tent near the east entrance is clear right now if anyone needs it.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- hey mirage -->
+        <div class="feed-swipe-card" style="background:#E0F2FE;border-color:#BAE6FD;">
+            <div class="feed-card-info">
+                <div class="feed-name">hey mirage</div>
+                <div class="feed-desc">private note to team mirage</div>
+            </div>
+            <div class="feed-card-content">
+                <div style="background:white;border-radius:14px;padding:1.1rem;border:1.5px solid #BAE6FD;">
+                    <div style="font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:700;color:#0369A1;margin-bottom:0.6rem;">✉️ private note — only sat sees this</div>
+                    <div style="background:#F8FAFC;border-radius:10px;padding:0.75rem;border:1px solid #E2E8F0;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:#64748B;font-style:italic;min-height:80px;">leave feedback, ideas, anything you want heard…</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-dots" id="feedDots">
+        <div class="scroll-dot active"></div>
+        <div class="scroll-dot"></div>
+        <div class="scroll-dot"></div>
+        <div class="scroll-dot"></div>
+    </div>
+</div>
+
+<!-- ============================================================
+     SECTION 6 — SINGLE Enter Mirage CTA (before footer)
+============================================================ -->
+<div class="section-divider"></div>
+<div class="final-cta-section">
+    <div class="final-cta-header">let's go</div>
+    <!-- Direct entry: passphrase gate removed Apr 18 2026 -->
+    <a href="/app" class="cta-btn" style="display:inline-block;text-decoration:none;">enter mirage</a>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================
+     SECTION 7 — FOOTER
+============================================================ -->
+<footer>
+    an experiment by sat. · <a href="https://bsky.app/profile/sunshinefm.bsky.social" target="_blank" rel="noopener">@sunshinefm.bsky.social</a> · disappears may 1, 2026 · <a href="/case-study">ongoing case study</a>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// HERO GATE — inline passphrase in the hero section
+// ============================================================
+
+function initHeroGate() {
+    if (isPassphraseAccepted()) {
+        // Already accepted — swap input group for a direct CTA button
+        const group = document.getElementById('heroInputGroup');
+        const sub = document.getElementById('heroGateSub');
+        // Fetch live activity count for social proof
+        fetch('/api/stats')
+            .then(r => r.ok ? r.json() : null)
+            .then(data => {
+                if (!data) return;
+                const total = (data.tips || 0) + (data.pulse || 0) + (data.moments || 0);
+                if (total < 1) return;
+                const badge = document.getElementById('heroStatBadge');
+                const text = document.getElementById('heroStatText');
+                if (badge && text) {
+                    text.textContent = total + ' desert dispatch' + (total !== 1 ? 'es' : '') + ' live';
+                    badge.style.display = 'inline-flex';
+                }
+            })
+            .catch(() => {});
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    // Boot the floating card gap animation
+    buildFloatGap();
+});
+
+// ============================================================
+// FLOATING CARD GAP ANIMATION
+// Cards and polaroids float in the space between hero + how-it-works
+// ============================================================
+const FLOAT_POSTS = [
+    { nick: 'dustfox_33', text: 'sunset over the main stage just hit different tonight.', live: true, type: 'card' },
+    { nick: 'cactusbird_7', text: 'water station by north entrance has zero line right now.', live: true, type: 'card' },
+    { nick: 'sandyowl_14', text: 'i-10 westbound backed up — take highway 111.', live: false, type: 'card' },
+    { nick: 'miragewalker_88', text: 'the art installations in the east field are unreal at night.', live: true, type: 'polaroid', emoji: '🌅' },
+    { nick: 'dryhawk_42', text: 'found a charging station near main entrance. almost no wait.', live: true, type: 'card' },
+    { nick: 'desertsage_19', text: 'palm springs air is doing free rides from the polo fields right now.', live: false, type: 'card' },
+    { nick: 'sunstruck_3', text: 'that set just changed my life. i will never be the same.', live: true, type: 'polaroid', emoji: '✨' },
+    { nick: 'cactuswren_27', text: 'north campsite water pressure is bad. west side way better.', live: false, type: 'card' },
+    { nick: 'goldendune_62', text: 'food vendor near the ferris wheel has a 5-min line vs. everywhere else.', live: false, type: 'card' },
+    { nick: 'aridwing_8', text: 'watching headliner from the hill behind the field. perfect sound.', live: true, type: 'polaroid', emoji: '🎸' },
+    { nick: 'saltflat_39', text: 'highway 86 is completely clear if you want to avoid the 10.', live: false, type: 'card' },
+    { nick: 'sunbaked_77', text: 'the silent disco is running right now and it is genuinely the vibe.', live: true, type: 'card' },
+];
+
+function buildFloatGap() {
+    const container = document.getElementById('cardFloatGap');
+    if (!container) return;
+
+    const gapW = container.offsetWidth;
+    const count = 8;
+
+    FLOAT_POSTS.slice(0, count).forEach((post, i) => {
+        // Wrapper: handles position + rotation (static, no animation)
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'absolute';
+        wrapper.style.bottom = '0';
+
+        const rotation = (Math.random() - 0.5) * 8;
+        wrapper.style.transform = `rotate(${rotation}deg)`;
+        wrapper.style.transformOrigin = 'bottom center';
+
+        // Inner: the animated element (translateY only — no rotation conflict)
+        let inner;
+        if (post.type === 'polaroid') {
+            inner = document.createElement('div');
+            inner.className = 'float-polaroid';
+            inner.style.position = 'relative'; // override absolute for inner
+            inner.innerHTML = `
+                <div class="fp-img">${post.emoji}</div>
+                <span class="fp-stamp">m</span>
+            `;
+            const maxLeft = gapW - 130;
+            wrapper.style.left = Math.max(5, (Math.random() * maxLeft)) + 'px';
+        } else {
+            inner = document.createElement('div');
+            inner.className = 'float-card';
+            inner.style.position = 'relative'; // override absolute for inner
+            inner.innerHTML = `
+                <div class="fc-nick">${post.live ? '<span class="fc-dot"></span>' : ''}${post.nick}</div>
+                <div class="fc-text">${post.text}</div>
+            `;
+            const maxLeft = gapW - 240;
+            wrapper.style.left = Math.max(5, (Math.random() * maxLeft)) + 'px';
+        }
+
+        const duration = 7 + Math.random() * 5;
+        const delay = i * 1.1 + Math.random() * 0.5;
+        inner.style.animationDuration = duration + 's';
+        inner.style.animationDelay = delay + 's';
+
+        wrapper.appendChild(inner);
+        container.appendChild(wrapper);
+    });
+}
+
+// ============================================================
+// SWIPEABLE SCROLL DOTS
+// ============================================================
+function initScrollDots(scrollEl, dotsEl) {
+    const dots = dotsEl.querySelectorAll('.scroll-dot');
+    scrollEl.addEventListener('scroll', () => {
+        const idx = Math.round(scrollEl.scrollLeft / scrollEl.offsetWidth);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }, { passive: true });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initScrollDots(document.getElementById('tierScroll'), document.getElementById('tierDots'));
+    initScrollDots(document.getElementById('feedScroll'), document.getElementById('feedDots'));
+});
+
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// SERVICE WORKER REGISTRATION
+// ============================================================
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then((reg) => {
+        console.log('[Mirage] Service worker registered:', reg.scope);
+    }).catch((err) => {
+        console.warn('[Mirage] Service worker registration failed:', err);
+    });
+}
+
+// ============================================================
+// DESKTOP TAB SYSTEM
+// ============================================================
+function initDesktopTabs() {
+    if (window.innerWidth < 768) return;
+
+    // Tier card tab accents (match card gradient colors)
+    const tierAccents = ['#0284C7', '#D97706', '#475569'];
+    setupDesktopTabs({
+        tabBarId: 'tierTabBar',
+        scrollId: 'tierScroll',
+        cardSelector: '.swipe-card',
+        labelFn: (card) => {
+            const h3 = card.querySelector('h3');
+            return h3 ? h3.textContent.trim() : '';
+        },
+        accentFn: (i) => tierAccents[i] || '#0284C7'
+    });
+
+    // Feed card tab accents
+    const feedAccents = ['#0284C7', '#D97706', '#DC2626', '#0284C7'];
+    setupDesktopTabs({
+        tabBarId: 'feedTabBar',
+        scrollId: 'feedScroll',
+        cardSelector: '.feed-swipe-card',
+        labelFn: (card) => {
+            const nameEl = card.querySelector('.feed-name');
+            return nameEl ? nameEl.textContent.trim() : '';
+        },
+        accentFn: (i) => feedAccents[i] || '#0284C7'
+    });
+}
+
+function setupDesktopTabs({ tabBarId, scrollId, cardSelector, labelFn, accentFn }) {
+    const bar = document.getElementById(tabBarId);
+    const scroll = document.getElementById(scrollId);
+    if (!bar || !scroll) return;
+
+    const cards = Array.from(scroll.querySelectorAll(cardSelector));
+    if (cards.length === 0) return;
+
+    // Activate tab mode
+    scroll.classList.add('desktop-tab-mode');
+
+    // Hide scroll dots
+    const dotsId = scrollId.replace('Scroll', 'Dots');
+    const dotsEl = document.getElementById(dotsId);
+    if (dotsEl) dotsEl.style.display = 'none';
+
+    // Build tab buttons and init visibility
+    cards.forEach((card, i) => {
+        const label = labelFn(card);
+        if (!label) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'desktop-tab-btn';
+        btn.textContent = label;
+
+        if (i === 0) {
+            btn.classList.add('active');
+            btn.style.color = accentFn(i);
+            btn.style.borderBottomColor = accentFn(i);
+            card.classList.add('desktop-visible');
+        } else {
+            card.classList.add('desktop-hidden');
+        }
+
+        btn.addEventListener('click', () => {
+            // Deactivate all tabs
+            bar.querySelectorAll('.desktop-tab-btn').forEach((b, j) => {
+                b.classList.remove('active');
+                b.style.color = '';
+                b.style.borderBottomColor = '';
+            });
+            // Activate this tab
+            btn.classList.add('active');
+            btn.style.color = accentFn(i);
+            btn.style.borderBottomColor = accentFn(i);
+            // Show this card, hide others
+            cards.forEach((c, j) => {
+                c.classList.toggle('desktop-visible', j === i);
+                c.classList.toggle('desktop-hidden', j !== i);
+            });
+        });
+
+        bar.appendChild(btn);
+    });
+}
+
+// Initialize on load and skip on resize (mobile breakpoint handles mobile)
+document.addEventListener('DOMContentLoaded', () => {
+    initDesktopTabs();
+});
+</script>
+
+<!-- Pageview Tracking — UTM-aware with sessionStorage persistence -->
+<script>
+(function() {
+  // Reuse existing session or create one for landing page visitors
+  var sid = localStorage.getItem('mirage_session');
+  if (!sid) {
+    try { sid = crypto.randomUUID(); } catch(e) { sid = 'lp-' + Date.now() + '-' + Math.random().toString(36).slice(2); }
+    localStorage.setItem('mirage_session', sid);
+  }
+  // Extract UTM params from URL — persist in sessionStorage so they survive redirects
+  var params = new URLSearchParams(window.location.search);
+  var keys = ['utm_source', 'utm_medium', 'utm_campaign'];
+  var utm = {};
+  keys.forEach(function(k) {
+    var v = params.get(k);
+    if (v) {
+      try { sessionStorage.setItem(k, v); } catch(e) {}
+      utm[k] = v;
+    } else {
+      try { var stored = sessionStorage.getItem(k); if (stored) utm[k] = stored; } catch(e) {}
+    }
+  });
+  // Fire-and-forget pageview (keepalive survives page navigation)
+  fetch('/api/analytics/pageview', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ device_id: sid, path: '/' }, utm)),
+    keepalive: true
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>

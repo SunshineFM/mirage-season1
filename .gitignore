@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+.DS_Store
+.deploy/
+reports/
+
+# Polsia safety rules, carried over from the original .gitignore
+.claude/
+projects/
+*.jsonl
+.wrangler/

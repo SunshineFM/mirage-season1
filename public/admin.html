@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mirage / signal</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sky: #0284C7;
+      --sky-dark: #0369A1;
+      --sky-light: #E0F2FE;
+      --gold: #D97706;
+      --white: #FFFFFF;
+      --off-white: #F8FAFC;
+      --text: #0F172A;
+      --text-muted: #475569;
+      --text-dim: #94A3B8;
+      --border: #E2E8F0;
+      --red: #EF4444;
+      --green: #22C55E;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ---- AUTH SCREEN ---- */
+    #auth-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0369A1 0%, #0EA5E9 60%, #7DD3FC 100%);
+    }
+    #auth-screen.hidden { display: none; }
+
+    .auth-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .auth-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--sky-dark);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .auth-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.75rem; }
+
+    .auth-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .auth-input:focus { border-color: var(--sky); }
+
+    .auth-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--sky-dark);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .auth-btn:hover { background: var(--sky); }
+    .auth-error { color: var(--red); font-size: 0.85rem; margin-top: 0.75rem; }
+
+    /* ---- DASHBOARD ---- */
+    #dashboard { display: none; }
+    #dashboard.visible { display: block; }
+
+    .top-bar {
+      background: var(--sky-dark);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .top-bar-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+    }
+    .top-bar-right { display: flex; align-items: center; gap: 1rem; font-size: 0.8rem; opacity: 0.85; }
+    .live-pill {
+      background: rgba(74,222,128,0.25);
+      color: #4ADE80;
+      border: 1px solid rgba(74,222,128,0.4);
+      border-radius: 99px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .refresh-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      border-radius: 6px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+
+    .main-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .main-content { grid-template-columns: 1fr; }
+      .col-stack { grid-column: 1 !important; }
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .card.full-width { grid-column: 1 / -1; }
+
+    /* ---- COLUMN STACK WRAPPER (Row 3) ---- */
+    .col-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    /* Cards inside col-stack don't need extra grid behavior */
+    .col-stack .card { width: 100%; }
+
+    .card-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    /* Post counts */
+    .feed-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .feed-stat { text-align: center; }
+    .feed-stat .num { font-size: 2.2rem; font-weight: 700; color: var(--sky-dark); line-height: 1; }
+    .feed-stat .lbl { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem; font-weight: 500; }
+
+    /* Reactions */
+    .reactions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+    .reaction-item {
+      background: var(--off-white);
+      border-radius: 8px;
+      padding: 0.6rem;
+      text-align: center;
+    }
+    .reaction-item .emoji { font-size: 1.4rem; }
+    .reaction-item .cnt { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+
+    /* Top tips */
+    .tip-item {
+      border-left: 3px solid var(--sky);
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 0.6rem;
+      background: var(--sky-light);
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .tip-item.pinned {
+      border-left-color: var(--gold);
+      background: #FFFBEB;
+    }
+    .tip-item:last-child { margin-bottom: 0; }
+    .tip-text { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+    .tip-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .tip-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.3rem; }
+    .pin-btn {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--sky);
+      background: transparent;
+      color: var(--sky);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .pin-btn:hover { background: var(--sky); color: white; }
+    .pin-btn.pinned {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .pin-btn.pinned:hover { background: var(--gold); color: white; }
+
+    /* Feed Curation Panel */
+    .cur-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .cur-tab {
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+    }
+    .cur-tab:hover { border-color: var(--sky); color: var(--sky); }
+    .cur-tab.active { border-color: var(--sky); background: var(--sky); color: white; }
+    .cur-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      margin: 0.75rem 0 0.4rem;
+    }
+    .cur-section-label:first-child { margin-top: 0; }
+    .cur-post {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--border);
+      background: var(--card);
+      margin-bottom: 0.35rem;
+      font-size: 0.88rem;
+    }
+    .cur-post.pinned { border-left-color: var(--gold); background: #FFFBEB; }
+    .cur-order {
+      min-width: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-top: 0.1rem;
+    }
+    .cur-text { flex: 1; color: var(--text); font-weight: 500; }
+    .cur-meta { color: var(--text-muted); font-size: 0.75rem; font-weight: 400; }
+    .cur-actions { display: flex; gap: 0.3rem; align-items: center; flex-shrink: 0; }
+    .cur-btn {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.18rem 0.45rem;
+      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .cur-btn:hover:not(:disabled) { border-color: var(--sky); color: var(--sky); }
+    .cur-btn:disabled { opacity: 0.3; cursor: default; }
+    .cur-btn.pin { border-color: var(--sky); color: var(--sky); }
+    .cur-btn.pin:hover { background: var(--sky); color: white; }
+    .cur-btn.unpin { border-color: var(--gold); color: var(--gold); }
+    .cur-btn.unpin:hover { background: var(--gold); color: white; }
+
+    /* Geo */
+    .geo-bars { display: flex; flex-direction: column; gap: 0.6rem; }
+    .geo-row { display: flex; align-items: center; gap: 0.75rem; }
+    .geo-label { font-size: 0.82rem; color: var(--text-muted); width: 160px; flex-shrink: 0; }
+    .geo-bar-wrap { flex: 1; background: var(--border); border-radius: 99px; height: 8px; overflow: hidden; }
+    .geo-bar { height: 100%; border-radius: 99px; background: var(--sky); transition: width 0.4s; }
+    .geo-count { font-size: 0.82rem; font-weight: 700; color: var(--text); width: 36px; text-align: right; }
+
+    /* Devices */
+    .big-num { font-size: 3rem; font-weight: 700; color: var(--sky-dark); line-height: 1; }
+    .big-sub { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    /* Passphrase */
+    .passphrase-word {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--sky-dark);
+      letter-spacing: 0.02em;
+    }
+    .passphrase-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+    .phrase-form { display: flex; gap: 0.5rem; margin-top: 1.25rem; }
+    .phrase-input {
+      flex: 1;
+      padding: 0.6rem 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      text-transform: lowercase;
+    }
+    .phrase-input:focus { border-color: var(--sky); }
+    .phrase-btn {
+      padding: 0.6rem 1rem;
+      background: var(--sky-dark);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      white-space: nowrap;
+    }
+    .phrase-btn:hover { background: var(--sky); }
+    .phrase-status { font-size: 0.78rem; margin-top: 0.4rem; }
+
+    /* Flagged posts */
+    .flagged-post {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .flagged-post.admin-hidden { opacity: 0.5; border-color: #FCA5A5; }
+    .flagged-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.4rem; }
+    .flagged-nick { font-weight: 700; font-size: 0.9rem; }
+    .flagged-meta { font-size: 0.75rem; color: var(--text-muted); }
+    .flagged-text { font-size: 0.88rem; color: var(--text); margin-bottom: 0.6rem; line-height: 1.4; }
+    .flagged-actions { display: flex; gap: 0.5rem; }
+    .action-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-hide { background: #FEE2E2; color: #991B1B; }
+    .btn-hide:hover { background: #FCA5A5; }
+    .btn-restore { background: #DCFCE7; color: #166534; }
+    .btn-restore:hover { background: #86EFAC; }
+    .btn-delete { background: #7F1D1D; color: #FEE2E2; }
+    .btn-delete:hover { background: #991B1B; color: #fff; }
+    .btn-block-ip { background: #1E1B4B; color: #C7D2FE; }
+    .btn-block-ip:hover { background: #312E81; color: #E0E7FF; }
+
+    /* Export & Email */
+    .action-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.25rem; }
+    .action-card-btn {
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: white;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--sky-dark);
+      transition: all 0.15s;
+    }
+    .action-card-btn:hover { background: var(--sky-light); border-color: var(--sky); }
+    .action-status { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+    .empty-state { color: var(--text-muted); font-size: 0.88rem; font-style: italic; }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .tag-moments { background: #DBEAFE; color: #1E40AF; }
+    .tag-tips { background: #FEF3C7; color: #92400E; }
+    .tag-pulse { background: #FCE7F3; color: #9D174D; }
+    .tag-hidden { background: #FEE2E2; color: #991B1B; }
+
+    /* Email destination */
+    .email-dest {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+    }
+    .email-dest strong { color: var(--text); }
+
+    /* Total reactions */
+    .reactions-total {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--sky-dark);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .reactions-total-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; margin-bottom: 1rem; }
+
+    /* Hourly chart */
+    .hourly-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .day-selector {
+      padding: 0.35rem 0.65rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+    .day-selector:focus { border-color: var(--sky); }
+    .hourly-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 100px;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+    .hour-col { display: flex; flex-direction: column; align-items: center; gap: 1px; flex-shrink: 0; width: 32px; }
+    .hour-bars { display: flex; align-items: flex-end; gap: 1px; height: 80px; }
+    .hour-bar { width: 9px; border-radius: 2px 2px 0 0; min-height: 2px; transition: height 0.3s; }
+    .bar-moments { background: var(--sky); }
+    .bar-tips { background: var(--gold); }
+    .bar-pulse { background: #EC4899; }
+    .hour-label { font-size: 0.62rem; color: var(--text-dim); margin-top: 2px; }
+    .hourly-legend { display: flex; gap: 1rem; margin-top: 0.75rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--text-muted); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .hourly-empty { color: var(--text-muted); font-size: 0.88rem; font-style: italic; padding: 1rem 0; }
+
+    /* Live pulse panel */
+    .pulse-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .pulse-post {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--off-white);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      border-left: 3px solid #F9A8D4;
+    }
+    .pulse-post-main { flex: 1; min-width: 0; }
+    .pulse-nick { font-weight: 700; font-size: 0.88rem; }
+    .pulse-text { font-size: 0.88rem; color: var(--text); margin-top: 0.15rem; line-height: 1.4; }
+    .pulse-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .pulse-timer {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      color: #9D174D;
+      flex-shrink: 0;
+      min-width: 3.5rem;
+      text-align: right;
+    }
+    .pulse-timer.expiring { color: var(--red); }
+
+    /* ---- CHART TOOLTIP ---- */
+    .chart-tooltip {
+      position: fixed;
+      background: var(--text);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      pointer-events: none;
+      z-index: 9999;
+      white-space: pre-line;
+      max-width: 220px;
+      opacity: 0;
+      transition: opacity 0.1s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      line-height: 1.6;
+    }
+    .chart-tooltip.visible { opacity: 1; }
+
+    /* ---- PULSE LOG ---- */
+    .pulse-log-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+    .pulse-log-table th {
+      text-align: left;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .pulse-log-table td {
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .pulse-log-table tr:last-child td { border-bottom: none; }
+    .pulse-log-table tr:hover td { background: var(--off-white); }
+    .pulse-expired { color: var(--text-dim); font-size: 0.75rem; }
+    .pulse-active-badge {
+      display: inline-block;
+      background: #DCFCE7;
+      color: #166534;
+      border-radius: 99px;
+      padding: 0.1rem 0.45rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    /* ---- ACTIONS COMPACT ---- */
+    .actions-compact {
+      grid-column: 2 / 3;
+    }
+    @media (max-width: 700px) {
+      .actions-compact { grid-column: 1 / -1; }
+    }
+
+    /* ---- WEEK SELECTOR ---- */
+    .week-bar {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .week-bar-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .week-tabs {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .week-tab {
+      padding: 0.28rem 0.7rem;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      background: white;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .week-tab:hover { border-color: var(--sky); color: var(--sky-dark); }
+    .week-tab.active { background: var(--sky-dark); color: white; border-color: var(--sky-dark); }
+    .week-range-hint {
+      font-size: 0.73rem;
+      color: var(--text-dim);
+      margin-left: auto;
+    }
+    @media (max-width: 700px) {
+      .week-bar { padding: 0.5rem 1rem; }
+      .week-range-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-title">signal</div>
+    <div class="auth-sub">mirage admin access</div>
+    <input id="token-input" class="auth-input" type="password" placeholder="admin token" autocomplete="off">
+    <button class="auth-btn" onclick="login()">enter</button>
+    <div id="auth-error" class="auth-error"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="top-bar">
+    <div class="top-bar-title">signal — mirage admin</div>
+    <div class="top-bar-right">
+      <span id="last-updated">—</span>
+      <span class="live-pill">live</span>
+      <button class="refresh-btn" onclick="load()">↻ refresh</button>
+    </div>
+  </div>
+
+  <!-- WEEK SELECTOR BAR -->
+  <div class="week-bar" id="week-bar">
+    <span class="week-bar-label">Week:</span>
+    <div class="week-tabs">
+      <button class="week-tab" data-week="pre-launch" onclick="selectWeek('pre-launch')">Pre-Launch</button>
+      <button class="week-tab" data-week="apr1-7" onclick="selectWeek('apr1-7')">Apr 1–7</button>
+      <button class="week-tab" data-week="apr8-14" onclick="selectWeek('apr8-14')">Apr 8–14</button>
+      <button class="week-tab" data-week="apr15-21" onclick="selectWeek('apr15-21')">Apr 15–21</button>
+      <button class="week-tab" data-week="apr22-28" onclick="selectWeek('apr22-28')">Apr 22–28</button>
+      <button class="week-tab" data-week="apr29-may1" onclick="selectWeek('apr29-may1')">Apr 29–May 1</button>
+    </div>
+    <span class="week-range-hint" id="week-range-hint"></span>
+  </div>
+
+  <div class="main-content">
+
+    <!-- ===== ROW 1: Passphrase | Local Knowledge ===== -->
+
+    <!-- Passphrase (left) -->
+    <div class="card">
+      <div class="card-label">passphrase</div>
+      <div class="passphrase-word" id="today-passphrase">—</div>
+      <div class="passphrase-sub" id="passphrase-date">today</div>
+
+      <div style="margin-top:1.25rem; border-top:1px solid var(--border); padding-top:1rem;">
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">
+          set tomorrow's passphrase
+          <span id="tomorrow-override" style="color:var(--sky-dark);font-weight:700;"></span>
+        </div>
+        <div class="phrase-form">
+          <input id="phrase-input" class="phrase-input" type="text" placeholder="one word" maxlength="30">
+          <button class="phrase-btn" onclick="setPassphrase()">set</button>
+        </div>
+        <div id="phrase-status" class="phrase-status"></div>
+      </div>
+    </div>
+
+    <!-- Seed Local Knowledge (right) -->
+    <div class="card">
+      <div class="card-label">seed local knowledge</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.75rem;">post to the good tips feed as admin. posts appear with a distinct admin badge. use for pre-seeded tips, reformatted reddit wisdom, etc.</div>
+      <textarea id="seed-text" style="width:100%;min-height:120px;padding:0.75rem;border:2px solid var(--border);border-radius:8px;font-size:0.9rem;font-family:'DM Sans',sans-serif;resize:vertical;outline:none;transition:border-color 0.2s;" placeholder="paste your tip here (max 1000 characters)" maxlength="1000" oninput="updateSeedCount()"></textarea>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem;">
+        <span id="seed-char-count" style="font-size:0.78rem;color:var(--text-dim);">1000</span>
+        <button class="phrase-btn" onclick="seedLocalKnowledge()" id="seed-btn">post to good tips</button>
+      </div>
+      <div id="seed-status" style="font-size:0.78rem;margin-top:0.5rem;color:var(--text-muted);"></div>
+    </div>
+
+    <!-- ===== ROW 2: Live Now | Hey Mirage ===== -->
+
+    <!-- Live Now (left) -->
+    <div class="card">
+      <div class="card-label">good tips <span style="font-size:0.72rem;color:var(--text-dim);letter-spacing:0;text-transform:none;font-family:'DM Sans',sans-serif;font-weight:400">(permanent · no expiry)</span></div>
+      <div class="pulse-list" id="pulse-list"><span class="empty-state">loading...</span></div>
+    </div>
+
+    <!-- Hey Mirage (right) -->
+    <div class="card">
+      <div class="card-label">hey mirage (<span id="notes-count">0</span>) <span id="week-label-notes" style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0;text-transform:none;color:var(--sky-dark);"></span></div>
+      <div id="notes-list"><span class="empty-state">loading...</span></div>
+    </div>
+
+    <!-- ===== ROW 3: Left col (Flagged + Blocked IPs) | Right col (Stats panels) ===== -->
+
+    <!-- Left column: Flagged Posts + Blocked IPs stacked -->
+    <div class="col-stack">
+
+      <!-- Flagged posts -->
+      <div class="card">
+        <div class="card-label">flagged posts (<span id="flagged-count">0</span>) <span id="week-label-flagged" style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0;text-transform:none;color:var(--sky-dark);"></span></div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;">auto-hide: 3 distinct IPs in 30 min or 5 distinct IPs total. default action: hide. delete only when necessary.</div>
+        <div id="flagged-list"><span class="empty-state">loading...</span></div>
+      </div>
+
+      <!-- Blocked IPs -->
+      <div class="card">
+        <div class="card-label">blocked IPs</div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;">manually blocked IPs. 24-hour blocks set from flagged posts panel. click unblock to lift early.</div>
+        <div style="display:flex;gap:0.75rem;margin-bottom:0.75rem;align-items:center">
+          <input id="manual-block-ip" type="text" placeholder="IP address to block" style="flex:1;padding:0.4rem 0.75rem;border:1px solid var(--border);border-radius:6px;font-size:0.84rem;font-family:'DM Sans',sans-serif;outline:none">
+          <button class="action-btn btn-block-ip" onclick="manualBlockIP()" style="white-space:nowrap">block 24h</button>
+        </div>
+        <div id="blocked-ips-list"><span class="empty-state">loading...</span></div>
+      </div>
+
+    </div>
+
+    <!-- Right column: Posts by Feed + Visitor Traffic + Reactions + Posts by Location stacked -->
+    <div class="col-stack">
+
+      <!-- Posts by feed -->
+      <div class="card">
+        <div class="card-label">posts by feed <span id="week-label-posts" style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0;text-transform:none;color:var(--sky-dark);"></span></div>
+        <div class="feed-stats">
+          <div class="feed-stat">
+            <div class="num" id="stat-moments">—</div>
+            <div class="lbl">good shots</div>
+          </div>
+          <div class="feed-stat">
+            <div class="num" id="stat-tips">—</div>
+            <div class="lbl">good vibes</div>
+          </div>
+          <div class="feed-stat">
+            <div class="num" id="stat-pulse">—</div>
+            <div class="lbl">good tips</div>
+          </div>
+          <div class="feed-stat">
+            <div class="num" id="stat-total">—</div>
+            <div class="lbl">total</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visitor Traffic -->
+      <div class="card">
+        <div class="card-label">visitor traffic <span id="week-label-traffic" style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0;text-transform:none;color:var(--sky-dark);"></span></div>
+        <div class="feed-stats">
+          <div class="feed-stat">
+            <div class="num" id="stat-total-visits">—</div>
+            <div class="lbl">total visits</div>
+          </div>
+          <div class="feed-stat">
+            <div class="num" id="stat-devices">—</div>
+            <div class="lbl">unique devices</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Posts by Location -->
+      <div class="card">
+        <div class="card-label">posts by location</div>
+        <div class="geo-bars">
+          <div class="geo-row">
+            <div class="geo-label">at the fest <span id="geo-label-grounds" style="font-weight:700;color:var(--text)"></span></div>
+            <div class="geo-bar-wrap"><div class="geo-bar" id="geo-bar-grounds" style="width:0%"></div></div>
+            <div class="geo-count" id="geo-num-grounds">0</div>
+          </div>
+          <div class="geo-row">
+            <div class="geo-label">in the desert <span id="geo-label-valley" style="font-weight:700;color:var(--text)"></span></div>
+            <div class="geo-bar-wrap"><div class="geo-bar" id="geo-bar-valley" style="width:0%"></div></div>
+            <div class="geo-count" id="geo-num-valley">0</div>
+          </div>
+          <div class="geo-row">
+            <div class="geo-label">watching from elsewhere <span id="geo-label-outside" style="font-weight:700;color:var(--text)"></span></div>
+            <div class="geo-bar-wrap"><div class="geo-bar" id="geo-bar-outside" style="width:0%;background:var(--text-dim)"></div></div>
+            <div class="geo-count" id="geo-num-outside">0</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== ROW 4: Top Local Knowledge + Posts by Hour (full width) ===== -->
+
+    <!-- Feed Curation (pin + reorder across all feeds) -->
+    <div class="card full-width">
+      <div class="card-label">📌 feed curation</div>
+      <div class="cur-tabs">
+        <button class="cur-tab active" data-tab="moments" onclick="switchCurationTab('moments')">📸 good shots</button>
+        <button class="cur-tab" data-tab="tips" onclick="switchCurationTab('tips')">✨ good vibes</button>
+        <button class="cur-tab" data-tab="pulse" onclick="switchCurationTab('pulse')">💡 good tips</button>
+      </div>
+      <div id="curation-content"><span class="empty-state">loading...</span></div>
+    </div>
+
+    <!-- Hourly Activity -->
+    <div class="card full-width">
+      <div class="hourly-header">
+        <div class="card-label" style="margin-bottom:0">posts by hour</div>
+        <input type="date" class="day-selector" id="hourly-date-picker">
+      </div>
+      <div class="hourly-chart" id="hourly-chart">
+        <span class="hourly-empty">loading...</span>
+      </div>
+      <div class="hourly-legend">
+        <div class="legend-item"><div class="legend-dot bar-moments"></div> good shots</div>
+        <div class="legend-item"><div class="legend-dot bar-tips"></div> good vibes</div>
+        <div class="legend-item"><div class="legend-dot bar-pulse"></div> good tips</div>
+      </div>
+    </div>
+
+    <!-- ===== ROW 5: Now Log (full width) + Actions (compact, right-aligned) ===== -->
+
+    <!-- Now Log -->
+    <div class="card full-width">
+      <div class="card-label">good tips log <span style="font-size:0.72rem;color:var(--text-dim);letter-spacing:0;text-transform:none;font-family:'DM Sans',sans-serif;font-weight:400">(all good tips posts · permanent, no expiry)</span></div>
+      <div id="pulse-log-container"><span class="empty-state">loading...</span></div>
+    </div>
+
+    <!-- Actions (compact, right column only) -->
+    <div class="card actions-compact">
+      <div class="card-label">actions</div>
+      <div class="action-row">
+        <button class="action-card-btn" onclick="triggerExport('csv')">📦 export csv</button>
+        <button class="action-card-btn" onclick="triggerExport('json')">{ } export json</button>
+        <button class="action-card-btn" onclick="triggerExport('md')">📄 export md</button>
+      </div>
+      <div id="action-status" class="action-status"></div>
+      <div class="email-dest" id="email-dest-row">daily summary auto-sends 8:00 AM PT → <strong id="email-dest-addr">sat@sunshine.fm</strong></div>
+    </div>
+
+    <!-- ===== BOTTOM: Full Reset (full width danger zone) ===== -->
+
+    <div class="card full-width" style="border:2px dashed var(--gold);background:rgba(217,119,6,0.05);">
+      <div class="card-label" style="color:var(--gold)">⚠️ full reset for launch</div>
+      <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">wipes all beta data for a clean april 1 launch: <strong>all posts</strong> (good shots, good vibes, good tips), <strong>hey mirage notes</strong>, <strong>visitor stats &amp; sessions</strong>, and <strong>blocked IPs</strong>. passphrase rules and moderation settings are preserved.</div>
+      <button onclick="resetStats()" style="background:var(--red);color:white;border:none;border-radius:8px;padding:0.6rem 1rem;font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;">full reset for launch</button>
+      <div id="reset-status" style="font-size:0.78rem;margin-top:0.5rem;color:var(--text-muted);"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let adminToken = '';
+  let refreshTimer = null;
+  let pulseTimer = null;
+  let pulseCountdownTimer = null;
+  let livePulsePosts = [];
+  const EMOJIS = ['😂','😢','🙏','🤔','💙'];
+
+  // Weekly view state — must be declared before auto-login IIFE
+  // (on refresh, IIFE calls showDashboard() during script init)
+  let currentWeek = 'apr1-7';
+  let currentCurationTab = 'moments';
+
+  const WEEK_LABELS = {
+    'pre-launch':  'Pre-Launch (beta)  ·  before Apr 1',
+    'apr1-7':      'Apr 1–7  ·  Coachella W1 prep',
+    'apr8-14':     'Apr 8–14  ·  Coachella Weekend 1',
+    'apr15-21':    'Apr 15–21  ·  Coachella Weekend 2',
+    'apr22-28':    'Apr 22–28  ·  Stagecoach',
+    'apr29-may1':  'Apr 29–May 1  ·  Final days'
+  };
+
+  // Auto-login if token is in sessionStorage or localStorage
+  (function () {
+    const saved = sessionStorage.getItem('mirage_admin_token') || localStorage.getItem('mirage_admin_token');
+    if (saved) { adminToken = saved; showDashboard(); }
+  })();
+
+  document.getElementById('token-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') login();
+  });
+
+  async function login() {
+    const token = document.getElementById('token-input').value.trim();
+    if (!token) return;
+    document.getElementById('auth-error').textContent = '';
+
+    try {
+      const r = await fetch('/api/admin/dashboard', { headers: { 'x-admin-token': token } });
+      if (r.status === 403) {
+        document.getElementById('auth-error').textContent = 'wrong token';
+        return;
+      }
+      adminToken = token;
+      sessionStorage.setItem('mirage_admin_token', token);
+      localStorage.setItem('mirage_admin_token', token);
+      showDashboard();
+    } catch (e) {
+      document.getElementById('auth-error').textContent = 'connection error';
+    }
+  }
+
+  function showDashboard() {
+    document.getElementById('auth-screen').classList.add('hidden');
+    const dash = document.getElementById('dashboard');
+    dash.style.display = 'block';
+
+    // Init week selector
+    currentWeek = getDefaultWeek();
+    document.querySelectorAll('.week-tab').forEach(t => t.classList.toggle('active', t.dataset.week === currentWeek));
+    const hint = document.getElementById('week-range-hint');
+    if (hint) hint.textContent = WEEK_LABELS[currentWeek] || '';
+
+    // Init date picker to today (PT)
+    const todayPT = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+    const picker = document.getElementById('hourly-date-picker');
+    if (picker) {
+      picker.value = todayPT;
+      picker.max = todayPT;
+      picker.addEventListener('change', () => loadHourlyActivity(picker.value));
+    }
+
+    load();
+    loadCuration(currentCurationTab);
+    loadLivePulse();
+    loadHourlyActivity(todayPT);
+    loadPulseLog();
+    loadWeeklyStats(currentWeek);
+    loadBlockedIPs();
+    // Auto-refresh every 30 seconds
+    refreshTimer = setInterval(() => { load(); loadWeeklyStats(currentWeek); loadCuration(currentCurationTab); }, 30000);
+    // Live pulse refresh every 30 seconds (reduced from 10s to prevent DB pool exhaustion)
+    pulseTimer = setInterval(loadLivePulse, 30000);
+    // Pulse log refresh every 2 minutes
+    setInterval(loadPulseLog, 120000);
+    // Countdown ticker every second
+    pulseCountdownTimer = setInterval(tickPulseCountdowns, 1000);
+  }
+
+  async function load() {
+    try {
+      const r = await fetch('/api/admin/dashboard', { headers: { 'x-admin-token': adminToken } });
+      if (r.status === 403) { sessionStorage.removeItem('mirage_admin_token'); localStorage.removeItem('mirage_admin_token'); location.reload(); return; }
+      const data = await r.json();
+      render(data);
+      document.getElementById('last-updated').textContent = 'updated ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    } catch (e) {
+      console.error('Load failed:', e);
+    }
+  }
+
+  function render(data) {
+    // Geo
+    const geo = data.geo || {};
+    const geoTotal = (geo.grounds || 0) + (geo.valley || 0) + (geo.outside || 0) || 1;
+    ['grounds','valley','outside'].forEach(tier => {
+      const cnt = geo[tier] || 0;
+      const pct = Math.round(cnt / geoTotal * 100);
+      document.getElementById(`geo-bar-${tier}`).style.width = pct + '%';
+      document.getElementById(`geo-num-${tier}`).textContent = cnt.toLocaleString();
+      const labelSpan = document.getElementById(`geo-label-${tier}`);
+      if (labelSpan) labelSpan.textContent = cnt > 0 ? `· ${cnt.toLocaleString()}` : '';
+    });
+
+    // Email destination
+    if (data.email_destination) {
+      const destRow = document.getElementById('email-dest-row');
+      const destAddr = document.getElementById('email-dest-addr');
+      if (destRow) destRow.style.display = '';
+      if (destAddr) destAddr.textContent = data.email_destination;
+    }
+
+    // Passphrase (always lowercase)
+    document.getElementById('today-passphrase').textContent = (data.today_passphrase || '—').toLowerCase();
+    document.getElementById('passphrase-date').textContent = 'today (' + (data.today || '') + ')';
+    const tomorrowEl = document.getElementById('tomorrow-override');
+    tomorrowEl.textContent = data.tomorrow_passphrase ? `— tomorrow: ${data.tomorrow_passphrase}` : '';
+
+  }
+
+  // ---- Weekly Panels (posts by feed, visitor traffic, notes, flagged posts) ----
+  // Map DB tab values to display names (matching public app)
+  const TAB_DISPLAY = { moments: 'good shots', tips: 'good vibes', pulse: 'good tips' };
+  function tabLabel(tab) { return TAB_DISPLAY[tab] || tab; }
+
+  function renderWeeklyPanels(data) {
+    // Update week label chips in card headers
+    const weekChip = `· ${data.label || ''}`;
+    ['posts','traffic','notes','flagged'].forEach(id => {
+      const el = document.getElementById(`week-label-${id}`);
+      if (el) el.textContent = weekChip;
+    });
+
+    // Posts by feed
+    document.getElementById('stat-moments').textContent = (data.posts?.moments ?? 0).toLocaleString();
+    document.getElementById('stat-tips').textContent = (data.posts?.tips ?? 0).toLocaleString();
+    document.getElementById('stat-pulse').textContent = (data.posts?.pulse ?? 0).toLocaleString();
+    document.getElementById('stat-total').textContent = (data.posts?.total ?? 0).toLocaleString();
+
+    // Visitor traffic
+    document.getElementById('stat-total-visits').textContent = (data.traffic?.total_visits ?? 0).toLocaleString();
+    document.getElementById('stat-devices').textContent = (data.traffic?.unique_devices ?? 0).toLocaleString();
+
+    // Hey Mirage notes
+    renderNotes(data.notes || []);
+
+    // Flagged posts / moderation log
+    const posts = data.flagged_posts || [];
+    document.getElementById('flagged-count').textContent = posts.length;
+    const list = document.getElementById('flagged-list');
+    if (posts.length === 0) {
+      list.innerHTML = '<span class="empty-state">no flagged posts this week</span>';
+    } else {
+      list.innerHTML = posts.map(p => `
+        <div class="flagged-post ${p.admin_hidden ? 'admin-hidden' : ''}" id="fp-${p.id}">
+          <div class="flagged-header">
+            <div>
+              <span class="flagged-nick">${escHtml(p.nickname)}</span>
+              <span class="tag tag-${p.tab}" style="margin-left:0.4rem">${tabLabel(p.tab)}</span>
+              ${p.admin_hidden ? '<span class="tag tag-hidden" style="margin-left:0.3rem">hidden</span>' : ''}
+            </div>
+            <div class="flagged-meta">
+              ${p.flag_count || 0} flags${p.distinct_flag_ips ? ` (${p.distinct_flag_ips} distinct IPs)` : ''} · ${timeAgo(p.created_at)} · ${p.geo_tier}
+              ${p.post_ip && p.post_ip !== 'unknown' ? `<span style="opacity:0.6;margin-left:0.4rem">IP: ${escHtml(p.post_ip)}</span>` : ''}
+            </div>
+          </div>
+          <div class="flagged-text">${escHtml(p.text || '[no text]')}</div>
+          <div class="flagged-actions">
+            ${!p.admin_hidden
+              ? `<button class="action-btn btn-hide" onclick="hidePost(${p.id})">hide</button>`
+              : `<button class="action-btn btn-restore" onclick="restorePost(${p.id})">restore</button>`
+            }
+            <button class="action-btn btn-delete" onclick="deletePost(${p.id})" title="Hard delete — cannot be undone">delete</button>
+            ${p.post_ip && p.post_ip !== 'unknown'
+              ? `<button class="action-btn btn-block-ip" onclick="blockPostIP('${escHtml(p.post_ip)}', ${p.id})" title="Block this IP for 24 hours">block IP</button>`
+              : ''
+            }
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // ---- Load Weekly Stats ----
+  function getDefaultWeek() {
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+    if (today < '2026-04-01') return 'pre-launch';
+    if (today <= '2026-04-07') return 'apr1-7';
+    if (today <= '2026-04-14') return 'apr8-14';
+    if (today <= '2026-04-21') return 'apr15-21';
+    if (today <= '2026-04-28') return 'apr22-28';
+    return 'apr29-may1';
+  }
+
+  function selectWeek(weekId) {
+    currentWeek = weekId;
+    document.querySelectorAll('.week-tab').forEach(t => t.classList.toggle('active', t.dataset.week === weekId));
+    const hint = document.getElementById('week-range-hint');
+    if (hint) hint.textContent = WEEK_LABELS[weekId] || '';
+    loadWeeklyStats(weekId);
+  }
+
+  async function loadWeeklyStats(weekId) {
+    try {
+      const r = await fetch(`/api/admin/weekly-stats?week=${encodeURIComponent(weekId)}`, { headers: { 'x-admin-token': adminToken } });
+      if (!r.ok) return;
+      const data = await r.json();
+      renderWeeklyPanels(data);
+    } catch (e) {
+      console.error('Weekly stats load failed:', e);
+    }
+  }
+
+  async function hidePost(id) {
+    const btn = document.querySelector(`#fp-${id} .btn-hide`);
+    if (btn) { btn.textContent = '...'; btn.disabled = true; }
+    try {
+      await fetch(`/api/admin/posts/${id}/hide`, { method: 'POST', headers: { 'x-admin-token': adminToken } });
+      load();
+    } catch (e) { alert('hide failed'); }
+  }
+
+  async function restorePost(id) {
+    const btn = document.querySelector(`#fp-${id} .btn-restore`);
+    if (btn) { btn.textContent = '...'; btn.disabled = true; }
+    try {
+      await fetch(`/api/admin/posts/${id}/restore`, { method: 'POST', headers: { 'x-admin-token': adminToken } });
+      load();
+    } catch (e) { alert('restore failed'); }
+  }
+
+  async function togglePin(id, currentlyPinned) {
+    const card = document.getElementById(`tip-${id}`);
+    const btn = card ? card.querySelector('.pin-btn') : null;
+    if (btn) { btn.textContent = '...'; btn.disabled = true; }
+    try {
+      const r = await fetch(`/api/admin/posts/${id}/pin`, { method: 'POST', headers: { 'x-admin-token': adminToken } });
+      if (r.ok) {
+        const d = await r.json();
+        const nowPinned = d.admin_pinned;
+        if (card) {
+          card.classList.toggle('pinned', nowPinned);
+          const textEl = card.querySelector('.tip-text');
+          if (textEl) {
+            // Toggle 📌 prefix on the text
+            const raw = textEl.textContent.replace(/^📌\s*/, '');
+            textEl.textContent = nowPinned ? `📌 ${raw}` : raw;
+          }
+        }
+        if (btn) {
+          btn.textContent = nowPinned ? 'unpin' : 'pin to top';
+          btn.disabled = false;
+          btn.className = `pin-btn${nowPinned ? ' pinned' : ''}`;
+          btn.setAttribute('onclick', `togglePin(${id}, ${nowPinned})`);
+        }
+      } else {
+        if (btn) { btn.textContent = currentlyPinned ? 'unpin' : 'pin to top'; btn.disabled = false; }
+        alert('Pin action failed');
+      }
+    } catch (e) {
+      if (btn) { btn.textContent = currentlyPinned ? 'unpin' : 'pin to top'; btn.disabled = false; }
+      alert('Pin action failed');
+    }
+  }
+
+  // ---- Feed Curation: multi-feed pin + reorder ----
+
+  function switchCurationTab(tab) {
+    currentCurationTab = tab;
+    document.querySelectorAll('.cur-tab').forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === tab);
+    });
+    loadCuration(tab);
+  }
+
+  async function loadCuration(tab) {
+    const container = document.getElementById('curation-content');
+    if (!container) return;
+    container.innerHTML = '<span class="empty-state">loading...</span>';
+    try {
+      const r = await fetch(`/api/admin/feed-posts/${tab}`, { headers: { 'x-admin-token': adminToken } });
+      if (!r.ok) { container.innerHTML = '<span class="empty-state">failed to load</span>'; return; }
+      const d = await r.json();
+
+      const pinned = d.pinned || [];
+      const top = d.top || [];
+      let html = '';
+
+      if (pinned.length > 0) {
+        html += '<div class="cur-section-label">📌 pinned — in order (visitors see these first)</div>';
+        html += pinned.map((p, i) => `
+          <div class="cur-post pinned" id="cur-${p.id}">
+            <div class="cur-order">${i + 1}</div>
+            <div class="cur-text">${escHtml(p.text)}<span class="cur-meta"> — ${escHtml(p.nickname)}${p.hearts > 0 ? ` · ${p.hearts} 🩵` : ''}</span></div>
+            <div class="cur-actions">
+              <button class="cur-btn" onclick="curMovePin(${p.id}, '${tab}', 'up')" ${i === 0 ? 'disabled' : ''} title="Move up">▲</button>
+              <button class="cur-btn" onclick="curMovePin(${p.id}, '${tab}', 'down')" ${i === pinned.length - 1 ? 'disabled' : ''} title="Move down">▼</button>
+              <button class="cur-btn unpin" onclick="curTogglePin(${p.id}, '${tab}')">unpin</button>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        html += '<div class="cur-section-label">📌 pinned</div>';
+        html += '<div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:0.75rem">no pinned posts yet — pin from below</div>';
+      }
+
+      if (top.length > 0) {
+        html += `<div class="cur-section-label">top posts${top.length === 30 ? ' (top 30)' : ''}</div>`;
+        html += top.map(p => `
+          <div class="cur-post" id="cur-${p.id}">
+            <div class="cur-text">${escHtml(p.text)}<span class="cur-meta"> — ${escHtml(p.nickname)}${p.hearts > 0 ? ` · ${p.hearts} 🩵` : ''}</span></div>
+            <div class="cur-actions">
+              <button class="cur-btn pin" onclick="curTogglePin(${p.id}, '${tab}')">pin</button>
+            </div>
+          </div>
+        `).join('');
+      } else if (pinned.length === 0) {
+        html += '<div style="font-size:0.8rem;color:var(--text-dim)">no posts yet in this feed</div>';
+      }
+
+      container.innerHTML = html;
+    } catch (e) {
+      container.innerHTML = '<span class="empty-state">failed to load</span>';
+    }
+  }
+
+  async function curTogglePin(id, tab) {
+    const card = document.getElementById(`cur-${id}`);
+    const btns = card ? card.querySelectorAll('.cur-btn') : [];
+    btns.forEach(b => b.disabled = true);
+    try {
+      const r = await fetch(`/api/admin/posts/${id}/pin`, { method: 'POST', headers: { 'x-admin-token': adminToken } });
+      if (r.ok) {
+        loadCuration(tab);
+      } else {
+        btns.forEach(b => b.disabled = false);
+        alert('Pin action failed');
+      }
+    } catch (e) {
+      btns.forEach(b => b.disabled = false);
+    }
+  }
+
+  async function curMovePin(id, tab, direction) {
+    const card = document.getElementById(`cur-${id}`);
+    const btns = card ? card.querySelectorAll('.cur-btn') : [];
+    btns.forEach(b => b.disabled = true);
+    try {
+      const r = await fetch(`/api/admin/posts/${id}/pin-move`, {
+        method: 'POST',
+        headers: { 'x-admin-token': adminToken, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ direction })
+      });
+      if (r.ok) {
+        loadCuration(tab);
+      } else {
+        btns.forEach(b => b.disabled = false);
+        alert('Reorder failed');
+      }
+    } catch (e) {
+      btns.forEach(b => b.disabled = false);
+    }
+  }
+
+  async function deletePost(id) {
+    if (!confirm(`Delete post #${id}? This cannot be undone.`)) return;
+    const btn = document.querySelector(`#fp-${id} .btn-delete`);
+    if (btn) { btn.textContent = '...'; btn.disabled = true; }
+    try {
+      const r = await fetch(`/api/admin/posts/${id}`, { method: 'DELETE', headers: { 'x-admin-token': adminToken } });
+      if (r.ok) {
+        const el = document.getElementById(`fp-${id}`);
+        if (el) el.remove();
+      } else {
+        alert('delete failed');
+        if (btn) { btn.textContent = 'delete'; btn.disabled = false; }
+      }
+    } catch (e) { alert('delete failed'); }
+  }
+
+  async function blockPostIP(ip, postId) {
+    if (!confirm(`Block IP ${ip} for 24 hours? They won't be able to post.`)) return;
+    try {
+      const r = await fetch('/api/admin/block-ip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': adminToken },
+        body: JSON.stringify({ ip, hours: 24, reason: `Flagged post #${postId}` })
+      });
+      if (r.ok) {
+        const data = await r.json();
+        alert(`IP ${ip} blocked until ${new Date(data.blocked_until).toLocaleString()}`);
+        loadBlockedIPs();
+      } else {
+        alert('Block failed');
+      }
+    } catch (e) { alert('Block failed: ' + e.message); }
+  }
+
+  async function manualBlockIP() {
+    const ip = document.getElementById('manual-block-ip').value.trim();
+    if (!ip) return;
+    await blockPostIP(ip, 'manual');
+    document.getElementById('manual-block-ip').value = '';
+  }
+
+  async function unblockIP(ip) {
+    if (!confirm(`Unblock IP ${ip}?`)) return;
+    try {
+      const r = await fetch(`/api/admin/block-ip/${encodeURIComponent(ip)}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-token': adminToken }
+      });
+      if (r.ok) loadBlockedIPs();
+      else alert('Unblock failed');
+    } catch (e) { alert('Unblock failed'); }
+  }
+
+  async function loadBlockedIPs() {
+    try {
+      const r = await fetch('/api/admin/blocked-ips', { headers: { 'x-admin-token': adminToken } });
+      const data = await r.json();
+      const list = document.getElementById('blocked-ips-list');
+      if (!list) return;
+      const blocks = data.blocks || [];
+      if (blocks.length === 0) {
+        list.innerHTML = '<span class="empty-state">no blocked IPs</span>';
+      } else {
+        list.innerHTML = blocks.map(b => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border)">
+            <div>
+              <strong style="font-size:0.88rem">${escHtml(b.ip)}</strong>
+              <span style="font-size:0.75rem;color:var(--text-muted);margin-left:0.5rem">until ${new Date(b.blocked_until).toLocaleString()}</span>
+              ${b.reason ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:0.5rem">${escHtml(b.reason)}</span>` : ''}
+            </div>
+            <button class="action-btn btn-restore" onclick="unblockIP('${escHtml(b.ip)}')">unblock</button>
+          </div>
+        `).join('');
+      }
+    } catch (e) {
+      console.error('Failed to load blocked IPs:', e);
+    }
+  }
+
+  async function setPassphrase() {
+    const word = document.getElementById('phrase-input').value.trim().toLowerCase().replace(/[^a-z]/g, '');
+    if (!word) return;
+    const statusEl = document.getElementById('phrase-status');
+    statusEl.textContent = 'saving...';
+    statusEl.style.color = 'var(--text-muted)';
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const dateStr = tomorrow.toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+
+    try {
+      const r = await fetch('/api/admin/passphrase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': adminToken },
+        body: JSON.stringify({ date: dateStr, word })
+      });
+      if (r.ok) {
+        statusEl.textContent = `✓ set "${word}" for ${dateStr}`;
+        statusEl.style.color = 'var(--green)';
+        document.getElementById('phrase-input').value = '';
+        setTimeout(load, 500);
+      } else {
+        statusEl.textContent = 'failed to save';
+        statusEl.style.color = 'var(--red)';
+      }
+    } catch (e) {
+      statusEl.textContent = 'error: ' + e.message;
+      statusEl.style.color = 'var(--red)';
+    }
+  }
+
+  function triggerExport(fmt) {
+    const el = document.getElementById('action-status');
+    const format = fmt || 'csv';
+    el.textContent = `starting ${format.toUpperCase()} download...`;
+    // Direct GET to server endpoint — server sends file with Content-Disposition: attachment
+    // This is the most reliable way to trigger a download on all devices including mobile
+    const url = `/api/admin/export.${format}?token=${encodeURIComponent(adminToken)}`;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => { el.textContent = `✓ ${format.toUpperCase()} download triggered — check your files`; }, 500);
+  }
+
+  // ---- Hourly Activity Chart ----
+  async function loadHourlyActivity(date) {
+    try {
+      const d = date || document.getElementById('hourly-date-picker').value;
+      const r = await fetch(`/api/admin/hourly-activity?date=${d}`, { headers: { 'x-admin-token': adminToken } });
+      if (!r.ok) return;
+      const data = await r.json();
+      renderHourlyChart(data.buckets);
+    } catch (e) {
+      console.error('Hourly activity load failed:', e);
+    }
+  }
+
+  function renderHourlyChart(buckets) {
+    const chart = document.getElementById('hourly-chart');
+    if (!chart) return;
+
+    // Find max value for scaling
+    let maxVal = 1;
+    for (let h = 0; h < 24; h++) {
+      const b = buckets[h] || {};
+      const total = (b.moments || 0) + (b.tips || 0) + (b.pulse || 0);
+      if (total > maxVal) maxVal = total;
+    }
+
+    const allZero = maxVal === 1 && Object.values(buckets).every(b => (b.moments||0)+(b.tips||0)+(b.pulse||0) === 0);
+    if (allZero) {
+      chart.innerHTML = '<span class="hourly-empty">no posts yet on this day</span>';
+      return;
+    }
+
+    const chartHeight = 80; // px
+    chart.innerHTML = Array.from({ length: 24 }, (_, h) => {
+      const b = buckets[h] || {};
+      const m = b.moments || 0;
+      const t = b.tips || 0;
+      const p = b.pulse || 0;
+      const total = m + t + p;
+
+      const mH = Math.round((m / maxVal) * chartHeight);
+      const tH = Math.round((t / maxVal) * chartHeight);
+      const pH = Math.round((p / maxVal) * chartHeight);
+
+      const label = h === 0 ? '12a' : h < 12 ? `${h}a` : h === 12 ? '12p' : `${h-12}p`;
+
+      const tipText = `${label}: ${total} total\n📸 ${m} good shots  🟡 ${t} good vibes  💡 ${p} good tips`;
+      return `
+        <div class="hour-col" data-tip="${escHtml(tipText)}" title="${h}:00 — ${total} posts">
+          <div class="hour-bars">
+            <div class="hour-bar bar-moments" style="height:${mH}px"></div>
+            <div class="hour-bar bar-tips" style="height:${tH}px"></div>
+            <div class="hour-bar bar-pulse" style="height:${pH}px"></div>
+          </div>
+          <div class="hour-label">${label}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function loadLivePulse() {
+    try {
+      const r = await fetch('/api/admin/live-pulse', { headers: { 'x-admin-token': adminToken } });
+      if (!r.ok) return;
+      const d = await r.json();
+      livePulsePosts = d.posts || [];
+      renderLivePulse();
+    } catch (e) {
+      console.error('Live pulse load failed:', e);
+    }
+  }
+
+  function renderLivePulse() {
+    const list = document.getElementById('pulse-list');
+    if (!list) return;
+    // Good Tips are permanent — show all posts, no expiry filtering
+    if (livePulsePosts.length === 0) {
+      list.innerHTML = '<span class="empty-state">no good tips yet</span>';
+      return;
+    }
+    list.innerHTML = livePulsePosts.map(p => {
+      return `
+        <div class="pulse-post" data-id="${p.id}">
+          <div class="pulse-post-main">
+            <div class="pulse-nick">${escHtml(p.nickname)} <span style="font-weight:400;color:var(--text-muted);font-size:0.78rem">${p.geo_tier}</span></div>
+            <div class="pulse-text">${escHtml(p.text)}</div>
+            <div class="pulse-meta">posted ${timeAgo(p.created_at)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function tickPulseCountdowns() {
+    // Good Tips are permanent — no countdown timers needed
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const m = Math.floor(diff / 60000);
+    if (m < 1) return 'just now';
+    if (m < 60) return `${m}m ago`;
+    const h = Math.floor(m / 60);
+    if (h < 24) return `${h}h ago`;
+    return `${Math.floor(h/24)}d ago`;
+  }
+
+  document.getElementById('phrase-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') setPassphrase();
+  });
+
+  // ---- Bar Chart Tooltip ----
+  const chartTip = document.createElement('div');
+  chartTip.className = 'chart-tooltip';
+  chartTip.id = 'chart-tip';
+  document.body.appendChild(chartTip);
+
+  function positionChartTip(e) {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    let left = clientX + 14;
+    let top = clientY - 44;
+    if (left + 200 > window.innerWidth) left = clientX - 210;
+    if (top < 8) top = clientY + 14;
+    chartTip.style.left = left + 'px';
+    chartTip.style.top = top + 'px';
+  }
+
+  // Event delegation on the hourly chart container
+  document.addEventListener('mouseover', (e) => {
+    const col = e.target.closest('.hour-col[data-tip]');
+    if (!col) return;
+    chartTip.textContent = col.dataset.tip;
+    chartTip.classList.add('visible');
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (!e.target.closest('.hour-col[data-tip]')) return;
+    const toEl = e.relatedTarget;
+    if (toEl && toEl.closest('.hour-col[data-tip]')) return;
+    chartTip.classList.remove('visible');
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (chartTip.classList.contains('visible')) positionChartTip(e);
+  });
+  // Touch support for mobile
+  document.addEventListener('touchstart', (e) => {
+    const col = e.target.closest('.hour-col[data-tip]');
+    if (!col) { chartTip.classList.remove('visible'); return; }
+    chartTip.textContent = col.dataset.tip;
+    chartTip.classList.add('visible');
+    positionChartTip(e);
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('touchend', () => {
+    setTimeout(() => chartTip.classList.remove('visible'), 1500);
+  });
+
+  // ---- Pulse Log ----
+  async function loadPulseLog() {
+    try {
+      const r = await fetch('/api/admin/pulse-log', { headers: { 'x-admin-token': adminToken } });
+      if (!r.ok) return;
+      const d = await r.json();
+      renderPulseLog(d.posts || []);
+    } catch (e) {
+      console.error('Pulse log load failed:', e);
+    }
+  }
+
+  function renderPulseLog(posts) {
+    const container = document.getElementById('pulse-log-container');
+    if (!container) return;
+    if (posts.length === 0) {
+      container.innerHTML = '<span class="empty-state">no good tips yet</span>';
+      return;
+    }
+    const rows = posts.map(p => {
+      const postedStr = new Date(p.created_at).toLocaleString([], { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      const geoTag = `<span class="tag tag-${p.geo_tier === 'grounds' ? 'moments' : p.geo_tier === 'valley' ? 'tips' : 'pulse'}" style="font-size:0.65rem">${p.geo_tier}</span>`;
+      return `<tr>
+        <td>${escHtml(p.nickname)} ${geoTag}</td>
+        <td>${escHtml(p.text)}</td>
+        <td style="white-space:nowrap">${postedStr}</td>
+      </tr>`;
+    }).join('');
+    container.innerHTML = `
+      <table class="pulse-log-table">
+        <thead><tr>
+          <th>nickname</th>
+          <th>post</th>
+          <th>posted at</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.75rem">${posts.length} good tips total</div>
+    `;
+  }
+
+  // ---- Notes to Sat ----
+  async function loadNotes() {
+    try {
+      const r = await fetch('/api/admin/notes', { headers: { 'x-admin-token': adminToken } });
+      if (!r.ok) return;
+      const d = await r.json();
+      renderNotes(d.notes || []);
+    } catch (e) {
+      console.error('Notes load failed:', e);
+    }
+  }
+
+  function renderNotes(notes) {
+    const list = document.getElementById('notes-list');
+    const count = document.getElementById('notes-count');
+    if (!list) return;
+    if (count) count.textContent = notes.length;
+    if (notes.length === 0) {
+      list.innerHTML = '<span class="empty-state">no notes yet</span>';
+      return;
+    }
+    list.innerHTML = notes.map(n => {
+      const ts = new Date(n.created_at).toLocaleString([], { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      return `<div class="flagged-post" style="margin-bottom:0.6rem">
+        <div class="flagged-header">
+          <span class="flagged-nick">${escHtml(n.nickname)}</span>
+          <span class="flagged-meta">${ts}</span>
+        </div>
+        <div class="flagged-text">${escHtml(n.text)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ---- Local Knowledge Seeding ----
+  function updateSeedCount() {
+    const textarea = document.getElementById('seed-text');
+    const counter = document.getElementById('seed-char-count');
+    if (textarea && counter) counter.textContent = 1000 - textarea.value.length;
+  }
+
+  async function seedLocalKnowledge() {
+    const textarea = document.getElementById('seed-text');
+    const btn = document.getElementById('seed-btn');
+    const status = document.getElementById('seed-status');
+    if (!textarea || !btn) return;
+
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    btn.disabled = true;
+    btn.textContent = 'posting…';
+
+    try {
+      const r = await fetch('/api/admin/seed-local-knowledge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': adminToken },
+        body: JSON.stringify({ text })
+      });
+      if (r.ok) {
+        textarea.value = '';
+        updateSeedCount();
+        if (status) { status.textContent = '✓ posted to good tips feed'; status.style.color = 'var(--green)'; }
+      } else {
+        const d = await r.json();
+        if (status) { status.textContent = d.error || 'failed to post'; status.style.color = 'var(--red)'; }
+      }
+    } catch (e) {
+      if (status) { status.textContent = 'connection error'; status.style.color = 'var(--red)'; }
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'post to good vibes';
+    setTimeout(() => { if (status) status.textContent = ''; }, 4000);
+  }
+
+  // ---- Full Reset for Launch ----
+  async function resetStats() {
+    const confirmed = confirm('⚠️ FULL PRE-LAUNCH RESET\n\nThis will permanently delete:\n• All posts (good shots, good vibes, good tips)\n• All hey mirage notes\n• All visitor stats & sessions\n• All blocked IPs\n\nPassphrase rules and moderation settings are preserved.\n\nAre you sure? This cannot be undone.');
+    if (!confirmed) return;
+
+    try {
+      const r = await fetch('/api/admin/reset-stats', {
+        method: 'POST',
+        headers: { 'x-admin-token': adminToken }
+      });
+      const d = await r.json();
+      const status = document.getElementById('reset-status');
+      if (r.ok) {
+        if (status) { status.textContent = '✓ full reset complete — clean slate for launch'; status.style.color = 'var(--green)'; }
+        setTimeout(() => load(), 500); // Refresh dashboard
+      } else {
+        if (status) { status.textContent = d.error || 'failed'; status.style.color = 'var(--red)'; }
+      }
+    } catch (e) {
+      const status = document.getElementById('reset-status');
+      if (status) { status.textContent = 'connection error'; status.style.color = 'var(--red)'; }
+    }
+  }
+</script>
+</body>
+</html>
