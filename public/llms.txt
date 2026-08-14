@@ -1,0 +1,37 @@
+# Mirage — SunshineFM (Case Study)
+> Mirage was a 30-day, geo-fenced, anonymous social network for festival season in the Coachella Valley. It appeared April 1, 2026 and disappeared May 1, 2026 by design. This site is the sealed Season 1 archive; the project continues as documented evidence and canonical case-study material.
+
+Status: archived (Season 1 complete; the application no longer runs)
+Last reviewed: 2026-08-14
+
+## What this is
+A SunshineFM project that ran for exactly 30 days across Coachella and Stagecoach weekends, then shut down on schedule. The Season 1 build is the documented evidence foundation for temporary social infrastructure and AI-assisted local product builds.
+
+/case-study is the canonical entry point and carries the full Season 1 wrap-up. /presentation is an 18-slide conference-style deck. /farewell is the post-shutdown landing page.
+
+## About
+- Brand: Mirage, a SunshineFM experiment
+- Operator: SunshineFM (Coachella Valley radio)
+- Anchor window: 2026-04-01 to 2026-05-01 (Season 1)
+- Original stack: Node.js + Express + PostgreSQL (Neon). At shutdown it was served through Polsia; the repository also carries a Render deploy config from earlier in its life.
+- Current form: a static archive on Cloudflare Pages. There is no application, no API and no database — the Neon instance is gone. Nothing on this site is dynamic.
+- Source: https://github.com/SunshineFM/mirage-season1 (public)
+
+## Pages
+- /case-study — canonical case-study entry point
+- /case-study.html, /mirage, /season1.html — aliases serving the same document; all declare /case-study as canonical
+- /presentation — 18-slide deck
+- /farewell — post-shutdown landing page
+- / — serves the Season 1 archive
+- Not indexed: /archive/internal and /archive/behind-the-scenes (operational appendix, robots noindex)
+
+## Metrics
+Season 1 figures live in the data strip at /case-study#by-the-numbers. They are not restated here, so there is exactly one place for them to be correct.
+
+## Routes that no longer exist
+/eat, /series and /sponsors were Restaurant Week and sponsor-pitch surfaces sharing this codebase. That project moved to its own repository on 2026-08-14 and those paths now return 404. Any earlier description of them under this domain is stale.
+
+## Licensing and citation
+Cite as: Mirage — SunshineFM Case Study (Season 1: 2026-04-01 to 2026-05-01), mirage.sunshine.fm/case-study.
+
+A Season 2 is plausible but not committed and is not marketed here as confirmed.

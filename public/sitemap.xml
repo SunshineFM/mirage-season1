@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static sitemap for the Mirage Season 1 archive.
+
+  Lists CANONICAL URLs only. /season1.html, /case-study.html and /mirage serve the
+  same document and every copy declares <link rel="canonical"> pointing at
+  /case-study, so listing them here would only dilute that signal.
+
+  /eat, /series and /sponsors were in the Express sitemap. They are deliberately
+  absent: that project left this domain on 2026-08-14 and those paths now 404.
+  /archive/internal and /archive/behind-the-scenes are noindex and stay out.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mirage.sunshine.fm/</loc><changefreq>yearly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://mirage.sunshine.fm/case-study</loc><changefreq>yearly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://mirage.sunshine.fm/presentation</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mirage.sunshine.fm/farewell</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+</urlset>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Not here — Mirage (SunshineFM)</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="robots" content="noindex">
+  <link href="/vendor/fonts/farewell.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --blue: #0284C7; --ink: #0F172A; --muted: #94A3B8; --faint: #475569; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--ink);
+      color: #E2E8F0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 34rem; }
+    .wordmark {
+      font-family: 'Righteous', 'Arial Rounded MT Bold', sans-serif;
+      font-size: clamp(2.5rem, 9vw, 4rem);
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    h1 { font-size: 1.25rem; font-weight: 500; margin-bottom: 0.75rem; }
+    p { color: var(--muted); margin-bottom: 1rem; }
+    .links { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.25rem; }
+    a { color: var(--blue); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    .note {
+      margin-top: 2.5rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.875rem; color: var(--faint);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="wordmark">mirage</div>
+    <h1>There's nothing at this address.</h1>
+    <p>Mirage ran for 30 days and disappeared on May 1, 2026. What survives is the Season 1 archive.</p>
+    <div class="links">
+      <a href="/case-study">The case study</a>
+      <a href="/presentation">The deck</a>
+      <a href="/farewell">The farewell</a>
+    </div>
+    <p class="note">
+      If you followed a link to <code>/eat</code>, <code>/series</code> or <code>/sponsors</code>,
+      those were separate surfaces that shared this codebase. They moved elsewhere in
+      August 2026 and are no longer published here.
+    </p>
+  </div>
+</body>
+</html>

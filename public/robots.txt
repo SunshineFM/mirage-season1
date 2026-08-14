@@ -1,10 +1,19 @@
 # robots.txt — Mirage (SunshineFM)
+# Season 1 archive. Static since 2026-08-14; the application no longer runs.
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /mirage/signal
 Disallow: /archive/internal
 Disallow: /archive/behind-the-scenes
+
+# Routes that existed on the Express app and do not exist on the static archive.
+# Disallowed rather than left open, so nothing indexes the 404 page under them.
+Disallow: /api/
+Disallow: /app
+Disallow: /admin
+Disallow: /mirage/signal
+Disallow: /eat
+Disallow: /series
+Disallow: /sponsors
 
 # Explicit allowlist for AI crawlers (do NOT block — keep LLM discoverability on)
 User-agent: GPTBot
