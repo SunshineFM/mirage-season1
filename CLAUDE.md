@@ -27,9 +27,16 @@ Node.js + Express + Neon PostgreSQL, served on Render. Static assets in `/public
 ## External integrations
 - Neon PostgreSQL — `DATABASE_URL` env var
 - Render — hosting, ephemeral filesystem, `/health` endpoint
-- Google Fonts — Righteous, Bebas Neue, DM Sans (presentation deck)
-- cdnjs / jsDelivr — Reveal.js 5.1.0, qrcodejs 1.0.0 (presentation deck)
+- ~~Google Fonts~~ — Righteous, Bebas Neue, DM Sans, **vendored 2026-08-14** to `public/vendor/fonts/` (12 woff2 + per-page CSS). No longer fetched at runtime.
+- ~~cdnjs / jsDelivr~~ — Reveal.js 5.1.0, qrcodejs 1.0.0, **vendored 2026-08-14** to `public/vendor/`. No longer fetched at runtime.
 - qrserver.com — not used (switched to qrcodejs for self-contained QR)
+
+- ~~R2 public bucket~~ — `Coachella Bound.mp3` (hero player on the archive page), **vendored 2026-08-14** to `public/vendor/audio/coachella-bound.mp3`. No longer fetched at runtime.
+
+As of 2026-08-14 the archive has **zero third-party runtime dependencies and no analytics
+of any kind** (the Meta Pixel on the farewell page was removed the same day). The only
+remaining external requests are the YouTube embeds on the archive page, one KESQ press
+image, and ordinary outbound links.
 
 ## Recent changes
 - 2026-07-29: Shipped /series — Coachella Valley Vertical Video Series sponsor-pitch landing with /api/series/lead intake (series_leads table) wired to Polsia email proxy

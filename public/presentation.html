@@ -17,14 +17,11 @@
   <meta name="twitter:image" content="https://mirage.sunshine.fm/og-card.png">
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="/vendor/fonts/presentation.css" rel="stylesheet" />
 
   <!-- Reveal.js -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.css" />
+  <link rel="stylesheet" href="/vendor/reveal/dist/reset.css" />
+  <link rel="stylesheet" href="/vendor/reveal/dist/reveal.css" />
 
   <style>
     /* ─── MIRAGE / SUNSHINEFM DESIGN SYSTEM ───────────────── */
@@ -1698,8 +1695,8 @@
 </div><!-- /.reveal -->
 
 <!-- Reveal.js -->
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="/vendor/reveal/dist/reveal.js"></script>
+<script src="/vendor/reveal/plugin/notes/notes.js"></script>
 <script>
   Reveal.initialize({
     hash: true,
@@ -1723,7 +1720,7 @@
 </script>
 
 <!-- QR Code library + render for closing slide -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/vendor/qrcodejs/qrcode.min.js"></script>
 <script>
   (function() {
     function renderQR() {
